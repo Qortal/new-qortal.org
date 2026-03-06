@@ -1,0 +1,42 @@
+# Changelog
+
+## Unreleased
+
+- **Added:** Scroll-driven Sovereign Cloud landing page with hero, tiering, performance, architecture, add-ons, and roadmap sections (how to use: run `npm run dev` and open the root route).
+- **Changed:** Theme system refined to branded dark/light blue palettes with runtime theme toggle and iframe compatibility (migration/notes: none).
+- **Changed:** Runtime mode indicator for gateway-aware vs native context rendering (migration/notes: none).
+- **Changed:** Public landing behavior now avoids forced auth on mount (migration/notes: `GlobalProvider` `authenticateOnMount` set to `false`).
+- **Changed:** Added scroll-state choreography improvements (staggered reveals, parallax motion, active section tracking) for a smoother single-page flow (migration/notes: none).
+- **Changed:** Deployment path section now uses conversion-focused CTA blocks for plugin-first and CHD managed-service audiences (migration/notes: none).
+- **Changed:** Gateway/native runtime messaging now drives contextual primary CTA targeting and navigation behavior (migration/notes: none).
+- **Changed:** Landing page width is no longer capped to a fixed max container, allowing wider viewport expansion while keeping responsive paddings (migration/notes: none).
+- **Added:** Scroll-reactive geometric background objects on the right side to deliver a more dynamic visual identity without introducing heavy runtime dependencies (how to use: scroll through the page to see rotation/morph shifts).
+- **Changed:** Access context detection now prioritizes trusted gateway host matching and falls back to `GET_USER_ACCOUNT` probing for native runtime detection (migration/notes: none).
+- **Added:** Cross-functional link actions now open internet links in gateway context and copy those links in native runtime context (how to use: use the Access handling actions in the hero panel).
+- **Changed:** Context notice is now visually separated as an informational access banner so it does not read as a service-tier feature (migration/notes: none).
+- **Changed:** Background grid was reduced in visual intensity with a darker base, wider spacing, center emphasis, and edge fade to reduce distraction (migration/notes: none).
+- **Changed:** Experience split into two explicit scroller routes: MSP-primary (`/`) and self-hosting plugin (`/self-hosting`) with separate messaging and navigation (migration/notes: route added).
+- **Added:** Self-hosting route visual identity uses left-side animation and circular-grid black-background style while MSP route keeps right-side animation and square-grid atmosphere (how to use: navigate between routes using top nav links).
+- **Changed:** Gateway detection is now strict: authenticated `GET_USER_ACCOUNT` always means QDN mode; trusted gateway mode requires `*.crowetic.com`; all other access is internet fallback context (migration/notes: external-link behavior now follows context mode).
+- **Fixed:** QDN detection now retries for delayed bridge initialization in Hub/dev mode, so authenticated `GET_USER_ACCOUNT` can correctly override initial internet/gateway assumptions (impact: prevents false “internet” context on startup).
+- **Changed:** External links now open directly only in gateway/internet contexts and copy to clipboard in authenticated QDN context (migration/notes: applies to payment/docs buttons).
+- **Changed:** Main content rail is intentionally narrower by percentage to expose animated side objects while remaining responsive (migration/notes: none).
+- **Changed:** MSP page content flow is now marketing-oriented: `Replaces the Following` → `Unify Your Cloud Life` → full replacement detail cards with stronger narrative progression (migration/notes: none).
+- **Changed:** Removed MSP `Managed Operations Model` section and replaced it with customer-outcome focused replacement detail content (migration/notes: none).
+- **Changed:** `Two Paths` became `Two Starting Points` to clearly position per-user existing-cloud onboarding vs fully private branded cloud onboarding (migration/notes: none).
+- **Added:** Side-slide reveal choreography for detailed replacement cards to create stronger scroll storytelling without overwhelming density (how to use: scroll through the MSP details section).
+- **Added:** Replacement cards now include provider icon references and staged panel reveal timing in the MSP `Replaces` section (how to use: scroll through the replacements section and observe timed card entry).
+- **Fixed:** Replacement icons now load from bundled local SVG assets instead of remote CDN URLs (impact: resolves icon loading failures in QDN/runtime environments).
+- **Changed:** Terminology shifted away from “Q-Apps” toward “distributed off-network applications” with expanded messaging on decentralized app access, encrypted chunked off-network backups, redundancy guarantees, private communications options, and distributed publishing status (migration/notes: content copy update).
+- **Added:** Deep-dive interactions now expand contextual panels directly below the originating section instead of always linking out (how to use: click any `Deep Dive` button on MSP page).
+- **Changed:** `Two Starting Points` now renders as vertical stacked offers, each with 3 package cards and dual payment actions (USD + QORT) (migration/notes: QORT path opens/copies QDN-oriented checkout links).
+- **Fixed:** Replacement-detail deep dives now open inline under the clicked card (instead of detached bottom panel layout) with corrected spacing and fuller explanatory content (impact: resolves stretched panel/misaligned spacing issues).
+- **Changed:** MSP feature messaging now reflects that core capabilities are included across every package path; in-page package cards no longer show fixed price copy and now emphasize deployment/capacity differences (migration/notes: pricing moved out of this marketing view).
+- **Added:** Full included-feature matrix content plus expansion-module and roadmap sections for broader replacement coverage (how to use: open `Two Starting Points` and click `Full Details`).
+- **Changed:** Replacements section now includes a wider big-tech mapping set (workspace, comms, storage, workflow, docs/knowledge, groupware, identity, operations, and lifecycle funnel equivalents) (migration/notes: content model expanded).
+- **Changed:** `Unify Your Cloud Life` now renders as a titled staggered sequence with stronger scroll-stage readability (migration/notes: section presentation updated).
+- **Changed:** Included/Expansion/Roadmap content moved under `Two Starting Points` and is now toggled via `Full Details` to reduce top-level section density (migration/notes: moved from matrix block to starting-points block).
+- **Changed:** Expansion modules narrowed to `Branded client apps`, `Enterprise federation`, `SaaS onboarding and migration`, and `Custom distributed applications`; roadmap now tracks `CommOps`, `Workspace CRM`, and `Expanded sovereign communications options` (migration/notes: module taxonomy revised).
+- **Changed:** Checkout buttons now render by access context: QDN shows QORT-only actions, gateway/internet shows USD-only actions (migration/notes: prevents non-working checkout options from being shown in the current mode).
+- **Changed:** Hero CTAs renamed to `See Packages` and `Details` with direct section navigation targets (`starting-points` and `capabilities`) (migration/notes: replaces checkout-based hero CTA behavior).
+- **Changed:** Active section tracking for side progress dots now uses visible section-center proximity for tighter alignment with on-screen content (migration/notes: scroll-state calculation updated).

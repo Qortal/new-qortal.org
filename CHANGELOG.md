@@ -40,3 +40,6 @@
 - **Changed:** Checkout buttons now render by access context: QDN shows QORT-only actions, gateway/internet shows USD-only actions (migration/notes: prevents non-working checkout options from being shown in the current mode).
 - **Changed:** Hero CTAs renamed to `See Packages` and `Details` with direct section navigation targets (`starting-points` and `capabilities`) (migration/notes: replaces checkout-based hero CTA behavior).
 - **Changed:** Active section tracking for side progress dots now uses visible section-center proximity for tighter alignment with on-screen content (migration/notes: scroll-state calculation updated).
+- **Changed:** Internet-hosted metadata/title/fallback branding no longer uses default Q-App identity; site metadata now presents Sovereign Cloud / CHD branding (migration/notes: `index.html` meta/title updated).
+- **Added:** New `/terms` route with CHD Terms of Service content adapted for the sovereign provider model (how to use: open `/terms` from footer link).
+- **Added:** Global footer with `© 2026 CHD` and `Terms of Service` link across site routes (how to use: available at the bottom of every page).

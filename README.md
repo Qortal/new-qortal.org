@@ -71,3 +71,5 @@ npm run build
 
 - Router basename remains `_qdnBase` aware for QDN compatibility.
 - GlobalProvider auth auto-login is disabled for public landing-page access.
+- `index.html` metadata/title now uses Sovereign Cloud branding for internet-hosted previews and social cards.
+- A routed Terms page is available at `/terms`, and a global footer now shows `© 2026 CHD` plus a Terms link.

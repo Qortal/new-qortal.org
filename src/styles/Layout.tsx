@@ -1,15 +1,19 @@
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import { useIframe } from '../hooks/useIframeListener';
 
 const Layout = () => {
   useIframe();
   return (
     <>
-      {/* Add Header here */}
       <main>
-        <Outlet /> {/* This is where page content will be rendered */}
+        <Outlet />
       </main>
-      {/* Add Footer here */}
+      <footer className="sc-site-footer">
+        <span>© 2026 CHD</span>
+        <Link to="/terms" className="sc-site-footer-link">
+          Terms of Service
+        </Link>
+      </footer>
     </>
   );
 };

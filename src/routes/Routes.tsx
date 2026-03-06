@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from '../App';
 import { AppWrapper } from '../AppWrapper';
 import SelfHostingPage from '../SelfHostingPage';
+import TermsPage from '../TermsPage';
 
 interface CustomWindow extends Window {
   _qdnBase: string;
@@ -23,6 +24,10 @@ export function Routes() {
           {
             path: 'self-hosting',
             element: <SelfHostingPage />,
+          },
+          {
+            path: 'terms',
+            element: <TermsPage />,
           },
         ],
       },

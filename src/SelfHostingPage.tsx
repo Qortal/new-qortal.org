@@ -18,6 +18,7 @@ import {
 import { useAtom } from 'jotai';
 import { CSSProperties, useCallback, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { BRAND_HEADER_LOGO, BRAND_HERO_LOGO } from './brandAssets';
 import { useAccessContext } from './hooks/useAccessContext';
 import { EnumTheme, themeAtom } from './state/global/system';
 import './App.css';
@@ -187,7 +188,7 @@ function SelfHostingPage() {
         <Box className="sc-shell-inner">
           <Box className="sc-topbar sc-reveal">
             <Stack direction="row" spacing={1.2} alignItems="center">
-              <img src="/logo-test.png" alt="NuQloud" className="sc-top-logo" />
+              <img src={BRAND_HEADER_LOGO} alt="NuQloud" className="sc-top-logo" />
               <Typography variant="subtitle1" className="sc-top-title">
                 NuQloud for Nextcloud
               </Typography>
@@ -260,7 +261,7 @@ function SelfHostingPage() {
             </Box>
             <Box className="sc-hero-art">
               <img
-                src={isDark ? '/advertising-dark.webp' : '/advertising-white.webp'}
+                src={BRAND_HERO_LOGO}
                 alt="NuQloud plugin overview"
                 className="sc-hero-image"
               />

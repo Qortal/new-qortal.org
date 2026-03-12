@@ -24,6 +24,7 @@ import docsProjectIcon from './assets/provider-icons/docs-project.svg';
 import dropboxStorageIcon from './assets/provider-icons/dropbox-storage.svg';
 import googleWorkspaceIcon from './assets/provider-icons/google-workspace.svg';
 import slackTeamsZoomIcon from './assets/provider-icons/slack-teams-zoom.svg';
+import { BRAND_HEADER_LOGO, BRAND_HERO_LOGO } from './brandAssets';
 import { useAccessContext } from './hooks/useAccessContext';
 import { EnumTheme, themeAtom } from './state/global/system';
 import './App.css';
@@ -660,7 +661,7 @@ function App() {
         <Box className="sc-shell-inner">
           <Box className="sc-topbar sc-reveal">
             <Stack direction="row" spacing={1.2} alignItems="center">
-              <img src="/logo-test.png" alt="NuQloud" className="sc-top-logo" />
+              <img src={BRAND_HEADER_LOGO} alt="NuQloud" className="sc-top-logo" />
               <Typography variant="subtitle1" className="sc-top-title">
                 NuQloud MSP
               </Typography>
@@ -738,7 +739,7 @@ function App() {
             </Box>
             <Box className="sc-hero-art">
               <img
-                src={isDark ? '/advertising-dark.webp' : '/advertising-white.webp'}
+                src={BRAND_HERO_LOGO}
                 alt="NuQloud platform preview"
                 className="sc-hero-image"
               />

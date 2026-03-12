@@ -57,9 +57,8 @@ Primary product messaging is derived from:
 ## Assets
 
 Logo/hero graphics are loaded from:
-- `public/logo-test.png`
-- `public/advertising-dark.webp`
-- `public/advertising-white.webp`
+- `public/NuQloud-Nucleus-logoOnly-favicon.png`
+- `public/NuQloud-Block-logo-noBG-2.png`
 
 ## Development
 

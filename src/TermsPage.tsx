@@ -3,6 +3,7 @@ import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
 import { Box, Button, Card, CardContent, Container, IconButton, Stack, Typography } from '@mui/material';
 import { useAtom } from 'jotai';
 import { Link } from 'react-router-dom';
+import { BRAND_HEADER_LOGO } from './brandAssets';
 import { EnumTheme, themeAtom } from './state/global/system';
 import './App.css';
 
@@ -116,7 +117,7 @@ function TermsPage() {
         <Box className="sc-shell-inner">
           <Box className="sc-topbar sc-reveal is-visible">
             <Stack direction="row" spacing={1.2} alignItems="center">
-              <img src="/logo-test.png" alt="NuQloud" className="sc-top-logo" />
+              <img src={BRAND_HEADER_LOGO} alt="NuQloud" className="sc-top-logo" />
               <Typography variant="subtitle1" className="sc-top-title">
                 NuQloud Terms of Service
               </Typography>

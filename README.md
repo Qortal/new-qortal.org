@@ -1,19 +1,25 @@
-# Sovereign Website
+# NuQloud Website
 
-Landing site for Sovereign Cloud, built as a Qortal-publishable React app (via `create-qortal-app`) and designed to work cleanly in both:
+Landing site for NuQloud, built as a Qortal-publishable React app (via `create-qortal-app`) and designed to work cleanly in both:
 - Qortal native context
-- Gateway-accessed context (for example `sovcloud.crowetic.com`)
+- Gateway-accessed context (for example `nuqloud.com`)
 
 ## What This Build Includes
 
 - Two distinct scroller routes:
   - `/` MSP-primary service page (managed provider focus)
   - `/self-hosting` plugin/self-hosting page
+- Branding refresh:
+  - MSP route: `NuQloud MSP`
+  - Plugin route: `NuQloud for Nextcloud - powered by Qortal`
+- Mobile-first content-density controls:
+  - Core heavy sections now support tap-to-expand / tap-to-collapse behavior on smaller screens.
+  - `More Details` in plans now includes additional nested toggles for Included, Expansion Modules, and Roadmap.
 - MSP narrative flow is now marketing-first:
-  - `Replaces the Following`
-  - `Unify Your Cloud Life`
-  - `Full Replacement Detail` cards
-  - `Two Starting Points` (per-user on existing cloud vs fully private branded cloud)
+  - `What You Can Replace`
+  - `What Is Included`
+  - `Compare By Need` cards
+  - `Choose Your Starting Plan` (per-user on existing cloud vs fully private branded cloud)
 - Replacements section now includes provider icon references and staged reveal timing for stronger scroll storytelling.
 - Replacements section now maps a broader set of big-tech equivalents (workspace, comms, storage, workflow, docs/knowledge, groupware, identity, operations, and lifecycle funnels).
 - Provider icons are now bundled as local SVG assets (no external CDN dependency), improving reliability in QDN/gateway contexts.
@@ -71,5 +77,5 @@ npm run build
 
 - Router basename remains `_qdnBase` aware for QDN compatibility.
 - GlobalProvider auth auto-login is disabled for public landing-page access.
-- `index.html` metadata/title now uses Sovereign Cloud branding for internet-hosted previews and social cards.
+- `index.html` metadata/title now uses NuQloud branding for internet-hosted previews and social cards.
 - A routed Terms page is available at `/terms`, and a global footer now shows `© 2026 CHD` plus a Terms link.

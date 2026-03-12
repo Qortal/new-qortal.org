@@ -604,6 +604,17 @@
   margin-top: 1rem;
 }
 
+.sc-toggle-wrap {
+  margin-top: 0.9rem;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.sc-btn-toggle {
+  width: fit-content;
+  font-weight: 600 !important;
+}
+
 .sc-unify-list {
   margin-top: 1.1rem;
   display: grid;
@@ -717,6 +728,9 @@
 
 .sc-starting-details-panel {
   margin-top: 1.15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
 }
 
 .sc-starting-card {
@@ -899,6 +913,10 @@
 }
 
 @media (max-width: 720px) {
+  .sc-section {
+    margin-top: 1.95rem;
+  }
+
   .sc-headline {
     font-size: clamp(1.7rem, 9.2vw, 2.4rem) !important;
   }
@@ -916,6 +934,10 @@
   .sc-hero,
   .sc-cta {
     padding: 1.05rem;
+  }
+
+  .sc-detail-list {
+    padding-left: 1rem;
   }
 
   .sc-nav-mini {

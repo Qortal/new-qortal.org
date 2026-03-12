@@ -1,4 +1,6 @@
 import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
+import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
+import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
 import OpenInNewRoundedIcon from '@mui/icons-material/OpenInNewRounded';
@@ -20,25 +22,27 @@ import { useAccessContext } from './hooks/useAccessContext';
 import { EnumTheme, themeAtom } from './state/global/system';
 import './App.css';
 
-const PLUGIN_DOCS_URL = 'https://sovcloud.crowetic.com/#self-hosting';
-const REPO_FEATURE_SCOPE_URL = 'https://sovcloud.crowetic.com/docs/v1-feature-scope';
-const REPO_CONNECTOR_URL = 'https://sovcloud.crowetic.com/docs/connector-catalog-contract-v1';
+const PLUGIN_DOCS_URL = 'https://nuqloud.com/nextcloud';
+const REPO_FEATURE_SCOPE_URL = 'https://nuqloud.com/features';
+const REPO_CONNECTOR_URL = 'https://nuqloud.com/integrations';
 
 const sectionNav = [
   { id: 'plugin-overview', label: 'Overview' },
-  { id: 'plugin-features', label: 'Features' },
+  { id: 'plugin-features', label: 'Included' },
   { id: 'plugin-mappings', label: 'Bridge + Files' },
-  { id: 'plugin-integrations', label: 'Integrations' },
-  { id: 'plugin-next', label: 'Next Steps' },
+  { id: 'plugin-integrations', label: 'References' },
+  { id: 'plugin-next', label: 'Start' },
 ];
 
+const MOBILE_COMPACT_BREAKPOINT = 720;
+
 const pluginFeatures = [
-  'Decentralized account linking and sovereign identity entry points.',
-  'Q-Apps dashboard and runtime-aware UX for gateway and QDN contexts.',
-  'Qortal Talk bridge mapping with server relay and dedupe protections.',
-  'Files publish bridge for direct folder/file publishing workflows.',
-  'Admin/user settings paths for mappings, relay diagnostics, and controls.',
-  'Catalog/package hooks for billing and service-tier visibility.',
+  'Simple account linking with decentralized identity support.',
+  'Dashboard behavior that adapts to gateway and QDN access modes.',
+  'Qortal Talk bridge mapping with relay and duplicate-protection controls.',
+  'Files publish bridge for direct folder and file publishing workflows.',
+  'Admin and user settings for mappings, relay diagnostics, and controls.',
+  'Catalog and package hooks for billing and service-tier visibility.',
 ];
 
 function SelfHostingPage() {
@@ -46,6 +50,10 @@ function SelfHostingPage() {
   const [scrollY, setScrollY] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeSection, setActiveSection] = useState(sectionNav[0].id);
+  const [isCompactMobile, setIsCompactMobile] = useState(() => window.innerWidth <= MOBILE_COMPACT_BREAKPOINT);
+  const [showFeatures, setShowFeatures] = useState(() => window.innerWidth > MOBILE_COMPACT_BREAKPOINT);
+  const [showMappings, setShowMappings] = useState(() => window.innerWidth > MOBILE_COMPACT_BREAKPOINT);
+  const [showReferences, setShowReferences] = useState(() => window.innerWidth > MOBILE_COMPACT_BREAKPOINT);
   const { accessContext, contextActionFeedback, openOrCopyInternetLink } = useAccessContext();
   const isDark = theme === EnumTheme.DARK;
 
@@ -85,7 +93,7 @@ function SelfHostingPage() {
 
     items.forEach((item) => observer.observe(item));
     return () => observer.disconnect();
-  }, []);
+  }, [showFeatures, showMappings, showReferences]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -118,6 +126,23 @@ function SelfHostingPage() {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleScroll);
     };
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const nextCompact = window.innerWidth <= MOBILE_COMPACT_BREAKPOINT;
+      setIsCompactMobile(nextCompact);
+
+      if (!nextCompact) {
+        setShowFeatures(true);
+        setShowMappings(true);
+        setShowReferences(true);
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const scrollToId = useCallback((id: string) => {
@@ -162,9 +187,9 @@ function SelfHostingPage() {
         <Box className="sc-shell-inner">
           <Box className="sc-topbar sc-reveal">
             <Stack direction="row" spacing={1.2} alignItems="center">
-              <img src="/logo-test.png" alt="Sovereign Cloud" className="sc-top-logo" />
+              <img src="/logo-test.png" alt="NuQloud" className="sc-top-logo" />
               <Typography variant="subtitle1" className="sc-top-title">
-                Sovereign Plugin (Self-Hosting)
+                NuQloud for Nextcloud
               </Typography>
             </Stack>
 
@@ -182,7 +207,7 @@ function SelfHostingPage() {
                 ))}
               </Stack>
               <Button component={Link} to="/" size="small" className="sc-nav-link">
-                MSP Primary <HomeRoundedIcon fontSize="small" />
+                NuQloud MSP <HomeRoundedIcon fontSize="small" />
               </Button>
               <IconButton
                 className="sc-theme-toggle"
@@ -204,25 +229,25 @@ function SelfHostingPage() {
           <section className="sc-hero sc-reveal" id="plugin-overview">
             <Box className="sc-hero-copy">
               <Typography variant="overline" className="sc-kicker">
-                Self-Managed • Sovereign Plugins • Operator-Controlled
+                Self-Managed • Plugin Edition • Powered by Qortal
               </Typography>
               <Typography variant="h1" className="sc-headline">
-                Deploy sovereign cloud functionality directly into your own Nextcloud stack.
+                NuQloud for Nextcloud, powered by Qortal.
               </Typography>
               <Typography variant="body1" className="sc-subline">
-                This path is for operators who self-host and want Qortal integration features, file publish
-                workflows, and Talk bridge controls while maintaining full infrastructure ownership.
+                This path is for teams that self-host and want Qortal integration, file publishing workflows,
+                and Talk bridge controls while keeping full infrastructure ownership.
               </Typography>
               <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1.2} className="sc-hero-actions">
                 <Button className="sc-btn-primary" onClick={() => openOrCopyInternetLink(PLUGIN_DOCS_URL)}>
-                  Open / Copy Plugin Docs
+                  Open / Copy Plugin Guide
                 </Button>
                 <Button className="sc-btn-ghost" component={Link} to="/">
-                  Back To MSP Primary
+                  Back To NuQloud MSP
                 </Button>
               </Stack>
               <Box className="sc-runtime-panel">
-                <Typography className="sc-runtime-title">Context-aware external links</Typography>
+                <Typography className="sc-runtime-title">How links behave in this context</Typography>
                 <Typography variant="caption" className="sc-runtime-note">
                   Authenticated QDN context copies internet-only links; gateway/internet opens them directly.
                 </Typography>
@@ -236,7 +261,7 @@ function SelfHostingPage() {
             <Box className="sc-hero-art">
               <img
                 src={isDark ? '/advertising-dark.webp' : '/advertising-white.webp'}
-                alt="Sovereign plugin overview"
+                alt="NuQloud plugin overview"
                 className="sc-hero-image"
               />
             </Box>
@@ -244,72 +269,101 @@ function SelfHostingPage() {
 
           <section className="sc-section sc-reveal" id="plugin-features">
             <Typography variant="h2" className="sc-section-title">
-              Plugin Feature Coverage
+              What You Get
             </Typography>
-            <Box className="sc-card-grid">
-              {pluginFeatures.map((item) => (
-                <Card className="sc-card" key={item}>
-                  <CardContent>
-                    <Typography className="sc-feature-copy">{item}</Typography>
-                  </CardContent>
-                </Card>
-              ))}
-            </Box>
+            {isCompactMobile ? (
+              <Box className="sc-toggle-wrap">
+                <Button className="sc-btn-ghost sc-btn-toggle" onClick={() => setShowFeatures((prev) => !prev)}>
+                  {showFeatures ? 'Hide Included Features' : 'Show Included Features'}
+                  {showFeatures ? <ExpandLessRoundedIcon fontSize="small" /> : <ExpandMoreRoundedIcon fontSize="small" />}
+                </Button>
+              </Box>
+            ) : null}
+            {showFeatures ? (
+              <Box className="sc-card-grid">
+                {pluginFeatures.map((item) => (
+                  <Card className="sc-card" key={item}>
+                    <CardContent>
+                      <Typography className="sc-feature-copy">{item}</Typography>
+                    </CardContent>
+                  </Card>
+                ))}
+              </Box>
+            ) : null}
           </section>
 
           <section className="sc-section sc-reveal" id="plugin-mappings">
             <Typography variant="h2" className="sc-section-title">
-              Bridge + Files Workflow Focus
+              Bridge + Files Focus
             </Typography>
-            <Box className="sc-two-col">
-              <Card className="sc-card">
-                <CardContent>
-                  <Typography className="sc-card-label">Talk Bridge</Typography>
-                  <Typography className="sc-feature-copy">
-                    Conversation mapping, relay direction controls, server relay diagnostics, and bridge-account
-                    handling for Qortal ↔ Talk workflows.
-                  </Typography>
-                </CardContent>
-              </Card>
-              <Card className="sc-card">
-                <CardContent>
-                  <Typography className="sc-card-label">Files Bridge</Typography>
-                  <Typography className="sc-feature-copy">
-                    Publish file/folder flows tied to sovereign storage and activity-based user visibility.
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Box>
+            {isCompactMobile ? (
+              <Box className="sc-toggle-wrap">
+                <Button className="sc-btn-ghost sc-btn-toggle" onClick={() => setShowMappings((prev) => !prev)}>
+                  {showMappings ? 'Hide Workflow Details' : 'Show Workflow Details'}
+                  {showMappings ? <ExpandLessRoundedIcon fontSize="small" /> : <ExpandMoreRoundedIcon fontSize="small" />}
+                </Button>
+              </Box>
+            ) : null}
+            {showMappings ? (
+              <Box className="sc-two-col">
+                <Card className="sc-card">
+                  <CardContent>
+                    <Typography className="sc-card-label">Talk Bridge</Typography>
+                    <Typography className="sc-feature-copy">
+                      Conversation mapping, relay direction controls, server relay diagnostics, and bridge-account
+                      handling for Qortal ↔ Talk workflows.
+                    </Typography>
+                  </CardContent>
+                </Card>
+                <Card className="sc-card">
+                  <CardContent>
+                    <Typography className="sc-card-label">Files Bridge</Typography>
+                    <Typography className="sc-feature-copy">
+                      Publish file and folder flows tied to distributed storage and activity-based visibility.
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Box>
+            ) : null}
           </section>
 
           <section className="sc-section sc-reveal" id="plugin-integrations">
             <Typography variant="h2" className="sc-section-title">
-              In-Depth Integration References
+              Integration References
             </Typography>
-            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1} className="sc-inline-actions">
-              <Button className="sc-btn-ghost" onClick={() => openOrCopyInternetLink(REPO_FEATURE_SCOPE_URL)}>
-                Feature Scope Notes <OpenInNewRoundedIcon fontSize="small" />
-              </Button>
-              <Button className="sc-btn-ghost" onClick={() => openOrCopyInternetLink(REPO_CONNECTOR_URL)}>
-                Connector Contract Notes <OpenInNewRoundedIcon fontSize="small" />
-              </Button>
-            </Stack>
+            {isCompactMobile ? (
+              <Box className="sc-toggle-wrap">
+                <Button className="sc-btn-ghost sc-btn-toggle" onClick={() => setShowReferences((prev) => !prev)}>
+                  {showReferences ? 'Hide Reference Links' : 'Show Reference Links'}
+                  {showReferences ? <ExpandLessRoundedIcon fontSize="small" /> : <ExpandMoreRoundedIcon fontSize="small" />}
+                </Button>
+              </Box>
+            ) : null}
+            {showReferences ? (
+              <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1} className="sc-inline-actions">
+                <Button className="sc-btn-ghost" onClick={() => openOrCopyInternetLink(REPO_FEATURE_SCOPE_URL)}>
+                  Feature Scope Notes <OpenInNewRoundedIcon fontSize="small" />
+                </Button>
+                <Button className="sc-btn-ghost" onClick={() => openOrCopyInternetLink(REPO_CONNECTOR_URL)}>
+                  Connector Contract Notes <OpenInNewRoundedIcon fontSize="small" />
+                </Button>
+              </Stack>
+            ) : null}
           </section>
 
           <section className="sc-cta sc-reveal" id="plugin-next">
             <Typography variant="h3" className="sc-cta-title">
-              Run self-hosted now, keep MSP path available.
+              Self-host now, keep the MSP path available.
             </Typography>
             <Typography className="sc-cta-copy">
-              You can adopt plugin-first, then transition to managed deployment if your operational profile
-              changes.
+              You can adopt plugin-first, then transition to managed deployment if your operational profile changes.
             </Typography>
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1.2} justifyContent="center">
               <Button className="sc-btn-primary" onClick={() => openOrCopyInternetLink(PLUGIN_DOCS_URL)}>
-                Open / Copy Plugin Docs
+                Open / Copy Plugin Guide
               </Button>
               <Button className="sc-btn-ghost" component={Link} to="/">
-                Return To MSP Service Page
+                Return To NuQloud MSP
               </Button>
             </Stack>
           </section>

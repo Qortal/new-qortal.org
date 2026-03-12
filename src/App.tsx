@@ -1,4 +1,6 @@
 import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
+import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
+import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
 import OpenInNewRoundedIcon from '@mui/icons-material/OpenInNewRounded';
 import SettingsEthernetRoundedIcon from '@mui/icons-material/SettingsEthernetRounded';
@@ -26,36 +28,38 @@ import { useAccessContext } from './hooks/useAccessContext';
 import { EnumTheme, themeAtom } from './state/global/system';
 import './App.css';
 
-const PAYMENT_URL = 'https://payment.crowetic.com';
-const MSP_CONTACT_URL = 'https://sovcloud.crowetic.com';
-const FEATURE_DOCS_URL = 'https://sovcloud.crowetic.com/#features';
-const QORT_PAYMENT_QORTAL_LINK_BASE = 'qortal://WEBSITE/sovcloud/qort-payments';
+const PAYMENT_URL = 'https://nuqloud.com/get-started';
+const MSP_CONTACT_URL = 'https://nuqloud.com';
+const FEATURE_DOCS_URL = 'https://nuqloud.com/features';
+const QORT_PAYMENT_QORTAL_LINK_BASE = 'qortal://WEBSITE/nuqloud/qort-payments';
 
 const sectionNav = [
   { id: 'overview', label: 'Overview' },
-  { id: 'replaces', label: 'Replaces' },
-  { id: 'capabilities', label: 'Unify' },
-  { id: 'details', label: 'Answers' },
-  { id: 'starting-points', label: 'Packages' },
-  { id: 'next', label: 'CTA' },
+  { id: 'replaces', label: 'Why Switch' },
+  { id: 'capabilities', label: 'Included' },
+  { id: 'details', label: 'Details' },
+  { id: 'starting-points', label: 'Plans' },
+  { id: 'next', label: 'Start' },
 ];
+
+const MOBILE_COMPACT_BREAKPOINT = 720;
 
 const replacementPairs = [
   {
     from: 'Google Workspace / Microsoft 365',
-    to: 'Unified sovereign workspace',
+    to: 'NuQloud all-in-one workspace',
     tease: 'Mail, files, office, calendars, contacts, tasks, identity',
     icon: googleWorkspaceIcon,
   },
   {
     from: 'Slack / Teams / Zoom / Discord',
-    to: 'Integrated communication stack',
+    to: 'NuQloud communication stack',
     tease: 'Chat, calls, screen sharing, meeting links, sovereign relay',
     icon: slackTeamsZoomIcon,
   },
   {
     from: 'Dropbox / OneDrive / Box / iCloud Drive',
-    to: 'Sovereign data + controlled publishing',
+    to: 'NuQloud data + controlled publishing',
     tease: 'Encrypted chunked off-network archives',
     icon: dropboxStorageIcon,
   },
@@ -67,37 +71,37 @@ const replacementPairs = [
   },
   {
     from: 'Notion / Confluence / Airtable',
-    to: 'One cloud life layer',
+    to: 'One NuQloud work layer',
     tease: 'Deck, notes, announcements, activity, tables in one experience',
     icon: docsProjectIcon,
   },
   {
     from: 'Google Calendar / Outlook / Calendly',
-    to: 'Unified groupware and scheduling',
+    to: 'NuQloud scheduling and groupware',
     tease: 'Calendars, contacts, tasks, invites, team schedules',
     icon: googleWorkspaceIcon,
   },
   {
     from: 'Google Docs / Office Online silos',
-    to: 'Real-time office collaboration',
+    to: 'NuQloud office collaboration',
     tease: 'Docs, sheets, presentations, browser previews',
     icon: googleWorkspaceIcon,
   },
   {
     from: 'Okta / Auth0 / Duo + identity lock-in',
-    to: 'Providerless identity + integration',
+    to: 'NuQloud identity + integration',
     tease: 'MFA, audit logging, SSO options, LDAP/SAML/OIDC expansion',
     icon: authIdentityIcon,
   },
   {
     from: 'Datadog / Splunk / backup tooling patchwork',
-    to: 'Managed platform operations',
+    to: 'NuQloud managed operations',
     tease: 'Monitoring, updates, backup operations, incident response',
     icon: billingPaymentsIcon,
   },
   {
     from: 'Disconnected billing + provisioning funnels',
-    to: 'Package-aware upgrade lifecycle',
+    to: 'NuQloud package-aware upgrade lifecycle',
     tease: 'Per-user onboarding to fully branded managed-cloud upgrades',
     icon: billingPaymentsIcon,
   },
@@ -106,8 +110,8 @@ const replacementPairs = [
 const unifyHighlights = [
   {
     id: 'all-included',
-    title: 'Everything Included By Default',
-    body: 'Collaboration, groupware, communications, office, admin controls, and platform operations are included across package paths.',
+    title: 'Everything Important Is Included',
+    body: 'Collaboration, groupware, communication, office, admin controls, and platform operations are included across package paths.',
   },
   {
     id: 'distributed-apps',
@@ -126,13 +130,13 @@ const unifyHighlights = [
   },
   {
     id: 'private-comms',
-    title: 'Sovereign Communications Options',
-    body: 'Encrypted private communication pathways expand from managed relay defaults into deeper sovereign modes.',
+    title: 'Private Communications Options',
+    body: 'Encrypted private communication pathways can grow from managed relay defaults into deeper sovereign modes.',
   },
   {
     id: 'publishing',
     title: 'Distributed Publishing Status + Verification',
-    body: 'File publishing includes status visibility and long-lived verification checks for operational confidence.',
+    body: 'File publishing includes status visibility and verification checks for operational confidence.',
   },
   {
     id: 'upgrade-paths',
@@ -144,7 +148,7 @@ const unifyHighlights = [
 const replacementDetails = [
   {
     id: 'workspace-core',
-    app: 'Sovereign Workspace Core',
+    app: 'NuQloud Workspace Core',
     replaces: 'Google Workspace / Microsoft 365',
     details: [
       'Private branded cloud accounts for organizations plus per-user entry options on existing cloud.',
@@ -162,7 +166,7 @@ const replacementDetails = [
   },
   {
     id: 'groupware-layer',
-    app: 'Sovereign Groupware Layer',
+    app: 'NuQloud Groupware Layer',
     replaces: 'Google Calendar / Outlook / Calendly + contact silos',
     details: [
       'Shared calendars, tasks, contacts, and scheduling run in one managed workspace.',
@@ -180,7 +184,7 @@ const replacementDetails = [
   },
   {
     id: 'comms-layer',
-    app: 'Sovereign Communications Layer',
+    app: 'NuQloud Communications Layer',
     replaces: 'Slack / Teams / Zoom style stack',
     details: [
       'Conversation relay architecture bridges cloud communication with sovereign message channels.',
@@ -188,7 +192,7 @@ const replacementDetails = [
       'Encrypted off-network private communication options are roadmap-aligned and protocol-native.',
     ],
     deepDive: [
-      'Sovereign relay mode supports growth from cloud-first collaboration into deeper decentralization.',
+      'NuQloud relay mode supports growth from cloud-first collaboration into deeper decentralization.',
       'Users keep familiar communication UX while gaining durable sovereign channel options.',
       'Cross-context delivery supports both gateway users and authenticated QDN users.',
       'Mapped conversations keep operational clarity between managed cloud workflows and sovereign channels.',
@@ -198,7 +202,7 @@ const replacementDetails = [
   },
   {
     id: 'office-layer',
-    app: 'Sovereign Office Collaboration',
+    app: 'NuQloud Office Collaboration',
     replaces: 'Google Docs / Office 365 doc silos',
     details: [
       'Real-time document collaboration runs in-browser through a private managed stack.',
@@ -216,7 +220,7 @@ const replacementDetails = [
   },
   {
     id: 'workflow-layer',
-    app: 'Sovereign Workflow + Knowledge Layer',
+    app: 'NuQloud Workflow + Knowledge Layer',
     replaces: 'Trello / Asana / Jira / Notion / Confluence / Airtable',
     details: [
       'Deck boards, notes, announcements, activity, and tables align into one operational model.',
@@ -234,7 +238,7 @@ const replacementDetails = [
   },
   {
     id: 'security-ops-layer',
-    app: 'Sovereign Security + Operations Layer',
+    app: 'NuQloud Security + Operations Layer',
     replaces: 'Identity and ops tool patchworks (Okta/Auth0/Duo/Datadog/Splunk + backup silos)',
     details: [
       'RBAC, MFA, TLS, audit logging, and encrypted storage are managed in one platform.',
@@ -252,7 +256,7 @@ const replacementDetails = [
   },
   {
     id: 'publish-layer',
-    app: 'Sovereign Publish + Backup Layer',
+    app: 'NuQloud Publish + Backup Layer',
     replaces: 'Dropbox add-ons + ad hoc public links',
     details: [
       'Encrypted and chunked off-network backups for long-term resilient access.',
@@ -270,7 +274,7 @@ const replacementDetails = [
   },
   {
     id: 'upgrade-model',
-    app: 'Sovereign Upgrade + Packaging Model',
+    app: 'NuQloud Upgrade + Packaging Model',
     replaces: 'Vendor lock-in growth funnels',
     details: [
       'Two starting points: per-user existing-cloud access or full branded private cloud launch.',
@@ -389,7 +393,7 @@ const capabilityDiveContent: Record<string, { title: string; points: string[] }>
     ],
   },
   redundancy: {
-    title: 'Deep Dive: Redundancy + Sovereign Backups',
+    title: 'Deep Dive: Redundancy + NuQloud Backups',
     points: [
       'Encrypted chunked off-network backups provide durable recovery routes.',
       'Redundancy guarantees can be purchased through CHD package tiers.',
@@ -430,7 +434,7 @@ const startingPoints = [
     title: 'Starting Point B: Fully Private, Branded Cloud',
     subtitle:
       'Best for organizations ready for a dedicated managed private cloud with branded identity and sovereignty-first controls.',
-    poweredModes: ['Sovereign Relay Mode', 'Encrypted Off-Network Publishing', 'Redundancy Guarantees (CHD)'],
+    poweredModes: ['NuQloud Relay Mode', 'Encrypted Off-Network Publishing', 'Redundancy Guarantees (CHD)'],
     packages: [
       {
         slug: 'org-foundation',
@@ -456,9 +460,16 @@ function App() {
   const [scrollY, setScrollY] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeSection, setActiveSection] = useState(sectionNav[0].id);
+  const [isCompactMobile, setIsCompactMobile] = useState(() => window.innerWidth <= MOBILE_COMPACT_BREAKPOINT);
+  const [showReplacements, setShowReplacements] = useState(() => window.innerWidth > MOBILE_COMPACT_BREAKPOINT);
+  const [showCapabilities, setShowCapabilities] = useState(() => window.innerWidth > MOBILE_COMPACT_BREAKPOINT);
+  const [showDetailsSection, setShowDetailsSection] = useState(() => window.innerWidth > MOBILE_COMPACT_BREAKPOINT);
   const [activeCapabilityDive, setActiveCapabilityDive] = useState<string | null>(null);
   const [activeDetailDive, setActiveDetailDive] = useState<string | null>(null);
   const [showFullDetails, setShowFullDetails] = useState(false);
+  const [showIncludedMatrix, setShowIncludedMatrix] = useState(false);
+  const [showExpansionModules, setShowExpansionModules] = useState(false);
+  const [showRoadmapModules, setShowRoadmapModules] = useState(false);
   const [paymentFeedback, setPaymentFeedback] = useState('');
   const { accessContext, contextActionFeedback, openOrCopyInternetLink } = useAccessContext();
   const isDark = theme === EnumTheme.DARK;
@@ -501,7 +512,15 @@ function App() {
 
     items.forEach((item) => observer.observe(item));
     return () => observer.disconnect();
-  }, []);
+  }, [
+    showReplacements,
+    showCapabilities,
+    showDetailsSection,
+    showFullDetails,
+    showIncludedMatrix,
+    showExpansionModules,
+    showRoadmapModules,
+  ]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -542,6 +561,26 @@ function App() {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleScroll);
     };
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const nextCompact = window.innerWidth <= MOBILE_COMPACT_BREAKPOINT;
+      setIsCompactMobile(nextCompact);
+
+      if (!nextCompact) {
+        setShowReplacements(true);
+        setShowCapabilities(true);
+        setShowDetailsSection(true);
+        setShowIncludedMatrix(true);
+        setShowExpansionModules(true);
+        setShowRoadmapModules(true);
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   useEffect(() => {
@@ -621,9 +660,9 @@ function App() {
         <Box className="sc-shell-inner">
           <Box className="sc-topbar sc-reveal">
             <Stack direction="row" spacing={1.2} alignItems="center">
-              <img src="/logo-test.png" alt="Sovereign Cloud" className="sc-top-logo" />
+              <img src="/logo-test.png" alt="NuQloud" className="sc-top-logo" />
               <Typography variant="subtitle1" className="sc-top-title">
-                Sovereign Cloud MSP
+                NuQloud MSP
               </Typography>
             </Stack>
 
@@ -641,7 +680,7 @@ function App() {
                 ))}
               </Stack>
               <Button component={Link} to="/self-hosting" size="small" className="sc-nav-link">
-                Self-Hosting Plugin
+                NuQloud for Nextcloud
               </Button>
               <IconButton
                 className="sc-theme-toggle"
@@ -663,14 +702,14 @@ function App() {
           <section className="sc-hero sc-reveal" id="overview">
             <Box className="sc-hero-copy">
               <Typography variant="overline" className="sc-kicker">
-                Managed • Private • Sovereign-Ready
+                NuQloud MSP • Private • Managed
               </Typography>
               <Typography variant="h1" className="sc-headline">
-                Replace big-tech SaaS stacks with a private, managed, branded cloud.
+                One private cloud for your team, without the app-sprawl.
               </Typography>
               <Typography variant="body1" className="sc-subline">
-                Start with a per-user account on an existing cloud for testing, or launch directly into a
-                fully private branded cloud for your organization.
+                Start with a simple user account for testing, or launch your own branded private cloud for your
+                organization. Same platform, same workflows, cleaner path to scale.
               </Typography>
               <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1.2} className="sc-hero-actions">
                 <Button className="sc-btn-primary" onClick={() => scrollToId('starting-points')}>
@@ -681,9 +720,9 @@ function App() {
                 </Button>
               </Stack>
               <Box className="sc-runtime-panel">
-                <Typography className="sc-runtime-title">External links behavior</Typography>
+                <Typography className="sc-runtime-title">How links behave in this context</Typography>
                 <Typography variant="caption" className="sc-runtime-note">
-                  QDN mode shows QORT checkout actions only. Gateway/internet mode shows USD checkout actions only.
+                  QDN mode shows QORT checkout only. Gateway/internet mode shows USD checkout only.
                 </Typography>
                 {contextActionFeedback ? (
                   <Typography variant="caption" className="sc-runtime-action-note">
@@ -700,7 +739,7 @@ function App() {
             <Box className="sc-hero-art">
               <img
                 src={isDark ? '/advertising-dark.webp' : '/advertising-white.webp'}
-                alt="Sovereign Cloud platform preview"
+                alt="NuQloud platform preview"
                 className="sc-hero-image"
               />
             </Box>
@@ -708,149 +747,184 @@ function App() {
 
           <section className="sc-section" id="replaces">
             <Typography variant="h2" className="sc-section-title sc-reveal">
-              Replaces The Following
+              What You Can Replace
             </Typography>
             <Typography variant="body1" className="sc-section-subtitle sc-reveal">
-              One managed sovereign stack replacing fragmented big-tech dependencies.
+              Move from disconnected apps to one managed NuQloud platform.
             </Typography>
-            <Box className="sc-replacement-grid">
-              {replacementPairs.map((pair, index) => (
-                <Card
-                  className="sc-card sc-replacement-card sc-reveal"
-                  key={pair.from}
-                  style={{ ['--sc-delay' as string]: `${Math.min(index * 120, 720)}ms` }}
-                >
-                  <CardContent>
-                    <Box className="sc-provider-line">
-                      <img src={pair.icon} alt={`${pair.from} icon`} className="sc-provider-icon" loading="lazy" />
-                      <Typography className="sc-card-label">Current Stack</Typography>
-                    </Box>
-                    <Typography className="sc-path-title">{pair.from}</Typography>
-                    <Typography className="sc-replace-arrow">→</Typography>
-                    <Typography className="sc-card-label">Sovereign Cloud</Typography>
-                    <Typography className="sc-feature-copy">{pair.to}</Typography>
-                    <Typography className="sc-mini-tease">{pair.tease}</Typography>
-                  </CardContent>
-                </Card>
-              ))}
-            </Box>
+            {isCompactMobile ? (
+              <Box className="sc-toggle-wrap">
+                <Button className="sc-btn-ghost sc-btn-toggle" onClick={() => setShowReplacements((prev) => !prev)}>
+                  {showReplacements ? 'Hide List' : 'Show List'}
+                  {showReplacements ? <ExpandLessRoundedIcon fontSize="small" /> : <ExpandMoreRoundedIcon fontSize="small" />}
+                </Button>
+              </Box>
+            ) : null}
+            {showReplacements ? (
+              <Box className="sc-replacement-grid">
+                {replacementPairs.map((pair, index) => (
+                  <Card
+                    className="sc-card sc-replacement-card sc-reveal"
+                    key={pair.from}
+                    style={{ ['--sc-delay' as string]: `${Math.min(index * 120, 720)}ms` }}
+                  >
+                    <CardContent>
+                      <Box className="sc-provider-line">
+                        <img src={pair.icon} alt={`${pair.from} icon`} className="sc-provider-icon" loading="lazy" />
+                        <Typography className="sc-card-label">Current Stack</Typography>
+                      </Box>
+                      <Typography className="sc-path-title">{pair.from}</Typography>
+                      <Typography className="sc-replace-arrow">→</Typography>
+                      <Typography className="sc-card-label">NuQloud</Typography>
+                      <Typography className="sc-feature-copy">{pair.to}</Typography>
+                      <Typography className="sc-mini-tease">{pair.tease}</Typography>
+                    </CardContent>
+                  </Card>
+                ))}
+              </Box>
+            ) : null}
           </section>
 
           <section className="sc-section sc-reveal" id="capabilities">
             <Typography variant="h2" className="sc-section-title">
-              Unify Your Cloud Life
+              What Is Included
             </Typography>
             <Typography variant="body1" className="sc-section-subtitle">
-              Everything below is presented as one cohesive service layer, not disconnected products.
+              Everything below is included as one service layer, not disconnected products.
             </Typography>
-            <Box component="ol" className="sc-unify-list">
-              {unifyHighlights.map((item, index) => (
-                <Card
-                  component="li"
-                  className="sc-card sc-unify-item sc-reveal"
-                  key={item.id}
-                  style={{ ['--sc-delay' as string]: `${Math.min(index * 130, 780)}ms` }}
-                >
-                  <CardContent>
-                    <Box className="sc-unify-item-head">
-                      <Typography className="sc-unify-step">{String(index + 1).padStart(2, '0')}</Typography>
-                      <Typography className="sc-detail-title">{item.title}</Typography>
-                    </Box>
-                    <Typography className="sc-feature-copy">{item.body}</Typography>
-                  </CardContent>
-                </Card>
-              ))}
-            </Box>
-            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1} className="sc-inline-actions">
-              <Button className="sc-btn-ghost" onClick={() => toggleCapabilityDive('distributed_apps')}>
-                {activeCapabilityDive === 'distributed_apps'
-                  ? 'Hide Deep Dive: Distributed Apps'
-                  : 'Deep Dive: Distributed Apps'}
-              </Button>
-              <Button className="sc-btn-ghost" onClick={() => toggleCapabilityDive('redundancy')}>
-                {activeCapabilityDive === 'redundancy'
-                  ? 'Hide Deep Dive: Backups + Redundancy'
-                  : 'Deep Dive: Backups + Redundancy'}
-              </Button>
-            </Stack>
-            {activeCapabilityDive ? (
-              <Card className="sc-card sc-dive-panel sc-inline-dive">
-                <CardContent>
-                  <Typography className="sc-path-title">
-                    {capabilityDiveContent[activeCapabilityDive].title}
-                  </Typography>
-                  <Typography className="sc-mini-tease">
-                    Extended context for decision-making and implementation planning.
-                  </Typography>
-                  <Box component="ul" className="sc-detail-list">
-                    {capabilityDiveContent[activeCapabilityDive].points.map((point) => (
-                      <Box component="li" className="sc-detail-item" key={point}>
-                        {point}
-                      </Box>
-                    ))}
-                  </Box>
-                  <Button className="sc-btn-ghost" onClick={() => openOrCopyInternetLink(FEATURE_DOCS_URL)}>
-                    In-Depth Feature Notes <OpenInNewRoundedIcon fontSize="small" />
+            {isCompactMobile ? (
+              <Box className="sc-toggle-wrap">
+                <Button className="sc-btn-ghost sc-btn-toggle" onClick={() => setShowCapabilities((prev) => !prev)}>
+                  {showCapabilities ? 'Hide Included List' : 'Show Included List'}
+                  {showCapabilities ? <ExpandLessRoundedIcon fontSize="small" /> : <ExpandMoreRoundedIcon fontSize="small" />}
+                </Button>
+              </Box>
+            ) : null}
+            {showCapabilities ? (
+              <>
+                <Box component="ol" className="sc-unify-list">
+                  {unifyHighlights.map((item, index) => (
+                    <Card
+                      component="li"
+                      className="sc-card sc-unify-item sc-reveal"
+                      key={item.id}
+                      style={{ ['--sc-delay' as string]: `${Math.min(index * 130, 780)}ms` }}
+                    >
+                      <CardContent>
+                        <Box className="sc-unify-item-head">
+                          <Typography className="sc-unify-step">{String(index + 1).padStart(2, '0')}</Typography>
+                          <Typography className="sc-detail-title">{item.title}</Typography>
+                        </Box>
+                        <Typography className="sc-feature-copy">{item.body}</Typography>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </Box>
+                <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1} className="sc-inline-actions">
+                  <Button className="sc-btn-ghost" onClick={() => toggleCapabilityDive('distributed_apps')}>
+                    {activeCapabilityDive === 'distributed_apps'
+                      ? 'Hide More Details: Distributed Apps'
+                      : 'More Details: Distributed Apps'}
                   </Button>
-                </CardContent>
-              </Card>
+                  <Button className="sc-btn-ghost" onClick={() => toggleCapabilityDive('redundancy')}>
+                    {activeCapabilityDive === 'redundancy'
+                      ? 'Hide More Details: Backups + Redundancy'
+                      : 'More Details: Backups + Redundancy'}
+                  </Button>
+                </Stack>
+                {activeCapabilityDive ? (
+                  <Card className="sc-card sc-dive-panel sc-inline-dive">
+                    <CardContent>
+                      <Typography className="sc-path-title">
+                        {capabilityDiveContent[activeCapabilityDive].title}
+                      </Typography>
+                      <Typography className="sc-mini-tease">
+                        Extra context if you want a deeper breakdown before choosing a plan.
+                      </Typography>
+                      <Box component="ul" className="sc-detail-list">
+                        {capabilityDiveContent[activeCapabilityDive].points.map((point) => (
+                          <Box component="li" className="sc-detail-item" key={point}>
+                            {point}
+                          </Box>
+                        ))}
+                      </Box>
+                      <Button className="sc-btn-ghost" onClick={() => openOrCopyInternetLink(FEATURE_DOCS_URL)}>
+                        In-Depth Feature Notes <OpenInNewRoundedIcon fontSize="small" />
+                      </Button>
+                    </CardContent>
+                  </Card>
+                ) : null}
+              </>
             ) : null}
           </section>
 
           <section className="sc-section" id="details">
             <Typography variant="h2" className="sc-section-title sc-reveal">
-              Full Replacement Detail
+              Compare By Need
             </Typography>
             <Typography variant="body1" className="sc-section-subtitle sc-reveal">
-              Scroll through replacement modules to see how each big-tech answer maps into the sovereign stack.
+              Open this section for the full mapping of each familiar toolset to the NuQloud platform.
             </Typography>
-            <Box className="sc-detail-grid">
-              {replacementDetails.map((item, index) => (
-                <Card
-                  className={`sc-card sc-detail-card sc-reveal ${index % 2 === 0 ? 'sc-reveal-side-l' : 'sc-reveal-side-r'}`}
-                  key={item.id}
-                >
-                  <CardContent>
-                    <Typography className="sc-card-label">Replaces</Typography>
-                    <Typography className="sc-path-title">{item.replaces}</Typography>
-                    <Typography className="sc-detail-title">{item.app}</Typography>
-                    <Box component="ul" className="sc-detail-list">
-                      {item.details.map((detail) => (
-                        <Box component="li" key={detail} className="sc-detail-item">
-                          {detail}
-                        </Box>
-                      ))}
-                    </Box>
-                    <Button className="sc-btn-ghost" onClick={() => toggleDetailDive(item.id)}>
-                      {activeDetailDive === item.id ? 'Hide Deep Dive' : 'Deep Dive'}
-                    </Button>
-                    {activeDetailDive === item.id ? (
-                      <Box className="sc-inline-dive sc-inline-dive--detail">
-                        <Typography className="sc-detail-title">{item.app} - Deep Dive</Typography>
-                        <Typography className="sc-mini-tease">
-                          Detailed implementation and value breakdown for this replacement path.
-                        </Typography>
-                        <Box component="ul" className="sc-detail-list">
-                          {item.deepDive.map((point) => (
-                            <Box component="li" className="sc-detail-item" key={point}>
-                              {point}
-                            </Box>
-                          ))}
-                        </Box>
-                        <Button className="sc-btn-ghost" onClick={() => openOrCopyInternetLink(item.url)}>
-                          In-Depth Reference <OpenInNewRoundedIcon fontSize="small" />
-                        </Button>
+            {isCompactMobile ? (
+              <Box className="sc-toggle-wrap">
+                <Button className="sc-btn-ghost sc-btn-toggle" onClick={() => setShowDetailsSection((prev) => !prev)}>
+                  {showDetailsSection ? 'Hide Full Mapping' : 'Show Full Mapping'}
+                  {showDetailsSection ? <ExpandLessRoundedIcon fontSize="small" /> : <ExpandMoreRoundedIcon fontSize="small" />}
+                </Button>
+              </Box>
+            ) : null}
+            {showDetailsSection ? (
+              <Box className="sc-detail-grid">
+                {replacementDetails.map((item, index) => (
+                  <Card
+                    className={`sc-card sc-detail-card sc-reveal ${index % 2 === 0 ? 'sc-reveal-side-l' : 'sc-reveal-side-r'}`}
+                    key={item.id}
+                  >
+                    <CardContent>
+                      <Typography className="sc-card-label">Replaces</Typography>
+                      <Typography className="sc-path-title">{item.replaces}</Typography>
+                      <Typography className="sc-detail-title">{item.app}</Typography>
+                      <Box component="ul" className="sc-detail-list">
+                        {item.details.map((detail) => (
+                          <Box component="li" key={detail} className="sc-detail-item">
+                            {detail}
+                          </Box>
+                        ))}
                       </Box>
-                    ) : null}
-                  </CardContent>
-                </Card>
-              ))}
-            </Box>
+                      <Button className="sc-btn-ghost" onClick={() => toggleDetailDive(item.id)}>
+                        {activeDetailDive === item.id ? 'Hide Deep Dive' : 'Deep Dive'}
+                      </Button>
+                      {activeDetailDive === item.id ? (
+                        <Box className="sc-inline-dive sc-inline-dive--detail">
+                          <Typography className="sc-detail-title">{item.app} - Deep Dive</Typography>
+                          <Typography className="sc-mini-tease">
+                            Detailed implementation and value breakdown for this replacement path.
+                          </Typography>
+                          <Box component="ul" className="sc-detail-list">
+                            {item.deepDive.map((point) => (
+                              <Box component="li" className="sc-detail-item" key={point}>
+                                {point}
+                              </Box>
+                            ))}
+                          </Box>
+                          <Button className="sc-btn-ghost" onClick={() => openOrCopyInternetLink(item.url)}>
+                            In-Depth Reference <OpenInNewRoundedIcon fontSize="small" />
+                          </Button>
+                        </Box>
+                      ) : null}
+                    </CardContent>
+                  </Card>
+                ))}
+              </Box>
+            ) : null}
           </section>
 
           <section className="sc-section sc-reveal" id="starting-points">
             <Typography variant="h2" className="sc-section-title">
-              Two Starting Points
+              Choose Your Starting Plan
+            </Typography>
+            <Typography variant="body1" className="sc-section-subtitle">
+              Start small or launch fully branded from day one. You can move between paths without resetting your workflow.
             </Typography>
             <Box className="sc-starting-stack">
               {startingPoints.map((point) => (
@@ -896,24 +970,87 @@ function App() {
             </Box>
             <Box className="sc-full-details-wrap">
               <Button className="sc-btn-primary" onClick={() => setShowFullDetails((prev) => !prev)}>
-                {showFullDetails ? 'Hide Full Details' : 'Full Details'}
+                {showFullDetails ? 'Hide More Details' : 'More Details'}
               </Button>
             </Box>
             {showFullDetails ? (
               <Box className="sc-starting-details-panel sc-reveal is-visible">
-                <Typography variant="h3" className="sc-section-title" sx={{ mt: 2 }}>
-                  Included
-                </Typography>
-                <Typography variant="body1" className="sc-section-subtitle">
-                  Core capabilities are included across all package paths.
-                </Typography>
-                <Box className="sc-card-grid">
-                  {fullFeatureMatrix.map((category) => (
-                    <Card className="sc-card" key={category.id}>
+                <Box className="sc-toggle-wrap">
+                  <Button className="sc-btn-ghost sc-btn-toggle" onClick={() => setShowIncludedMatrix((prev) => !prev)}>
+                    {showIncludedMatrix ? 'Hide Included Features' : 'Show Included Features'}
+                    {showIncludedMatrix ? <ExpandLessRoundedIcon fontSize="small" /> : <ExpandMoreRoundedIcon fontSize="small" />}
+                  </Button>
+                </Box>
+                {showIncludedMatrix ? (
+                  <>
+                    <Typography variant="h3" className="sc-section-title" sx={{ mt: 2 }}>
+                      Included
+                    </Typography>
+                    <Typography variant="body1" className="sc-section-subtitle">
+                      Core capabilities are included across all package paths.
+                    </Typography>
+                    <Box className="sc-card-grid">
+                      {fullFeatureMatrix.map((category) => (
+                        <Card className="sc-card" key={category.id}>
+                          <CardContent>
+                            <Typography className="sc-detail-title">{category.title}</Typography>
+                            <Box component="ul" className="sc-detail-list">
+                              {category.items.map((item) => (
+                                <Box component="li" key={item} className="sc-detail-item">
+                                  {item}
+                                </Box>
+                              ))}
+                            </Box>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </Box>
+                  </>
+                ) : null}
+
+                <Box className="sc-toggle-wrap">
+                  <Button
+                    className="sc-btn-ghost sc-btn-toggle"
+                    onClick={() => setShowExpansionModules((prev) => !prev)}
+                  >
+                    {showExpansionModules ? 'Hide Expansion Modules' : 'Show Expansion Modules'}
+                    {showExpansionModules ? <ExpandLessRoundedIcon fontSize="small" /> : <ExpandMoreRoundedIcon fontSize="small" />}
+                  </Button>
+                </Box>
+                {showExpansionModules ? (
+                  <>
+                    <Typography variant="h3" className="sc-section-title" sx={{ mt: 3 }}>
+                      Expansion Modules
+                    </Typography>
+                    <Card className="sc-card">
                       <CardContent>
-                        <Typography className="sc-detail-title">{category.title}</Typography>
                         <Box component="ul" className="sc-detail-list">
-                          {category.items.map((item) => (
+                          {expansionModules.map((module) => (
+                            <Box component="li" key={module} className="sc-detail-item">
+                              {module}
+                            </Box>
+                          ))}
+                        </Box>
+                      </CardContent>
+                    </Card>
+                  </>
+                ) : null}
+
+                <Box className="sc-toggle-wrap">
+                  <Button className="sc-btn-ghost sc-btn-toggle" onClick={() => setShowRoadmapModules((prev) => !prev)}>
+                    {showRoadmapModules ? 'Hide Roadmap' : 'Show Roadmap'}
+                    {showRoadmapModules ? <ExpandLessRoundedIcon fontSize="small" /> : <ExpandMoreRoundedIcon fontSize="small" />}
+                  </Button>
+                </Box>
+                {showRoadmapModules ? (
+                  <>
+                    <Typography variant="h3" className="sc-section-title" sx={{ mt: 3 }}>
+                      Roadmap
+                    </Typography>
+                    <Card className="sc-card">
+                      <CardContent>
+                        <Box component="ul" className="sc-detail-list">
+                          {roadmapModules.map((item) => (
                             <Box component="li" key={item} className="sc-detail-item">
                               {item}
                             </Box>
@@ -921,43 +1058,15 @@ function App() {
                         </Box>
                       </CardContent>
                     </Card>
-                  ))}
-                </Box>
-                <Typography variant="h3" className="sc-section-title" sx={{ mt: 3 }}>
-                  Expansion Modules
-                </Typography>
-                <Card className="sc-card">
-                  <CardContent>
-                    <Box component="ul" className="sc-detail-list">
-                      {expansionModules.map((module) => (
-                        <Box component="li" key={module} className="sc-detail-item">
-                          {module}
-                        </Box>
-                      ))}
-                    </Box>
-                  </CardContent>
-                </Card>
-                <Typography variant="h3" className="sc-section-title" sx={{ mt: 3 }}>
-                  Roadmap
-                </Typography>
-                <Card className="sc-card">
-                  <CardContent>
-                    <Box component="ul" className="sc-detail-list">
-                      {roadmapModules.map((item) => (
-                        <Box component="li" key={item} className="sc-detail-item">
-                          {item}
-                        </Box>
-                      ))}
-                    </Box>
-                  </CardContent>
-                </Card>
+                  </>
+                ) : null}
               </Box>
             ) : null}
           </section>
 
           <section className="sc-cta sc-reveal" id="next">
             <Typography variant="h3" className="sc-cta-title">
-              Start small, scale sovereign, upgrade any time.
+              Start small, scale when you are ready.
             </Typography>
             <Typography className="sc-cta-copy">
               Begin with per-user options or launch full branded private cloud from day one.

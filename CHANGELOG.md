@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- **Changed:** Rebranded primary landing experience from Sovereign Cloud naming to NuQloud MSP and NuQloud for Nextcloud wording (migration/notes: metadata, top-bar labels, and route copy updated).
+- **Changed:** MSP and plugin routes now use mobile-first tap-to-expand sections for dense content blocks to reduce excessive scrolling on phones (migration/notes: no data model changes; presentation-only behavior).
+- **Changed:** Plugin route messaging was rewritten in more plain-language wording while preserving feature scope and reference links (migration/notes: no endpoint/runtime logic changes).
+- **Changed:** Public metadata/title now presents NuQloud branding in social/link previews (migration/notes: `index.html` descriptions/titles updated).
 - **Added:** Scroll-driven Sovereign Cloud landing page with hero, tiering, performance, architecture, add-ons, and roadmap sections (how to use: run `npm run dev` and open the root route).
 - **Changed:** Theme system refined to branded dark/light blue palettes with runtime theme toggle and iframe compatibility (migration/notes: none).
 - **Changed:** Runtime mode indicator for gateway-aware vs native context rendering (migration/notes: none).

@@ -6,7 +6,7 @@ export const AppWrapper = () => {
   return (
     <GlobalProvider
       config={{
-        appName: 'Sovereign Cloud',
+        appName: 'NuQloud',
         auth: {
           balanceSetting: {
             interval: 180000,

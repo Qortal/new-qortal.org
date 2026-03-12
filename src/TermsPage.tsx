@@ -116,17 +116,17 @@ function TermsPage() {
         <Box className="sc-shell-inner">
           <Box className="sc-topbar sc-reveal is-visible">
             <Stack direction="row" spacing={1.2} alignItems="center">
-              <img src="/logo-test.png" alt="Sovereign Cloud" className="sc-top-logo" />
+              <img src="/logo-test.png" alt="NuQloud" className="sc-top-logo" />
               <Typography variant="subtitle1" className="sc-top-title">
-                CHD Terms of Service
+                NuQloud Terms of Service
               </Typography>
             </Stack>
             <Stack direction="row" spacing={0.8} alignItems="center" className="sc-nav-actions">
               <Button component={Link} to="/" size="small" className="sc-nav-link">
-                MSP
+                NuQloud MSP
               </Button>
               <Button component={Link} to="/self-hosting" size="small" className="sc-nav-link">
-                Self-Hosting
+                NuQloud for Nextcloud
               </Button>
               <IconButton
                 className="sc-theme-toggle"
@@ -144,7 +144,7 @@ function TermsPage() {
                 Terms of Service
               </Typography>
               <Typography variant="h1" className="sc-headline">
-                Terms of Service for all CHD services
+                Terms of Service for NuQloud and CHD services
               </Typography>
               <Typography variant="body1" className="sc-subline">
                 Effective Date: October 2025. Provider: Crowetic Hardware Development, LLC (CHD), Reno, Nevada, USA.

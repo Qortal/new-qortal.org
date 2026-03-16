@@ -46,8 +46,27 @@ import { useAccessContext } from "./hooks/useAccessContext";
 import { EnumTheme, themeAtom } from "./state/global/system";
 import "./App.css";
 
-const PAYMENT_URL = "https://nuqloud.com/get-started";
-const MSP_CONTACT_URL = "https://nuqloud.com";
+const PLAN_CHECKOUT_URLS: Record<string, string> = {
+  "nuqloud-starter":
+    "https://payment.crowetic.com/products/nuqloud/nuqloud-starter/checkout",
+  "nuqloud-advanced":
+    "https://payment.crowetic.com/products/nuqloud/nuqloud-advanced/checkout",
+  "nuqloud-pro":
+    "https://payment.crowetic.com/products/nuqloud/nuqloud-pro/checkout",
+  "nuqloud-team-starter":
+    "https://payment.crowetic.com/products/nuqloud/nuqloud-starter-team/checkout",
+  "nuqloud-team-advanced":
+    "https://payment.crowetic.com/products/nuqloud/nuqloud-advanced-team/checkout",
+  "nuqloud-team-pro":
+    "https://payment.crowetic.com/products/nuqloud/nuqloud-professional-team/checkout",
+  "nuqloud-branded-starter":
+    "https://payment.crowetic.com/products/nuqloud-branded/nuqloud-branded-starter/checkout",
+  "nuqloud-branded-advanced":
+    "https://payment.crowetic.com/products/nuqloud-branded/nuqloud-branded-pro/checkout",
+  "nuqloud-branded-enterprise":
+    "https://payment.crowetic.com/products/nuqloud-branded/nuqloud-branded-enterprise-default/checkout",
+};
+const CONTACT_TICKET_URL = "https://payment.crowetic.com/tickets/create";
 
 const pageSections = [
   { id: "overview", label: "Home", topNav: true },
@@ -229,7 +248,7 @@ const serviceModels = [
       "Files, collaboration, messaging, and backups in one managed service.",
       "A clear path into larger team or organization rollouts later.",
     ],
-    ctaLabel: "View Plans",
+    ctaLabel: "View Account Plans",
     ctaTarget: "plans",
   },
   {
@@ -244,8 +263,8 @@ const serviceModels = [
       "Built for teams that want a cloud that feels like their own platform.",
       "Managed operations, backups, and growth planning included in the service path.",
     ],
-    ctaLabel: "Talk to Sales",
-    ctaTarget: "contact",
+    ctaLabel: "View Branded Plans",
+    ctaTarget: "plans",
   },
 ];
 
@@ -260,7 +279,7 @@ const foundationHighlights = [
   },
   {
     title: "Optional resilience layer",
-    body: "Decentralized publishing and resilience features support the cloud instead of overwhelming the pitch.",
+    body: "Decentralized publishing and resilience features support the cloud with stronger independence and durability.",
   },
 ];
 
@@ -268,46 +287,99 @@ const planGroups = [
   {
     id: "managed",
     title: "NuQloud Accounts",
+    intro:
+      "All NuQloud account packages include the same core features. Plans control your on-server storage, decentralized encrypted publishing space, and the initial publishing credits included with the account.",
     plans: [
       {
-        slug: "individual-starter",
-        name: "Starter",
-        description: "For personal use and simpler private cloud needs.",
+        slug: "nuqloud-starter",
+        name: "NuQloud Starter",
+        description: "Starting at $12/month.",
+        price: "$12",
+        cadence: "/month",
+        summary: "10GB on-server + 10GB decentralized encrypted publish space.",
+        publishingCredits: "500 initial publishing credits included.",
+        note: "Team versions available",
+        teamSlug: "nuqloud-team-starter",
+        teamLabel: "Team version available",
       },
       {
-        slug: "individual-pro",
-        name: "Pro",
-        description: "For professionals and heavier day-to-day usage.",
+        slug: "nuqloud-advanced",
+        name: "NuQloud Advanced",
+        description: "$21/month with more storage and initial publishing credits.",
+        price: "$21",
+        cadence: "/month",
+        summary: "25GB on-server + 25GB decentralized encrypted publish space.",
+        publishingCredits: "2,000 initial publishing credits included.",
+        note: "Team versions available",
+        teamSlug: "nuqloud-team-advanced",
+        teamLabel: "Team version available",
       },
       {
-        slug: "team-demo",
-        name: "Team",
-        description:
-          "For collaboration, onboarding, and publishing-focused teams.",
+        slug: "nuqloud-pro",
+        name: "NuQloud Professional",
+        description: "$36/month with more storage and initial publishing credits.",
+        price: "$36",
+        cadence: "/month",
+        summary: "100GB on-server + 100GB decentralized encrypted publish space.",
+        publishingCredits: "5,000 initial publishing credits included.",
+        note: "Team versions available",
+        teamSlug: "nuqloud-team-pro",
+        teamLabel: "Team version available",
       },
     ],
   },
   {
     id: "dedicated",
     title: "Fully Branded Private Instances",
+    intro:
+      "NuQloud Branded gives you your own fully private instance, control over your own users, and your own branding.",
     plans: [
       {
-        slug: "org-foundation",
-        name: "NuQloud Branded",
+        slug: "nuqloud-branded-starter",
+        name: "NuQloud Branded Starter",
         description:
-          "Managed, branded instance for your organization or community.",
+          "$175/month with a $500 one-time initial setup fee.",
+        price: "$175",
+        cadence: "/month",
+        setupFee: "$500 one-time setup",
+        summary: "150GB storage + 150GB decentralized publishing space.",
+        publishingCredits: "10,000 initial publishing credits included.",
+        bullets: [
+          "Expansion options available",
+          "Guaranteed functionality for 10+ very active users, or many more less active",
+        ],
       },
       {
-        slug: "org-enhanced",
-        name: "Branded Pro",
+        slug: "nuqloud-branded-advanced",
+        name: "NuQloud Branded Advanced",
         description:
-          "Higher capacities for your growing organization or community.",
+          "$350/month with a $1,000 one-time initial setup fee.",
+        price: "$350",
+        cadence: "/month",
+        setupFee: "$1,000 one-time setup",
+        summary: "500GB on-instance storage + 500GB decentralized publishing space.",
+        publishingCredits: "25,000 initial publishing credits included.",
+        bullets: [
+          "Expansion options available",
+          "Guaranteed functionality for 25+ very active accounts, or more less-active",
+          "Access to early beta options",
+        ],
       },
       {
-        slug: "org-enterprise",
-        name: "Branded Enterprise",
+        slug: "nuqloud-branded-enterprise",
+        name: "NuQloud Branded Enterprise",
         description:
-          "Custom deployments for larger environments or complex needs (multi-instance available).",
+          "Multi-instance options starting at $1,500/month with a $3,500 one-time setup fee for an initial 3-instance configuration.",
+        price: "$1,500",
+        cadence: "/month",
+        setupFee: "$3,500 one-time setup",
+        summary: "1TB per instance + 1TB per instance decentralized publishing space.",
+        publishingCredits: "100,000 initial publishing credits per instance.",
+        bullets: [
+          "Multiple expansion options",
+          "Cross-communication, cross-instance sharing, conversations, and meetings between instances",
+          "Access to early beta options",
+        ],
       },
     ],
   },
@@ -360,8 +432,6 @@ function renderFeatureScene(
           className="sc-story-scene sc-story-scene--sync"
           style={sceneStyles}
         >
-          <Box className="sc-story-path sc-story-path--primary" />
-          <Box className="sc-story-path sc-story-path--secondary" />
           <Box className="sc-story-node sc-story-node--file">
             <InsertDriveFileRoundedIcon fontSize="medium" />
           </Box>
@@ -383,8 +453,6 @@ function renderFeatureScene(
           className="sc-story-scene sc-story-scene--share"
           style={sceneStyles}
         >
-          <Box className="sc-story-path sc-story-path--primary" />
-          <Box className="sc-story-path sc-story-path--secondary" />
           <Box className="sc-story-node sc-story-node--document">
             <DescriptionRoundedIcon fontSize="medium" />
           </Box>
@@ -408,8 +476,6 @@ function renderFeatureScene(
           className="sc-story-scene sc-story-scene--communicate"
           style={sceneStyles}
         >
-          <Box className="sc-story-path sc-story-path--primary" />
-          <Box className="sc-story-path sc-story-path--secondary" />
           <Box className="sc-story-node sc-story-node--message">
             <ForumRoundedIcon fontSize="medium" />
           </Box>
@@ -433,9 +499,6 @@ function renderFeatureScene(
           className="sc-story-scene sc-story-scene--publish"
           style={sceneStyles}
         >
-          <Box className="sc-story-network-line sc-story-network-line--left" />
-          <Box className="sc-story-network-line sc-story-network-line--right" />
-          <Box className="sc-story-network-line sc-story-network-line--center" />
           <Box className="sc-story-node sc-story-node--publish-file">
             <DescriptionRoundedIcon fontSize="medium" />
           </Box>
@@ -595,18 +658,35 @@ function App() {
     el.scrollIntoView({ behavior: "smooth", block: "start" });
   }, []);
 
-  const handleStartCloud = useCallback(
+  const handlePlanCheckout = useCallback(
     (planSlug?: string) => {
-      const url = planSlug
-        ? `${PAYMENT_URL}?plan=${encodeURIComponent(planSlug)}`
-        : PAYMENT_URL;
+      const normalizedSlug = String(planSlug || "").trim();
+      const url = normalizedSlug ? PLAN_CHECKOUT_URLS[normalizedSlug] || "" : "";
+      if (!url) {
+        return;
+      }
       void openOrCopyInternetLink(url);
     },
     [openOrCopyInternetLink],
   );
 
+  const handlePlanDetails = useCallback(
+    (planSlug?: string) => {
+      const normalizedSlug = String(planSlug || "").trim();
+      const checkoutUrl = normalizedSlug
+        ? PLAN_CHECKOUT_URLS[normalizedSlug] || ""
+        : "";
+      const detailsUrl = checkoutUrl.replace(/\/checkout\/?$/, "");
+      if (!detailsUrl) {
+        return;
+      }
+      void openOrCopyInternetLink(detailsUrl);
+    },
+    [openOrCopyInternetLink],
+  );
+
   const handleSalesAction = useCallback(() => {
-    void openOrCopyInternetLink(MSP_CONTACT_URL);
+    void openOrCopyInternetLink(CONTACT_TICKET_URL);
   }, [openOrCopyInternetLink]);
 
   return (
@@ -686,9 +766,9 @@ function App() {
               <Button
                 className="sc-btn-primary sc-nav-cta"
                 size="small"
-                onClick={() => handleStartCloud()}
+                onClick={() => scrollToId("plans")}
               >
-                Start Your Cloud
+                View Plans
               </Button>
               <IconButton
                 className="sc-theme-toggle"
@@ -724,12 +804,6 @@ function App() {
                   onClick={() => scrollToId("plans")}
                 >
                   View Plans
-                </Button>
-                <Button
-                  className="sc-btn-ghost"
-                  onClick={() => handleStartCloud()}
-                >
-                  Start Your Cloud
                 </Button>
               </Stack>
               <Typography className="sc-home-support-copy">
@@ -954,13 +1028,25 @@ function App() {
                                 </Box>
                               </Box>
                               <Box sx={{ mt: 2 }}>
-                                <Button
-                                  component={Link}
-                                  to={`/feature-details/${story.id}`}
-                                  className="sc-btn-ghost"
+                                <Stack
+                                  direction={{ xs: "column", sm: "row" }}
+                                  spacing={1}
+                                  className="sc-story-detail-actions"
                                 >
-                                  Read More
-                                </Button>
+                                  <Button
+                                    component={Link}
+                                    to={`/feature-details/${story.id}`}
+                                    className="sc-btn-ghost"
+                                  >
+                                    Read More
+                                  </Button>
+                                  <Button
+                                    className="sc-btn-link"
+                                    onClick={() => scrollToId("plans")}
+                                  >
+                                    View Plans
+                                  </Button>
+                                </Stack>
                               </Box>
                             </Box>
                           </Box>
@@ -988,8 +1074,7 @@ function App() {
               variant="body1"
               className="sc-section-subtitle sc-reveal"
             >
-              NuQloud should read like a credible private cloud company first,
-              with advanced infrastructure as a supporting advantage.
+              Private, practical, stable, premium, and independent.
             </Typography>
             <Box className="sc-four-grid">
               {differenceCards.map((card) => {
@@ -1021,8 +1106,7 @@ function App() {
               variant="body1"
               className="sc-section-subtitle sc-reveal"
             >
-              Separate the standard hosted account path from the fully branded
-              deployment path so buyers know what they are actually buying.
+              Choose between hosted NuQloud accounts and fully branded private instances.
             </Typography>
             <Box className="sc-two-col">
               {serviceModels.map((model) => (
@@ -1056,11 +1140,7 @@ function App() {
                     </Box>
                     <Button
                       className="sc-btn-ghost"
-                      onClick={() =>
-                        model.ctaTarget === "plans"
-                          ? scrollToId("plans")
-                          : handleSalesAction()
-                      }
+                      onClick={() => scrollToId("plans")}
                     >
                       {model.ctaLabel}
                     </Button>
@@ -1097,8 +1177,8 @@ function App() {
                   </Typography>
                   <Typography className="sc-mini-tease">
                     Need the self-hosted path instead of managed service? The
-                    plugin edition remains available for teams running their own
-                    infrastructure.
+                    self-hosting plugin path is launching soon for teams running
+                    their own infrastructure.
                   </Typography>
                   <Button
                     component={Link}
@@ -1138,6 +1218,23 @@ function App() {
               branded and managed cloud built specifically for your
               organization, the choice is yours!
             </Typography>
+            <Card className="sc-card sc-plan-overview sc-reveal">
+              <CardContent>
+                <Typography className="sc-card-label">
+                  Included Across All Packages
+                </Typography>
+                <Typography className="sc-feature-copy">
+                  All packages include the same core NuQloud features. What
+                  changes between plans is your available on-server storage,
+                  decentralized encrypted publishing space, and the initial
+                  publishing credits included.
+                </Typography>
+                <Typography className="sc-mini-tease">
+                  Publishing credits are required for publishing to the
+                  decentralized encrypted and chunked off-internet data network.
+                </Typography>
+              </CardContent>
+            </Card>
             <Stack spacing={2.1} className="sc-plan-stack">
               {planGroups.map((group) => (
                 <Box key={group.id} className="sc-plan-section sc-reveal">
@@ -1146,6 +1243,11 @@ function App() {
                       {group.title}
                     </Typography>
                   </Box>
+                  {"intro" in group && group.intro ? (
+                    <Typography className="sc-mini-tease sc-plan-group-intro">
+                      {group.intro}
+                    </Typography>
+                  ) : null}
                   <Box className="sc-plan-grid">
                     {group.plans.map((plan) => (
                       <Card className="sc-card sc-plan-card" key={plan.slug}>
@@ -1153,18 +1255,77 @@ function App() {
                           <Typography className="sc-card-label">
                             Plan
                           </Typography>
-                          <Typography className="sc-home-card-title">
-                            {plan.name}
-                          </Typography>
-                          <Typography className="sc-mini-tease">
-                            {plan.description}
-                          </Typography>
-                          <Button
-                            className="sc-btn-ghost"
-                            onClick={() => handleStartCloud(plan.slug)}
-                          >
-                            View Details
-                          </Button>
+                          <Box className="sc-plan-card-head">
+                            <Box className="sc-plan-card-copy">
+                              <Typography className="sc-home-card-title">
+                                {plan.name}
+                              </Typography>
+                              <Typography className="sc-mini-tease">
+                                {plan.description}
+                              </Typography>
+                            </Box>
+                            {"price" in plan && plan.price ? (
+                              <Box className="sc-plan-price-wrap">
+                                <Typography className="sc-plan-price">
+                                  {plan.price}
+                                  <Box component="span" className="sc-plan-cadence">
+                                    {plan.cadence || ""}
+                                  </Box>
+                                </Typography>
+                                {"setupFee" in plan && plan.setupFee ? (
+                                  <Typography className="sc-plan-setup">
+                                    {plan.setupFee}
+                                  </Typography>
+                                ) : null}
+                              </Box>
+                            ) : null}
+                          </Box>
+                          {"summary" in plan && plan.summary ? (
+                            <Typography className="sc-plan-summary">
+                              {plan.summary}
+                            </Typography>
+                          ) : null}
+                          {"publishingCredits" in plan && plan.publishingCredits ? (
+                            <Typography className="sc-plan-credits">
+                              {plan.publishingCredits}
+                            </Typography>
+                          ) : null}
+                          {"bullets" in plan && Array.isArray(plan.bullets) && plan.bullets.length ? (
+                            <Box component="ul" className="sc-detail-list sc-plan-detail-list">
+                              {plan.bullets.map((item) => (
+                                <Box component="li" className="sc-detail-item" key={item}>
+                                  {item}
+                                </Box>
+                              ))}
+                            </Box>
+                          ) : null}
+                          {"note" in plan && plan.note ? (
+                            <Typography className="sc-plan-note">
+                              {plan.note}
+                            </Typography>
+                          ) : null}
+                          <Box className="sc-plan-actions">
+                            <Button
+                              className="sc-btn-primary sc-plan-buy-btn"
+                              onClick={() => handlePlanCheckout(plan.slug)}
+                            >
+                              Buy Now
+                            </Button>
+                            <Button
+                              className="sc-btn-link sc-plan-detail-link"
+                              onClick={() => handlePlanDetails(plan.slug)}
+                            >
+                              View Details
+                            </Button>
+                            {"teamSlug" in plan && plan.teamSlug ? (
+                              <Button
+                                className="sc-btn-link sc-plan-team-link"
+                                onClick={() => handlePlanDetails(plan.teamSlug)}
+                              >
+                                {plan.teamLabel || "View Team Version"}
+                              </Button>
+                            ) : null}
+                          </Box>
                         </CardContent>
                       </Card>
                     ))}

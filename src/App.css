@@ -1402,6 +1402,10 @@
   margin-top: 1.2rem;
 }
 
+.sc-plan-overview {
+  margin-top: 1.1rem;
+}
+
 .sc-plan-section {
   display: flex;
   flex-direction: column;
@@ -1422,6 +1426,106 @@
 
 .sc-plan-card {
   min-height: 100%;
+}
+
+.sc-plan-group-intro {
+  margin-top: -0.1rem !important;
+  max-width: 74ch;
+}
+
+.sc-plan-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.sc-plan-card-copy {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.sc-plan-price-wrap {
+  flex: 0 0 auto;
+  text-align: right;
+}
+
+.sc-plan-price {
+  color: var(--sc-text);
+  font-family: "Orbitron", "Inter", sans-serif !important;
+  font-size: clamp(1.35rem, 2.8vw, 2.1rem) !important;
+  font-weight: 700 !important;
+  line-height: 1.05 !important;
+  white-space: nowrap;
+}
+
+.sc-plan-cadence {
+  margin-left: 0.22rem;
+  color: var(--sc-text-soft);
+  font-family: "Oxygen", "Inter", sans-serif !important;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.sc-plan-setup {
+  margin-top: 0.35rem !important;
+  color: var(--sc-primary);
+  font-size: 0.8rem !important;
+  font-weight: 700 !important;
+}
+
+.sc-plan-summary {
+  margin-top: 0.85rem !important;
+  color: var(--sc-text);
+  font-weight: 600 !important;
+}
+
+.sc-plan-credits {
+  margin-top: 0.35rem !important;
+  color: var(--sc-text-soft);
+}
+
+.sc-plan-detail-list {
+  margin-top: 0.8rem;
+  margin-bottom: 0;
+}
+
+.sc-plan-note {
+  margin-top: 0.75rem !important;
+  color: var(--sc-primary);
+  font-size: 0.82rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.sc-plan-actions {
+  margin-top: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4rem;
+}
+
+.sc-plan-buy-btn {
+  min-width: 10rem !important;
+  padding-inline: 1.1rem !important;
+}
+
+.sc-plan-detail-link {
+  padding-inline: 0 !important;
+  min-width: 0 !important;
+  font-size: 0.84rem !important;
+}
+
+.sc-plan-team-link {
+  padding-inline: 0 !important;
+  min-width: 0 !important;
+  font-size: 0.84rem !important;
+}
+
+.sc-story-detail-actions {
+  align-items: flex-start;
 }
 
 .sc-full-details-wrap {
@@ -1599,6 +1703,14 @@
 
   .sc-plan-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sc-plan-card-head {
+    flex-direction: column;
+  }
+
+  .sc-plan-price-wrap {
+    text-align: left;
   }
 
   .sc-detail-card {

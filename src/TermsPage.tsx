@@ -124,7 +124,7 @@ function TermsPage() {
             </Stack>
             <Stack direction="row" spacing={0.8} alignItems="center" className="sc-nav-actions">
               <Button component={Link} to="/" size="small" className="sc-nav-link">
-                NuQloud MSP
+                Home
               </Button>
               <Button component={Link} to="/self-hosting" size="small" className="sc-nav-link">
                 NuQloud for Nextcloud

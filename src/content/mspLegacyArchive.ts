@@ -252,14 +252,13 @@ export const legacyMspHomepageArchive = {
       details: [
         "Two starting points: per-user existing-cloud access or full branded private cloud launch.",
         "All core platform features are included across package paths.",
-        "USD checkout and QORT-oriented checkout paths are both part of service evolution.",
+        "Package paths are designed to support simple onboarding now and larger managed rollouts later.",
       ],
       deepDive: [
         "Package architecture supports organization-first rollouts and individual-first trial adoption.",
         "In-cloud upgrade paths keep onboarding simple while preserving sovereignty trajectory.",
-        "Payment path flexibility aligns with mixed internet + QDN operating environments.",
         "Growth paths can be tuned for multi-user expansion without feature fragmentation.",
-        "QORT and USD pathways are designed to support both native and gateway purchasing experiences.",
+        "Package structure is designed to support both hosted-account growth and fully branded private deployments.",
       ],
       url: PAYMENT_URL,
     },

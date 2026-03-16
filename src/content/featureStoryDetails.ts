@@ -64,7 +64,7 @@ export const featureStoryDetails: Record<FeatureStoryId, FeatureStoryDetail> = {
     summary:
       "NuQloud keeps your files, sync, sharing, collaboration, and off-network backup options in one private workflow instead of scattering them across separate storage tools.",
     supportCopy:
-      "This detail view reuses the preserved NuQloud landing-page material so the deeper feature explanations stay available while the homepage stays simpler.",
+      "Files, collaboration, controlled sharing, and resilient publishing stay in one managed environment instead of being split across storage, backup, and link-sharing services.",
     replaceSummary: [
       "Dropbox / OneDrive / Box / iCloud Drive",
       "Google Drive / Workspace Files",
@@ -92,7 +92,7 @@ export const featureStoryDetails: Record<FeatureStoryId, FeatureStoryDetail> = {
     summary:
       "NuQloud keeps document work, team coordination, project tracking, and shared knowledge in one private workspace so collaboration does not sprawl across disconnected apps.",
     supportCopy:
-      "These sections pull from the preserved pre-restructure content model and group the collaboration-focused NuQloud layers in one place.",
+      "Document work, shared context, workflow tracking, and team coordination stay attached to the same private cloud instead of being distributed across multiple vendors.",
     replaceSummary: [
       "Google Workspace / Microsoft 365",
       "Notion / Confluence / Airtable",
@@ -117,7 +117,7 @@ export const featureStoryDetails: Record<FeatureStoryId, FeatureStoryDetail> = {
     summary:
       "NuQloud brings messaging, calls, meeting links, recordings, and team context together so internal and external communication stays in the same private environment.",
     supportCopy:
-      "The content below is sourced from the preserved deeper NuQloud messaging and operations copy rather than a new marketing-only rewrite.",
+      "Conversations, calls, scheduling context, and operational visibility remain in one environment so teams can communicate without another app stack.",
     replaceSummary: [
       "Slack / Teams / Zoom",
       "Discord / meeting-link sprawl",
@@ -142,7 +142,7 @@ export const featureStoryDetails: Record<FeatureStoryId, FeatureStoryDetail> = {
     summary:
       "NuQloud can publish content to QDN for access with or without the cloud, preserve verifiable audit trails, and layer encrypted chunked off-network resilience into the same file workflow.",
     supportCopy:
-      "This page collects the preserved publish, redundancy, and distributed-application material that used to live in the denser homepage version.",
+      "Publishing, backup resilience, and broader off-network access can be part of the same file workflow instead of a separate backup or distribution system.",
     replaceSummary: [
       "Public drive links / expiring shares",
       "Docs portals and static knowledge silos",

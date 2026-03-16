@@ -1,6 +1,5 @@
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import DarkModeRoundedIcon from "@mui/icons-material/DarkModeRounded";
-import LaunchRoundedIcon from "@mui/icons-material/LaunchRounded";
 import LightModeRoundedIcon from "@mui/icons-material/LightModeRounded";
 import {
   Box,
@@ -21,18 +20,13 @@ import {
   FeatureStoryId,
   featureStoryDetails,
 } from "./content/featureStoryDetails";
-import { useAccessContext } from "./hooks/useAccessContext";
 import { EnumTheme, themeAtom } from "./state/global/system";
 import "./App.css";
-
-const PAYMENT_URL = "https://nuqloud.com/get-started";
-const MSP_CONTACT_URL = "https://nuqloud.com";
 
 function FeatureDetailsPage() {
   const [theme, setTheme] = useAtom(themeAtom);
   const [scrollY, setScrollY] = useState(0);
   const { storyId } = useParams<{ storyId: FeatureStoryId }>();
-  const { contextActionFeedback, openOrCopyInternetLink } = useAccessContext();
   const isDark = theme === EnumTheme.DARK;
 
   const story = storyId ? featureStoryDetails[storyId] : undefined;
@@ -161,27 +155,7 @@ function FeatureDetailsPage() {
                   <ArrowBackRoundedIcon fontSize="small" />
                   Back To Homepage
                 </Button>
-                <Button
-                  className="sc-btn-ghost"
-                  onClick={() => openOrCopyInternetLink(PAYMENT_URL)}
-                >
-                  Start Your Cloud
-                </Button>
-                <Button
-                  className="sc-btn-ghost"
-                  onClick={() => openOrCopyInternetLink(MSP_CONTACT_URL)}
-                >
-                  Contact
-                </Button>
               </Stack>
-              {contextActionFeedback ? (
-                <Typography
-                  variant="caption"
-                  className="sc-runtime-action-note sc-home-feedback"
-                >
-                  {contextActionFeedback}
-                </Typography>
-              ) : null}
             </Box>
 
             <Box className="sc-hero-art">
@@ -206,9 +180,9 @@ function FeatureDetailsPage() {
                     ))}
                   </Stack>
                   <Typography className="sc-mini-tease">
-                    These deeper details are sourced from the preserved NuQloud
-                    archive content that was removed from the main homepage when
-                    the landing flow was simplified.
+                    Detailed sections below show the NuQloud layers involved in
+                    this workflow and the surrounding platform capabilities that
+                    support it.
                   </Typography>
                 </CardContent>
               </Card>
@@ -217,11 +191,11 @@ function FeatureDetailsPage() {
 
           <section className="sc-section">
             <Typography variant="h2" className="sc-section-title">
-              Preserved Detail
+              NuQloud Layers Involved
             </Typography>
             <Typography variant="body1" className="sc-section-subtitle">
-              The cards below reuse the earlier in-depth NuQloud landing-page
-              content instead of replacing it with shortened marketing copy.
+              These are the core NuQloud layers that make this part of the
+              platform work end to end.
             </Typography>
             <Box className="sc-two-col">
               {story.archivedSections.map((section) => (
@@ -261,13 +235,6 @@ function FeatureDetailsPage() {
                         </Box>
                       ))}
                     </Box>
-                    <Button
-                      className="sc-btn-ghost"
-                      onClick={() => openOrCopyInternetLink(section.url)}
-                    >
-                      Open Related Overview
-                      <LaunchRoundedIcon fontSize="small" />
-                    </Button>
                   </CardContent>
                 </Card>
               ))}
@@ -279,8 +246,8 @@ function FeatureDetailsPage() {
               Included Capabilities
             </Typography>
             <Typography variant="body1" className="sc-section-subtitle">
-              These preserved capability groups show the surrounding platform
-              functions that support this part of NuQloud.
+              These platform capabilities are part of the wider NuQloud
+              environment that supports this workflow.
             </Typography>
             <Box className="sc-card-grid">
               {story.includedCapabilities.map((section) => (
@@ -314,8 +281,8 @@ function FeatureDetailsPage() {
               Deeper Infrastructure Context
             </Typography>
             <Typography variant="body1" className="sc-section-subtitle">
-              These preserved deep-dive notes explain the off-network and
-              resilience layers without crowding the homepage.
+              These sections explain the off-network and resilience layers tied
+              to this part of NuQloud.
             </Typography>
             <Box className="sc-two-col">
               {story.capabilitySections.map((section) => (
@@ -344,21 +311,18 @@ function FeatureDetailsPage() {
 
           <section className="sc-cta" id="next">
             <Typography variant="h3" className="sc-cta-title">
-              Need this built around your exact workflow?
+              Need this explained in the context of your workflow?
             </Typography>
             <Stack
               direction={{ xs: "column", sm: "row" }}
               spacing={1.2}
               justifyContent="center"
             >
-              <Button
-                className="sc-btn-primary"
-                onClick={() => openOrCopyInternetLink(MSP_CONTACT_URL)}
-              >
-                Contact
-              </Button>
-              <Button className="sc-btn-ghost" component={Link} to="/">
+              <Button className="sc-btn-primary" component={Link} to="/">
                 Back To Homepage
+              </Button>
+              <Button className="sc-btn-ghost" component={Link} to="/self-hosting">
+                Self-Hosting Path
               </Button>
             </Stack>
           </section>

@@ -1,20 +1,21 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import App from '../App';
-import { AppWrapper } from '../AppWrapper';
-import SelfHostingPage from '../SelfHostingPage';
-import TermsPage from '../TermsPage';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import App from "../App";
+import { AppWrapper } from "../AppWrapper";
+import FeatureDetailsPage from "../FeatureDetailsPage";
+import SelfHostingPage from "../SelfHostingPage";
+import TermsPage from "../TermsPage";
 
 interface CustomWindow extends Window {
   _qdnBase: string;
 }
 const customWindow = window as unknown as CustomWindow;
-const baseUrl = customWindow?._qdnBase || '';
+const baseUrl = customWindow?._qdnBase || "";
 
 export function Routes() {
   const router = createBrowserRouter(
     [
       {
-        path: '/',
+        path: "/",
         element: <AppWrapper />,
         children: [
           {
@@ -22,11 +23,15 @@ export function Routes() {
             element: <App />,
           },
           {
-            path: 'self-hosting',
+            path: "self-hosting",
             element: <SelfHostingPage />,
           },
           {
-            path: 'terms',
+            path: "feature-details/:storyId",
+            element: <FeatureDetailsPage />,
+          },
+          {
+            path: "terms",
             element: <TermsPage />,
           },
         ],
@@ -34,7 +39,7 @@ export function Routes() {
     ],
     {
       basename: baseUrl,
-    }
+    },
   );
 
   return <RouterProvider router={router} />;

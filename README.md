@@ -1,6 +1,7 @@
 # NuQloud Website
 
 Landing site for NuQloud, built as a Qortal-publishable React app (via `create-qortal-app`) and designed to work cleanly in both:
+
 - Qortal native context
 - Gateway-accessed context (for example `nuqloud.com`)
 
@@ -9,28 +10,18 @@ Landing site for NuQloud, built as a Qortal-publishable React app (via `create-q
 - Two distinct scroller routes:
   - `/` MSP-primary service page (managed provider focus)
   - `/self-hosting` plugin/self-hosting page
+  - `/feature-details/:storyId` preserved in-depth feature pages sourced from the archived MSP content model
+- Root landing page now uses a private-cloud-first marketing structure:
+  - direct hero messaging for normal buyers
+  - plain-language explanation of what NuQloud is
+  - a scroll-driven feature-story section with animated workflows, readable big-tech replacement groups, and `Read More` links into preserved detail pages
+  - differentiation, service-model split, stack summary, and plan preview sections
+- Self-hosting route remains available for the plugin-first audience with separate messaging and navigation, and now clearly notes that the plugin package is being finalized for near-term release.
+- Previous dense MSP homepage content is preserved in:
+  - `src/content/mspLegacyArchive.ts`
 - Branding refresh:
-  - MSP route: `NuQloud MSP`
+  - MSP route: `NuQloud`
   - Plugin route: `NuQloud for Nextcloud - powered by Qortal`
-- Mobile-first content-density controls:
-  - Core heavy sections now support tap-to-expand / tap-to-collapse behavior on smaller screens.
-  - `More Details` in plans now includes additional nested toggles for Included, Expansion Modules, and Roadmap.
-- MSP narrative flow is now marketing-first:
-  - `What You Can Replace`
-  - `What Is Included`
-  - `Compare By Need` cards
-  - `Choose Your Starting Plan` (per-user on existing cloud vs fully private branded cloud)
-- Replacements section now includes provider icon references and staged reveal timing for stronger scroll storytelling.
-- Replacements section now maps a broader set of big-tech equivalents (workspace, comms, storage, workflow, docs/knowledge, groupware, identity, operations, and lifecycle funnels).
-- Provider icons are now bundled as local SVG assets (no external CDN dependency), improving reliability in QDN/gateway contexts.
-- Deep-dive buttons now expand in-page panels directly below the section where they are triggered.
-- `Two Starting Points` now stacks vertically and each starting point includes 3 starter package cards with USD/QORT payment actions.
-- Included feature matrix content plus `Expansion Modules` and `Roadmap` now live under `Two Starting Points` via the `Full Details` expander.
-- Package messaging is pricing-agnostic in-page: package differences are communicated as deployment model/capacity/operations scope rather than feature gating.
-- `Unify Your Cloud Life` now uses titled staggered sequence cards for cleaner scan/read flow while scrolling.
-- Checkout actions are now access-aware: QDN mode shows QORT-only actions, gateway/internet mode shows USD-only actions.
-- Hero CTAs now use section navigation labels (`See Packages`, `Details`) and jump to the matching sections.
-- Right-side scroll tracking now uses section-center proximity for tighter active-dot alignment with visible content.
 - MSP page keeps right-side animated geometry and square-grid atmosphere.
 - Self-hosting page uses left-side animated geometry with circular-grid black-background styling.
 - Dual-theme design (dark + light blue systems).
@@ -51,12 +42,18 @@ Landing site for NuQloud, built as a Qortal-publishable React app (via `create-q
 ## Content Sources
 
 Primary product messaging is derived from:
+
 - `DOCS/Initial-Concept-Overview.md`
 - `DOCS/Initial-Platform-Packages.md`
+
+Legacy MSP homepage content from the earlier detailed landing build is preserved for reuse in:
+
+- `src/content/mspLegacyArchive.ts`
 
 ## Assets
 
 Logo/hero graphics are loaded from:
+
 - `public/NuQloud-Nucleus-logoOnly-favicon.png`
 - `public/NuQloud-Block-logo-noBG-2.png`
 
@@ -76,5 +73,5 @@ npm run build
 
 - Router basename remains `_qdnBase` aware for QDN compatibility.
 - GlobalProvider auth auto-login is disabled for public landing-page access.
-- `index.html` metadata/title now uses NuQloud branding for internet-hosted previews and social cards.
+- `index.html` metadata/title now emphasizes the private-cloud offer instead of the previous abstract tagline.
 - A routed Terms page is available at `/terms`, and a global footer now shows `© 2026 CHD` plus a Terms link.

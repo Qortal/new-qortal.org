@@ -16,7 +16,8 @@ Landing site for NuQloud, built as a Qortal-publishable React app (via `create-q
   - updated hero/about positioning around NuQloud as a private digital world and gateway to decentralized data/apps
   - plain-language explanation of what NuQloud is
   - a scroll-driven feature-story section with animated workflows, larger bundled color replacement-provider logos, and `Read More` links into preserved detail pages
-  - a curated real screenshot gallery for the NuQloud dashboard, network identity/publishing flow, decentralized apps, files, conversations, and collaborative editing
+  - a curated real screenshot gallery for the NuQloud dashboard, network identity/publishing flow, decentralized apps, files, conversations, and collaborative editing, with mobile-friendly bottom tabs below the active screenshot and arrow-based navigation in the enlarged lightbox view
+  - managed account plan cards now surface the team variant as a smaller outlined `team - up to 5 users` button so the alternate package path is easier to notice
   - communications replacement logos now avoid duplicate entries and include additional real bundled service marks for messaging apps like Telegram and WhatsApp
   - plans now render as two coordinated lanes, with the `NuQloud Accounts` and `Dedicated Branded NuQloud Instances` summary cards centered above their matching plan groups and accent styling carried through to the plan cards and buy buttons
   - differentiation, service-model split, stack summary, and plan preview sections
@@ -63,6 +64,8 @@ Logo/hero graphics are loaded from:
 
 Replacement-provider icons and the `Powered by Qortal` badge are bundled locally in `src/assets/` so they continue to work in QDN-hosted builds without remote asset dependencies.
 
+The website and Nextcloud integration now both use the smaller bundled `Powered by Qortal` logo variants where that badge is shown, reducing the visual footprint while keeping theme-specific light/dark assets.
+
 The interface gallery screenshots are also bundled locally under `src/assets/interface-gallery/` with stable renamed filenames so the gallery works the same in both standard hosting and QDN-published deployments.
 
 ## Development
@@ -82,4 +85,7 @@ npm run build
 - Router basename remains `_qdnBase` aware for QDN compatibility.
 - GlobalProvider auth auto-login is disabled for public landing-page access.
 - `index.html` metadata/title now emphasizes the private-cloud offer instead of the previous abstract tagline.
+- Public-facing metadata now includes canonical URL, robots directives, expanded Open Graph/Twitter card fields, absolute social-preview image URLs, and JSON-LD structured data for stronger SEO and link-preview behavior on internet-hosted deployments.
 - A routed Terms page is available at `/terms`, and a global footer now shows `© 2026 CHD` plus a Terms link.
+- The Terms page now explicitly distinguishes on-instance data from QDN-published data, including CHD’s lack of access/control over private QDN-published data and the limits of CHD redundancy guarantees once an account is no longer in good standing.
+- The Terms page also now clarifies present hardware-policy scope, nominative/comparative use of third-party logos and service marks, and that `NuQloud for Nextcloud` is a Qortal-powered plugin layer extending the separate Nextcloud platform.

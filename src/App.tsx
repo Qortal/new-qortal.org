@@ -1,6 +1,8 @@
 import ApartmentRoundedIcon from "@mui/icons-material/ApartmentRounded";
 import CallRoundedIcon from "@mui/icons-material/CallRounded";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
+import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
+import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
 import CloudRoundedIcon from "@mui/icons-material/CloudRounded";
 import DarkModeRoundedIcon from "@mui/icons-material/DarkModeRounded";
 import DescriptionRoundedIcon from "@mui/icons-material/DescriptionRounded";
@@ -40,8 +42,8 @@ import {
   useState,
 } from "react";
 import { Link } from "react-router-dom";
-import poweredByQortalDark from "./assets/brand/powered-by-qortal-dark.png";
-import poweredByQortalLight from "./assets/brand/powered-by-qortal-light.png";
+import poweredByQortalDark from "./assets/brand/powered-by-qortal-dark-small.png";
+import poweredByQortalLight from "./assets/brand/powered-by-qortal-light-small.png";
 import collaborativeDocSharingImage from "./assets/interface-gallery/nuqloud-collaborative-doc-sharing.png";
 import createGroupConversationImage from "./assets/interface-gallery/nuqloud-create-group-conversation.png";
 import dashboardOverviewImage from "./assets/interface-gallery/nuqloud-dashboard-overview.png";
@@ -543,7 +545,7 @@ const planGroups = [
         publishingCredits: "500 initial publishing credits included.",
         note: "Team versions available",
         teamSlug: "nuqloud-team-starter",
-        teamLabel: "Team version available",
+        teamLabel: "team - up to 5 users",
       },
       {
         slug: "nuqloud-advanced",
@@ -556,7 +558,7 @@ const planGroups = [
         publishingCredits: "2,000 initial publishing credits included.",
         note: "Team versions available",
         teamSlug: "nuqloud-team-advanced",
-        teamLabel: "Team version available",
+        teamLabel: "team - up to 5 users",
       },
       {
         slug: "nuqloud-pro",
@@ -570,7 +572,7 @@ const planGroups = [
         publishingCredits: "5,000 initial publishing credits included.",
         note: "Team versions available",
         teamSlug: "nuqloud-team-pro",
-        teamLabel: "Team version available",
+        teamLabel: "team - up to 5 users",
       },
     ],
   },
@@ -745,6 +747,12 @@ function App() {
     interfaceShowcaseSlides.find(
       (slide) => slide.id === activeShowcaseSlideId
     ) ?? interfaceShowcaseSlides[0];
+  const activeShowcaseSlideIndex = Math.max(
+    0,
+    interfaceShowcaseSlides.findIndex(
+      (slide) => slide.id === activeShowcaseSlide.id
+    )
+  );
 
   const pageMotionStyles = useMemo(
     () =>
@@ -907,6 +915,30 @@ function App() {
 
   const closeShowcaseLightbox = useCallback(() => {
     setIsShowcaseLightboxOpen(false);
+  }, []);
+
+  const showPreviousShowcaseSlide = useCallback(() => {
+    setActiveShowcaseSlideId((currentId) => {
+      const currentIndex = interfaceShowcaseSlides.findIndex(
+        (slide) => slide.id === currentId
+      );
+      const safeIndex = currentIndex >= 0 ? currentIndex : 0;
+      const nextIndex =
+        (safeIndex - 1 + interfaceShowcaseSlides.length) %
+        interfaceShowcaseSlides.length;
+      return interfaceShowcaseSlides[nextIndex].id;
+    });
+  }, []);
+
+  const showNextShowcaseSlide = useCallback(() => {
+    setActiveShowcaseSlideId((currentId) => {
+      const currentIndex = interfaceShowcaseSlides.findIndex(
+        (slide) => slide.id === currentId
+      );
+      const safeIndex = currentIndex >= 0 ? currentIndex : 0;
+      const nextIndex = (safeIndex + 1) % interfaceShowcaseSlides.length;
+      return interfaceShowcaseSlides[nextIndex].id;
+    });
   }, []);
 
   return (
@@ -1432,6 +1464,33 @@ function App() {
                           </Box>
                         ))}
                       </Box>
+                      <Box className="sc-showcase-mobile-tabs">
+                        {interfaceShowcaseSlides.map((slide) => {
+                          const SlideIcon = slide.Icon;
+                          const isActive = slide.id === activeShowcaseSlide.id;
+
+                          return (
+                            <button
+                              type="button"
+                              className={`sc-showcase-tab sc-showcase-tab--mobile ${isActive ? "is-active" : ""}`}
+                              key={`mobile-${slide.id}`}
+                              onClick={() => setActiveShowcaseSlideId(slide.id)}
+                            >
+                              <Box className="sc-home-icon-wrap sc-home-icon-wrap--mobile-tab">
+                                <SlideIcon fontSize="small" />
+                              </Box>
+                              <Box className="sc-showcase-tab-copy">
+                                <Typography className="sc-card-label">
+                                  {slide.eyebrow}
+                                </Typography>
+                                <Typography className="sc-home-card-title">
+                                  {slide.title}
+                                </Typography>
+                              </Box>
+                            </button>
+                          );
+                        })}
+                      </Box>
                     </Box>
                   </Box>
                 </CardContent>
@@ -1462,12 +1521,30 @@ function App() {
                   </Button>
                 </Box>
                 <Box className="sc-showcase-lightbox-image-shell">
+                  <Button
+                    className="sc-showcase-lightbox-nav sc-showcase-lightbox-nav--prev"
+                    onClick={showPreviousShowcaseSlide}
+                    aria-label="Show previous screenshot"
+                  >
+                    <ChevronLeftRoundedIcon />
+                  </Button>
                   <img
                     src={activeShowcaseSlide.image}
                     alt={activeShowcaseSlide.imageAlt}
                     className="sc-showcase-lightbox-image"
                   />
+                  <Button
+                    className="sc-showcase-lightbox-nav sc-showcase-lightbox-nav--next"
+                    onClick={showNextShowcaseSlide}
+                    aria-label="Show next screenshot"
+                  >
+                    <ChevronRightRoundedIcon />
+                  </Button>
                 </Box>
+                <Typography className="sc-showcase-lightbox-position">
+                  {activeShowcaseSlideIndex + 1} /{" "}
+                  {interfaceShowcaseSlides.length}
+                </Typography>
                 <Typography className="sc-mini-tease">
                   {activeShowcaseSlide.body}
                 </Typography>

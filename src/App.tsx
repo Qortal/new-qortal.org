@@ -31,16 +31,42 @@ import {
 import { useAtom } from "jotai";
 import {
   CSSProperties,
+  type ElementType,
   useCallback,
   useEffect,
   useMemo,
   useState,
 } from "react";
 import { Link } from "react-router-dom";
-import docsProjectIcon from "./assets/provider-icons/docs-project.svg";
-import dropboxStorageIcon from "./assets/provider-icons/dropbox-storage.svg";
-import googleWorkspaceIcon from "./assets/provider-icons/google-workspace.svg";
-import slackTeamsZoomIcon from "./assets/provider-icons/slack-teams-zoom.svg";
+import poweredByQortalDark from "./assets/brand/powered-by-qortal-dark.png";
+import poweredByQortalLight from "./assets/brand/powered-by-qortal-light.png";
+import collaborativeDocSharingImage from "./assets/interface-gallery/nuqloud-collaborative-doc-sharing.png";
+import createGroupConversationImage from "./assets/interface-gallery/nuqloud-create-group-conversation.png";
+import dashboardOverviewImage from "./assets/interface-gallery/nuqloud-dashboard-overview.png";
+import filesPublishApprovalImage from "./assets/interface-gallery/nuqloud-files-publish-approval.png";
+import filesPublishStatusImage from "./assets/interface-gallery/nuqloud-files-publish-status.png";
+import liveDocumentCollaborationImage from "./assets/interface-gallery/nuqloud-live-document-collaboration.png";
+import networkTransactionsImage from "./assets/interface-gallery/nuqloud-network-transactions.png";
+import qdeckAccessImage from "./assets/interface-gallery/nuqloud-qdeck-access.png";
+import qmailAccessImage from "./assets/interface-gallery/nuqloud-qmail-access.png";
+import sharedFileInConversationImage from "./assets/interface-gallery/nuqloud-shared-file-in-conversation.png";
+import airtableIcon from "./assets/provider-icons/real/airtable.svg";
+import asanaIcon from "./assets/provider-icons/real/asana.svg";
+import boxIcon from "./assets/provider-icons/real/box.svg";
+import confluenceIcon from "./assets/provider-icons/real/confluence.svg";
+import discordIcon from "./assets/provider-icons/real/discord.svg";
+import dropboxIcon from "./assets/provider-icons/real/dropbox.svg";
+import googleChatIcon from "./assets/provider-icons/real/googlechat.svg";
+import googleDocsIcon from "./assets/provider-icons/real/googledocs.svg";
+import googleDriveIcon from "./assets/provider-icons/real/googledrive.svg";
+import googleMeetIcon from "./assets/provider-icons/real/googlemeet.svg";
+import icloudIcon from "./assets/provider-icons/real/icloud.svg";
+import jiraIcon from "./assets/provider-icons/real/jira.svg";
+import notionIcon from "./assets/provider-icons/real/notion.svg";
+import telegramIcon from "./assets/provider-icons/real/telegram.svg";
+import trelloIcon from "./assets/provider-icons/real/trello.svg";
+import whatsappIcon from "./assets/provider-icons/real/whatsapp.svg";
+import zoomIcon from "./assets/provider-icons/real/zoom.svg";
 import { BRAND_HEADER_LOGO, BRAND_HERO_LOGO } from "./brandAssets";
 import { useAccessContext } from "./hooks/useAccessContext";
 import { EnumTheme, themeAtom } from "./state/global/system";
@@ -74,7 +100,7 @@ const pageSections = [
   { id: "features", label: "Features", topNav: true },
   { id: "why", label: "Why", topNav: false },
   { id: "dedicated-cloud", label: "Dedicated Cloud", topNav: true },
-  { id: "foundation", label: "Technology", topNav: false },
+  { id: "foundation", label: "Interface", topNav: false },
   { id: "plans", label: "Plans", topNav: true },
   { id: "contact", label: "Contact", topNav: true },
 ] as const;
@@ -87,131 +113,201 @@ const heroHighlights = [
 
 const heroQuickWins = [
   {
-    title: "Files",
-    body: "Sync, share, and off-network accessible backups.",
+    title: "Files + Collaboration",
+    body: "Sync, share, and publish to a decentralized network",
     Icon: CloudRoundedIcon,
   },
   {
-    title: "Communication",
-    body: "Project management, collaboration, and communication in one place.",
+    title: "Secure Communications",
+    body: "Encrypted, and Private video/voice/meetings and project management",
     Icon: WorkspacesRoundedIcon,
   },
   {
-    title: "Private Replacements",
-    body: "Private replacements for countless services in one place.",
+    title: "Private and Forward-Thinking",
+    body: "Privacy by default, with unstoppable end-to-end decentralized files + apps",
     Icon: ShieldRoundedIcon,
   },
 ];
+
+type ProviderLogo = {
+  name: string;
+  icon: string;
+};
+
+type ReplacementGroup = {
+  label: string;
+  providers: ProviderLogo[];
+};
+
+type FeatureSceneId = "sync" | "share" | "communicate" | "publish";
+
+type FeatureStory = {
+  id: string;
+  title: string;
+  body: string;
+  detail: string;
+  actionLabel: string;
+  successLabel: string;
+  scene: FeatureSceneId;
+  Icon: ElementType;
+  steps: readonly string[];
+  replacements: readonly ReplacementGroup[];
+  badgeImageLight?: string;
+  badgeImageDark?: string;
+  badgeAlt?: string;
+};
 
 const featureStories = [
   {
     id: "store-sync",
     title: "Store & Sync",
-    body: "Keep files available across desktop and mobile devices without bouncing between consumer storage silos.",
+    body: "Keep files available across multiple devices and easily publish selected files to an encrypted decentralized data network.",
     detail:
-      "One upload becomes one private file pipeline instead of a stack of consumer sync products.",
+      "Keep files on any device, sync all files or only what you choose, share publicly or privately, and publish selected files to a decentralized network that stays available without a server.",
     actionLabel:
-      "Upload once, sync multiple devices, share privately or publicly, collaborate actively.",
-    successLabel: "Synchronized",
+      "One private file workflow from sync to optional decentralized publishing.",
+    successLabel: "Files ready everywhere",
     scene: "sync",
     Icon: SyncRoundedIcon,
     steps: [
-      "Add file",
-      "Sync multiple devices",
-      "Share and collab publicly or privately",
-      "Publish to off-network storage",
+      "Files on any device",
+      "Sync all files or only what you choose",
+      "Share publicly or privately",
+      "Publish to a decentralized network and access without a server",
     ],
     replacements: [
       {
-        label: "Dropbox / OneDrive / Box / iCloud Drive",
-        icon: dropboxStorageIcon,
+        label: "Consumer file storage silos",
+        providers: [
+          { name: "Dropbox", icon: dropboxIcon },
+          { name: "Google Drive", icon: googleDriveIcon },
+          { name: "Box", icon: boxIcon },
+          { name: "iCloud", icon: icloudIcon },
+        ],
       },
       {
-        label: "Google Drive / Workspace Files",
-        icon: googleWorkspaceIcon,
+        label: "Separate office-file stacks",
+        providers: [
+          { name: "Google Docs", icon: googleDocsIcon },
+          { name: "Notion", icon: notionIcon },
+          { name: "Airtable", icon: airtableIcon },
+        ],
       },
     ],
   },
   {
     id: "share-collaborate",
     title: "Share & Collaborate",
-    body: "Work with clients, teams, and family in one private cloud space instead of splitting work across separate doc and project tools.",
+    body: "Work with internal and external clients, teams, and family members in one private cloud without worrying about your data.",
     detail:
-      "A single file becomes a shared workspace instead of another round trip between disconnected tools.",
-    actionLabel: "Share once. Collaborate in place.",
-    successLabel: "Shared with your team",
+      "A single file can be edited in place by multiple parties, then optionally published to the decentralized data network for stronger security and wider availability.",
+    actionLabel: "Collaborate in place, then publish selected work when needed.",
+    successLabel: "Shared and active",
     scene: "share",
     Icon: WorkspacesRoundedIcon,
-    steps: ["Prepare the file", "Share it", "Collaborate together"],
+    steps: [
+      "Share with internal or external people",
+      "Edit one file in place with multiple parties",
+      "Keep work organized with permissions",
+      "Optionally publish finalized work to the decentralized network",
+    ],
     replacements: [
       {
-        label: "Google Workspace / Microsoft 365",
-        icon: googleWorkspaceIcon,
+        label: "Document and knowledge stacks",
+        providers: [
+          { name: "Google Docs", icon: googleDocsIcon },
+          { name: "Notion", icon: notionIcon },
+          { name: "Confluence", icon: confluenceIcon },
+        ],
       },
       {
-        label: "Notion / Confluence / Airtable",
-        icon: docsProjectIcon,
-      },
-      {
-        label: "Trello / Asana / Jira",
-        icon: docsProjectIcon,
+        label: "Project and workflow stacks",
+        providers: [
+          { name: "Trello", icon: trelloIcon },
+          { name: "Asana", icon: asanaIcon },
+          { name: "Jira", icon: jiraIcon },
+          { name: "Airtable", icon: airtableIcon },
+        ],
       },
     ],
   },
   {
     id: "communicate",
-    title: "Communicate",
-    body: "Use built-in messaging, calls, and collaboration tools without bolting on another vendor stack.",
+    title: "Communicate Securely & Privately",
+    body: "Built-in messaging, calling, meetings, and collaboration tools in one place.",
     detail:
-      "Messages, meetings, and team context stay together instead of scattering across separate chat apps.",
-    actionLabel: "Message, meet, and move work forward.",
-    successLabel: "Conversation connected",
+      "Messages, meetings, and teams stay in one place, with encrypted and private communications by default.",
+    actionLabel:
+      "Create conversations, schedule meetings, and launch voice, video, and screenshare without another app stack.",
+    successLabel: "Conversation secured",
     scene: "communicate",
     Icon: ForumRoundedIcon,
     steps: [
-      "Start a conversation",
-      "Connect with internal and external parties",
-      "Keep everything organized",
-      "Encrypted calls and meeting recordings available by default",
+      "Create conversations, schedule meetings, and launch voice, video, and screenshare sessions",
+      "Keep teams organized and separated with permissions",
+      "Encrypted and private communications in one place",
+      "Optional private recording for meetings and calls",
     ],
     replacements: [
       {
-        label: "Slack / Teams / Zoom",
-        icon: slackTeamsZoomIcon,
+        label: "Chat and meeting stacks",
+        providers: [
+          { name: "Google Chat", icon: googleChatIcon },
+          { name: "Google Meet", icon: googleMeetIcon },
+          { name: "Zoom", icon: zoomIcon },
+        ],
       },
       {
-        label: "Discord / meeting-link sprawl",
-        icon: slackTeamsZoomIcon,
+        label: "Extra communication silos",
+        providers: [
+          { name: "Telegram", icon: telegramIcon },
+          { name: "WhatsApp", icon: whatsappIcon },
+          { name: "Discord", icon: discordIcon },
+        ],
       },
     ],
   },
   {
     id: "publish-resilience",
-    title: "Publish with Off-Network Resilience",
-    body: "Optionally publish content to QDN, access it anywhere with or without the cloud or any server, and get guaranteed audit trails on each file.",
+    title: "Publish to Decentralized Data Network",
+    body: "Optional fully off-internet publishing, powered by Qortal, lets selected files stay accessible anywhere with a single private key instead of depending on a server.",
     detail:
-      "Content can be published to an off-internet network encrypted and chunked, with a single click.",
-    actionLabel: "Publish beyond a single platform.",
-    successLabel: "Published + verified",
+      "That same private key can authenticate you to NuQloud and the Qortal Network, while your files are published as encrypted, chunked data with a single click from the NuQloud files interface.",
+    actionLabel:
+      "Choose what to publish for extreme security and access without any server at all.",
+    successLabel: "Published off-network",
     scene: "publish",
     Icon: PublicRoundedIcon,
-    steps: ["Prepare the content", "Distribute it", "Verify delivery"],
+    badgeImageLight: poweredByQortalLight,
+    badgeImageDark: poweredByQortalDark,
+    badgeAlt: "Powered by Qortal",
+    steps: [
+      "Upload files to NuQloud",
+      "Choose what to publish for extreme security and accessibility",
+      "Publish with one click",
+      "Access files without any server at all",
+    ],
     replacements: [
       {
-        label: "Public drive links / expiring shares",
-        icon: dropboxStorageIcon,
+        label: "Server-dependent shared links",
+        providers: [
+          { name: "Dropbox", icon: dropboxIcon },
+          { name: "Google Drive", icon: googleDriveIcon },
+          { name: "Box", icon: boxIcon },
+          { name: "iCloud", icon: icloudIcon },
+        ],
       },
       {
-        label: "Docs portals and static knowledge silos",
-        icon: docsProjectIcon,
-      },
-      {
-        label: "Centralized publishing platforms",
-        icon: googleWorkspaceIcon,
+        label: "Centralized document portals",
+        providers: [
+          { name: "Google Docs", icon: googleDocsIcon },
+          { name: "Notion", icon: notionIcon },
+          { name: "Confluence", icon: confluenceIcon },
+        ],
       },
     ],
   },
-] as const;
+] as const satisfies readonly FeatureStory[];
 
 const differenceCards = [
   {
@@ -239,54 +335,193 @@ const differenceCards = [
 const serviceModels = [
   {
     id: "managed-cloud-accounts",
+    tone: "accounts",
     title: "NuQloud Accounts",
-    subtitle: "For single users or teams not needing full branded options.",
+    subtitle:
+      "For single users, families, and teams that want fast access to a managed private cloud.",
     bestFor:
-      "Start on existing NuQloud-run infrastructure and scale when you need more.",
+      "Start on an existing NuQloud instance and expand when you need more space, users, or branded deployment.",
     bullets: [
-      "Fast onboarding without standing up your own infrastructure.",
-      "Files, collaboration, messaging, and backups in one managed service.",
-      "A clear path into larger team or organization rollouts later.",
+      "Fast onboarding to an existing NuQloud instance.",
+      "All NuQloud features provided for all accounts.",
+      "Clear upgrade options directly in the NuQloud Dashboard.",
     ],
-    ctaLabel: "View Account Plans",
-    ctaTarget: "plans",
   },
   {
     id: "dedicated-branded-cloud",
-    title: "Dedicated Branded Instances",
+    tone: "dedicated",
+    title: "Dedicated Branded NuQloud Instances",
     subtitle:
-      "For those needing a full private instance for their team, community, or organization.",
+      "For organizations that would like their own private instance, or multiple linked instances, branded for their team or community.",
     bestFor:
-      "A fully branded deployment with your own domain, identity, and managed environment.",
+      "A private NuQloud environment with your own domain, identity, branding, and managed environment.",
     bullets: [
-      "Dedicated managed environment with stronger ownership and brand presence.",
-      "Built for teams that want a cloud that feels like their own platform.",
+      "Dedicated branded private environment for your organization.",
+      "Optional multiple linked instances for teams or communities.",
       "Managed operations, backups, and growth planning included in the service path.",
     ],
-    ctaLabel: "View Branded Plans",
-    ctaTarget: "plans",
   },
 ];
 
-const foundationHighlights = [
+const interfaceShowcaseSlides = [
   {
-    title: "Familiar private cloud experience",
-    body: "Usable file, collaboration, and communication tools come first so the platform feels approachable.",
+    id: "dashboard",
+    eyebrow: "Account Hub",
+    title: "NuQloud Dashboard",
+    body: "Access decentralized network tools, launch NuQloud apps, and purchase NuQloud services directly from one dashboard.",
+    highlights: [
+      "Apps and services in one place",
+      "Publish credits on the dashboard",
+      "Backup and settings tools",
+      "Private account hub",
+    ],
+    image: dashboardOverviewImage,
+    imageAlt: "NuQloud dashboard showing apps, publish credits, and purchases.",
+    Icon: HubRoundedIcon,
   },
   {
-    title: "Managed operations layer",
-    body: "Updates, backup planning, and operational support stay in the same service model.",
+    id: "register-name",
+    eyebrow: "Publishing Identity",
+    title: "Register Your Network Name",
+    body: "A distributed name unlocks decentralized publishing and gives you a portable identity across NuQloud and the broader network.",
+    highlights: [
+      "150 publish credits to register",
+      "Admins can provide initial credits",
+      "One identity for publishing",
+      "Confirmation shown in the dashboard",
+    ],
+    image: filesPublishApprovalImage,
+    imageAlt: "NuQloud register name dialog with decentralized identity registration details.",
+    Icon: VerifiedUserRoundedIcon,
   },
   {
-    title: "Optional resilience layer",
-    body: "Decentralized publishing and resilience features support the cloud with stronger independence and durability.",
+    id: "transactions",
+    eyebrow: "Activity History",
+    title: "See Network Transactions Clearly",
+    body: "Publishing and other decentralized network activity stays visible in one transaction history so status is easy to verify.",
+    highlights: [
+      "Publishing activity",
+      "Incoming and outgoing records",
+      "Account actions in one view",
+      "Clear confirmation history",
+    ],
+    image: networkTransactionsImage,
+    imageAlt: "NuQloud transactions section showing publishing and account activity.",
+    Icon: LanRoundedIcon,
+  },
+  {
+    id: "publish-status",
+    eyebrow: "Files Status",
+    title: "Publish Files and Track Status",
+    body: "Publish files to the decentralized network and see decentralized availability directly from the NuQloud files experience.",
+    highlights: [
+      "Publish from the files workflow",
+      "Decentralized status visibility",
+      "Access with or without NuQloud",
+      "No server-only dependency",
+    ],
+    image: filesPublishStatusImage,
+    imageAlt: "NuQloud files list showing decentralized publish status icons.",
+    Icon: PublicRoundedIcon,
+  },
+  {
+    id: "qmail",
+    eyebrow: "Decentralized Mail",
+    title: "Q-Mail Inside NuQloud",
+    body: "Open fully off-internet encrypted mail directly from within NuQloud instead of switching to a separate platform.",
+    highlights: [
+      "Encrypted mail access",
+      "Runs on decentralized infrastructure",
+      "Direct access inside NuQloud",
+      "Private messaging continuity",
+    ],
+    image: qmailAccessImage,
+    imageAlt: "Q-Mail opened inside the NuQloud interface.",
+    Icon: ForumRoundedIcon,
+  },
+  {
+    id: "qdeck",
+    eyebrow: "More Decentralized Apps",
+    title: "Access More Decentralized Applications",
+    body: "NuQloud opens the door to other decentralized applications and data that remain reachable with or without the cloud.",
+    highlights: [
+      "Project workspaces",
+      "Decentralized app access",
+      "Off-network data availability",
+      "One gateway into more tools",
+    ],
+    image: qdeckAccessImage,
+    imageAlt: "Q-Deck decentralized application opened from within NuQloud.",
+    Icon: HubRoundedIcon,
+  },
+  {
+    id: "document-sharing",
+    eyebrow: "Documents and Sharing",
+    title: "Collaborative Documents + Sharing",
+    body: "Edit documents in place, share internally or externally, and create public links without duplicating the same file across apps.",
+    highlights: [
+      "In-place editing",
+      "Internal and external shares",
+      "Public link support",
+      "One file, not copies",
+    ],
+    image: collaborativeDocSharingImage,
+    imageAlt: "Collaborative document editing with the NuQloud sharing sidebar open.",
+    Icon: DescriptionRoundedIcon,
+  },
+  {
+    id: "conversation-create",
+    eyebrow: "Meetings and Conversations",
+    title: "Create Group Conversations Fast",
+    body: "Start a private group conversation or meeting in seconds, with options for guests and controlled visibility.",
+    highlights: [
+      "Private group setup",
+      "Guest link options",
+      "Permissions controls",
+      "Fast meeting creation",
+    ],
+    image: createGroupConversationImage,
+    imageAlt: "NuQloud Talk interface creating a new group conversation.",
+    Icon: GroupsRoundedIcon,
+  },
+  {
+    id: "conversation-file-share",
+    eyebrow: "Shared Context",
+    title: "Share Files in Active Conversations",
+    body: "Share files directly inside conversations so the same document stays attached to the discussion, participants, and meeting context.",
+    highlights: [
+      "File sharing in chat",
+      "Shared items sidebar",
+      "Meeting and file context together",
+      "No app switching",
+    ],
+    image: sharedFileInConversationImage,
+    imageAlt: "A NuQloud conversation with a shared document attached in the active discussion.",
+    Icon: ShareRoundedIcon,
+  },
+  {
+    id: "live-collaboration",
+    eyebrow: "Live Collaboration",
+    title: "Edit Together Without Duplication",
+    body: "Collaborative editing can happen right inside an active conversation, so everyone works on the same file instead of passing copies around.",
+    highlights: [
+      "Edit from the conversation view",
+      "Meeting-friendly collaboration",
+      "Same file for all participants",
+      "Private cloud workflow",
+    ],
+    image: liveDocumentCollaborationImage,
+    imageAlt: "Collaborative document editing while a NuQloud conversation remains visible beside it.",
+    Icon: WorkspacesRoundedIcon,
   },
 ];
 
 const planGroups = [
   {
     id: "managed",
-    title: "NuQloud Accounts",
+    tone: "accounts",
+    modelId: "managed-cloud-accounts",
+    title: "NuQloud Account Plans",
     intro:
       "All NuQloud account packages include the same core features. Plans control your on-server storage, decentralized encrypted publishing space, and the initial publishing credits included with the account.",
     plans: [
@@ -330,7 +565,9 @@ const planGroups = [
   },
   {
     id: "dedicated",
-    title: "Fully Branded Private Instances",
+    tone: "dedicated",
+    modelId: "dedicated-branded-cloud",
+    title: "Branded Private NuQloud Servers",
     intro:
       "NuQloud Branded gives you your own fully private instance, control over your own users, and your own branding.",
     plans: [
@@ -415,8 +652,19 @@ function getStoryStickyTop(viewportWidth: number, viewportHeight: number) {
   return Math.min(Math.max(78, viewportHeight * 0.085), 118);
 }
 
+const featureSceneIconSequence: Record<FeatureSceneId, ElementType[]> = {
+  sync: [
+    InsertDriveFileRoundedIcon,
+    FolderRoundedIcon,
+    SyncRoundedIcon,
+  ],
+  share: [DescriptionRoundedIcon, ShareRoundedIcon, GroupsRoundedIcon],
+  communicate: [ForumRoundedIcon, CallRoundedIcon, GroupsRoundedIcon],
+  publish: [DescriptionRoundedIcon, HubRoundedIcon, PublicRoundedIcon],
+};
+
 function renderFeatureScene(
-  scene: (typeof featureStories)[number]["scene"],
+  scene: FeatureSceneId,
   progress: number,
   successLabel: string,
 ) {
@@ -424,103 +672,50 @@ function renderFeatureScene(
     ["--sc-story-progress" as string]: progress.toFixed(3),
   } as CSSProperties;
   const showSuccess = progress > 0.72;
+  const iconSequence = featureSceneIconSequence[scene];
+  const stageProgress = Math.min(progress / 0.72, 0.999);
+  const activeIndex = Math.min(
+    iconSequence.length - 1,
+    Math.floor(stageProgress * iconSequence.length),
+  );
 
-  switch (scene) {
-    case "sync":
-      return (
-        <Box
-          className="sc-story-scene sc-story-scene--sync"
-          style={sceneStyles}
-        >
-          <Box className="sc-story-node sc-story-node--file">
-            <InsertDriveFileRoundedIcon fontSize="medium" />
+  return (
+    <Box
+      className={`sc-story-scene sc-story-scene--${scene} ${showSuccess ? "is-success" : ""}`}
+      style={sceneStyles}
+    >
+      <Box className="sc-story-scene-core">
+        <Box className="sc-story-icon-shell">
+          <Box className="sc-story-icon-swap">
+            {iconSequence.map((Icon, index) => (
+              <Box
+                className={`sc-story-icon-swap-item ${!showSuccess && index === activeIndex ? "is-active" : ""} ${!showSuccess && index < activeIndex ? "is-past" : ""}`}
+                key={`${scene}-${index}`}
+              >
+                <Icon fontSize="inherit" />
+              </Box>
+            ))}
           </Box>
-          <Box className="sc-story-node sc-story-node--folder">
-            <FolderRoundedIcon fontSize="medium" />
-          </Box>
-          <Box className="sc-story-node sc-story-node--sync-icon">
-            <SyncRoundedIcon fontSize="medium" />
-          </Box>
-          <Box className={`sc-story-badge ${showSuccess ? "is-visible" : ""}`}>
-            <CheckCircleRoundedIcon fontSize="small" />
-            {successLabel}
-          </Box>
-        </Box>
-      );
-    case "share":
-      return (
-        <Box
-          className="sc-story-scene sc-story-scene--share"
-          style={sceneStyles}
-        >
-          <Box className="sc-story-node sc-story-node--document">
-            <DescriptionRoundedIcon fontSize="medium" />
-          </Box>
-          <Box className="sc-story-node sc-story-node--share-icon">
-            <ShareRoundedIcon fontSize="medium" />
-          </Box>
-          <Box className="sc-story-node sc-story-node--team">
-            <GroupsRoundedIcon fontSize="medium" />
-          </Box>
-          <Box className="sc-story-ghost-card sc-story-ghost-card--one" />
-          <Box className="sc-story-ghost-card sc-story-ghost-card--two" />
-          <Box className={`sc-story-badge ${showSuccess ? "is-visible" : ""}`}>
-            <CheckCircleRoundedIcon fontSize="small" />
-            {successLabel}
+          <Box className="sc-story-progress-pips">
+            {iconSequence.map((_, index) => (
+              <Box
+                className={`sc-story-progress-pip ${showSuccess || index <= activeIndex ? "is-active" : ""}`}
+                key={`${scene}-pip-${index}`}
+              />
+            ))}
           </Box>
         </Box>
-      );
-    case "communicate":
-      return (
-        <Box
-          className="sc-story-scene sc-story-scene--communicate"
-          style={sceneStyles}
-        >
-          <Box className="sc-story-node sc-story-node--message">
-            <ForumRoundedIcon fontSize="medium" />
+        <Box className={`sc-story-status ${showSuccess ? "is-visible" : ""}`}>
+          <Box className="sc-story-status-check">
+            <CheckCircleRoundedIcon fontSize="inherit" />
           </Box>
-          <Box className="sc-story-node sc-story-node--call">
-            <CallRoundedIcon fontSize="medium" />
-          </Box>
-          <Box className="sc-story-node sc-story-node--audience">
-            <GroupsRoundedIcon fontSize="medium" />
-          </Box>
-          <Box className="sc-story-ring sc-story-ring--one" />
-          <Box className="sc-story-ring sc-story-ring--two" />
-          <Box className={`sc-story-badge ${showSuccess ? "is-visible" : ""}`}>
-            <CheckCircleRoundedIcon fontSize="small" />
+          <Typography className="sc-story-status-label">
             {successLabel}
-          </Box>
+          </Typography>
         </Box>
-      );
-    case "publish":
-      return (
-        <Box
-          className="sc-story-scene sc-story-scene--publish"
-          style={sceneStyles}
-        >
-          <Box className="sc-story-node sc-story-node--publish-file">
-            <DescriptionRoundedIcon fontSize="medium" />
-          </Box>
-          <Box className="sc-story-node sc-story-node--publish-hub">
-            <HubRoundedIcon fontSize="medium" />
-          </Box>
-          <Box className="sc-story-node sc-story-node--publish-node-a">
-            <PublicRoundedIcon fontSize="small" />
-          </Box>
-          <Box className="sc-story-node sc-story-node--publish-node-b">
-            <CloudRoundedIcon fontSize="small" />
-          </Box>
-          <Box className="sc-story-node sc-story-node--publish-node-c">
-            <ShieldRoundedIcon fontSize="small" />
-          </Box>
-          <Box className={`sc-story-badge ${showSuccess ? "is-visible" : ""}`}>
-            <CheckCircleRoundedIcon fontSize="small" />
-            {successLabel}
-          </Box>
-        </Box>
-      );
-  }
+      </Box>
+    </Box>
+  );
 }
 
 function App() {
@@ -533,8 +728,14 @@ function App() {
   const [featureStoryProgress, setFeatureStoryProgress] = useState(
     initialFeatureStoryProgress,
   );
+  const [activeShowcaseSlideId, setActiveShowcaseSlideId] = useState(
+    interfaceShowcaseSlides[0].id,
+  );
   const { contextActionFeedback, openOrCopyInternetLink } = useAccessContext();
   const isDark = theme === EnumTheme.DARK;
+  const activeShowcaseSlide =
+    interfaceShowcaseSlides.find((slide) => slide.id === activeShowcaseSlideId) ??
+    interfaceShowcaseSlides[0];
 
   const pageMotionStyles = useMemo(
     () =>
@@ -791,8 +992,7 @@ function App() {
                 Your Private Cloud, Without Big Tech.
               </Typography>
               <Typography variant="body1" className="sc-subline">
-                Secure file storage, collaboration, messaging, and backups on
-                infrastructure built for privacy, control, and resilience.
+                secure, private options to run your digital world
               </Typography>
               <Stack
                 direction={{ xs: "column", sm: "row" }}
@@ -807,8 +1007,11 @@ function App() {
                 </Button>
               </Stack>
               <Typography className="sc-home-support-copy">
-                For individuals, teams, and organizations that want a simpler
-                private cloud.
+                ...from encrypted voice/video calls and meetings to
+                collaboration, to sync/storage and decentralized encrypted data
+                and apps, NuQloud is your private digital world. The features
+                you need, without harvesting your data, and a gateway to a
+                post-quantum decentralized future.
               </Typography>
               <Stack
                 direction="row"
@@ -843,9 +1046,6 @@ function App() {
                 />
                 <Card className="sc-card sc-home-hero-panel">
                   <CardContent>
-                    <Typography className="sc-card-label">
-                      What You Get
-                    </Typography>
                     <Stack spacing={1.1}>
                       {heroQuickWins.map((item) => {
                         const Icon = item.Icon;
@@ -877,53 +1077,59 @@ function App() {
 
           <section className="sc-section" id="about">
             <Typography variant="h2" className="sc-section-title sc-reveal">
-              What is NuQloud
+              What Is NuQloud
             </Typography>
             <Typography
               variant="body1"
               className="sc-section-subtitle sc-reveal"
             >
-              NuQloud is designed to feel simpler, more private, and more
-              unified than the patchwork most people are used to.
+              Your future-proof private upgrade for the services you use today,
+              and access to the services you'll need tomorrow. The cloud
+              re-thought for user privacy, and easy access to a next-generation
+              decentralized data network
             </Typography>
             <Box className="sc-two-col sc-home-intro-grid">
               <Card className="sc-card sc-reveal">
                 <CardContent>
                   <Typography className="sc-card-label">
-                    What is NuQloud
+                    More on NuQloud
                   </Typography>
                   <Typography className="sc-feature-copy">
-                    NuQloud, for most, will feel like a simpler, more private
-                    cloud. You will still have familiar day-to-day features you
-                    expect from a cloud provider, but everything in one unified
-                    interface and many things not offered by the big tech
-                    providers.
+                    For most users NuQloud will be a private cloud service that
+                    doesn't harvest your metadata to use against you. A unified
+                    platform that replaces a huge number of services with a
+                    single platform. But NuQloud offers much more than that, it
+                    is simultaneously a gateway to the future of content
+                    distribution that does not suffer from the same security
+                    issues of the internet. NuQloud helps you transition to a
+                    decentralized future, while ensuring you keep the
+                    functionality you need today.
                   </Typography>
                 </CardContent>
               </Card>
               <Card className="sc-card sc-reveal">
                 <CardContent>
                   <Typography className="sc-card-label">
-                    Included In The Experience
+                    Included in Every NuQloud
                   </Typography>
                   <Box
                     component="ul"
                     className="sc-detail-list sc-home-checklist"
                   >
                     <Box component="li" className="sc-detail-item">
-                      Secure file storage, sync, and sharing
+                      Private file sync/storage across multiple devices (mobile and desktop)
                     </Box>
                     <Box component="li" className="sc-detail-item">
-                      Collaboration, office workflows, and team organization
+                      Private collaboration for teams, communities, organizations and families
                     </Box>
                     <Box component="li" className="sc-detail-item">
-                      Messaging, calls, and communication tools
+                      Encrypted and private voice, video, screensharing and meetings with easy scheduling and E-Mail notifications.
                     </Box>
                     <Box component="li" className="sc-detail-item">
-                      Managed backups, support, and growth paths
+                      Off-internet decentralized data backups and decentralized applications access.
                     </Box>
                     <Box component="li" className="sc-detail-item">
-                      Much more beyond the standard cloud checklist
+                      A feature set no other cloud can provide.
                     </Box>
                   </Box>
                 </CardContent>
@@ -968,6 +1174,21 @@ function App() {
                     >
                       <CardContent className="sc-story-panel-content">
                         <Box className="sc-story-grid">
+                          {"badgeImageLight" in story &&
+                          story.badgeImageLight &&
+                          story.badgeImageDark ? (
+                            <Box className="sc-story-badge">
+                              <img
+                                src={
+                                  isDark
+                                    ? story.badgeImageDark
+                                    : story.badgeImageLight
+                                }
+                                alt={story.badgeAlt}
+                                className="sc-story-badge-image"
+                              />
+                            </Box>
+                          ) : null}
                           <Box className="sc-story-copy">
                             <Typography className="sc-card-label">
                               Capability {String(index + 1).padStart(2, "0")}
@@ -1013,15 +1234,26 @@ function App() {
                                       <Box
                                         className="sc-story-replacement-card is-visible"
                                         key={replacement.label}
+                                        aria-label={replacement.label}
+                                        title={replacement.label}
                                       >
-                                        <img
-                                          src={replacement.icon}
-                                          alt={replacement.label}
-                                          className="sc-story-provider-icon"
-                                        />
-                                        <Typography className="sc-story-provider-name">
-                                          {replacement.label}
-                                        </Typography>
+                                        <Box className="sc-story-provider-strip">
+                                          {replacement.providers.map(
+                                            (provider) => (
+                                              <Box
+                                                className="sc-story-provider-pill"
+                                                key={provider.name}
+                                                title={provider.name}
+                                              >
+                                                <img
+                                                  src={provider.icon}
+                                                  alt={provider.name}
+                                                  className="sc-story-provider-icon"
+                                                />
+                                              </Box>
+                                            ),
+                                          )}
+                                        </Box>
                                       </Box>
                                     );
                                   })}
@@ -1098,126 +1330,85 @@ function App() {
             </Box>
           </section>
 
-          <section className="sc-section" id="dedicated-cloud">
-            <Typography variant="h2" className="sc-section-title sc-reveal">
-              Choose the Right NuQloud Model
-            </Typography>
-            <Typography
-              variant="body1"
-              className="sc-section-subtitle sc-reveal"
-            >
-              Choose between hosted NuQloud accounts and fully branded private instances.
-            </Typography>
-            <Box className="sc-two-col">
-              {serviceModels.map((model) => (
-                <Card
-                  className="sc-card sc-home-model-card sc-reveal"
-                  key={model.id}
-                >
-                  <CardContent>
-                    <Typography className="sc-card-label">
-                      Service Model
-                    </Typography>
-                    <Typography className="sc-path-title">
-                      {model.title}
-                    </Typography>
-                    <Typography className="sc-path-copy">
-                      {model.subtitle}
-                    </Typography>
-                    <Typography className="sc-home-model-best-for">
-                      {model.bestFor}
-                    </Typography>
-                    <Box component="ul" className="sc-detail-list">
-                      {model.bullets.map((item) => (
-                        <Box
-                          component="li"
-                          className="sc-detail-item"
-                          key={item}
-                        >
-                          {item}
-                        </Box>
-                      ))}
-                    </Box>
-                    <Button
-                      className="sc-btn-ghost"
-                      onClick={() => scrollToId("plans")}
-                    >
-                      {model.ctaLabel}
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
-            </Box>
-          </section>
-
           <section className="sc-section" id="foundation">
             <Typography variant="h2" className="sc-section-title sc-reveal">
-              A Simpler Cloud Stack
+              NuQloud Interface and Features
             </Typography>
             <Typography
               variant="body1"
               className="sc-section-subtitle sc-reveal"
             >
-              NuQloud is built on proven private cloud software and enhanced
-              with decentralized infrastructure options for resilience and
-              publishing. That means you get the usability people expect, with
-              more ownership and stronger long-term control.
+              Real NuQloud interface screenshots, organized from account setup
+              and decentralized publishing through apps, files,
+              conversations, and live collaboration.
             </Typography>
-            <Box className="sc-two-col sc-home-foundation-grid">
-              <Card className="sc-card sc-reveal">
+            <Box className="sc-showcase-grid">
+              <Box className="sc-showcase-list sc-reveal">
+                {interfaceShowcaseSlides.map((slide) => {
+                  const SlideIcon = slide.Icon;
+                  const isActive = slide.id === activeShowcaseSlide.id;
+                  return (
+                    <button
+                      type="button"
+                      className={`sc-showcase-tab ${isActive ? "is-active" : ""}`}
+                      key={slide.id}
+                      onClick={() => setActiveShowcaseSlideId(slide.id)}
+                    >
+                      <Box className="sc-home-icon-wrap">
+                        <SlideIcon fontSize="small" />
+                      </Box>
+                      <Box className="sc-showcase-tab-copy">
+                        <Typography className="sc-card-label">
+                          {slide.eyebrow}
+                        </Typography>
+                        <Typography className="sc-home-card-title">
+                          {slide.title}
+                        </Typography>
+                      </Box>
+                    </button>
+                  );
+                })}
+              </Box>
+              <Card className="sc-card sc-showcase-preview sc-reveal">
                 <CardContent>
                   <Typography className="sc-card-label">
-                    Technology Foundation
+                    {activeShowcaseSlide.eyebrow}
+                  </Typography>
+                  <Typography className="sc-showcase-preview-title">
+                    {activeShowcaseSlide.title}
                   </Typography>
                   <Typography className="sc-feature-copy">
-                    Nextcloud provides the familiar private-cloud layer for
-                    files, collaboration, and day-to-day workflows. Qortal adds
-                    optional infrastructure capabilities for resilience,
-                    publishing, and broader independence.
+                    {activeShowcaseSlide.body}
                   </Typography>
-                  <Typography className="sc-mini-tease">
-                    Need the self-hosted path instead of managed service? The
-                    self-hosting plugin path is launching soon for teams running
-                    their own infrastructure.
-                  </Typography>
-                  <Button
-                    component={Link}
-                    to="/self-hosting"
-                    className="sc-btn-ghost"
-                  >
-                    See Self-Hosting Path
-                  </Button>
+                  <Box className="sc-showcase-frame">
+                    <Box className="sc-showcase-frame-bar">
+                      <Box className="sc-showcase-dot" />
+                      <Box className="sc-showcase-dot" />
+                      <Box className="sc-showcase-dot" />
+                    </Box>
+                    <Box className="sc-showcase-frame-body">
+                      <Box className="sc-showcase-screenshot-shell">
+                        <img
+                          src={activeShowcaseSlide.image}
+                          alt={activeShowcaseSlide.imageAlt}
+                          className="sc-showcase-screenshot"
+                        />
+                      </Box>
+                      <Box className="sc-showcase-chip-grid">
+                        {activeShowcaseSlide.highlights.map((item) => (
+                          <Box className="sc-showcase-chip" key={item}>
+                            {item}
+                          </Box>
+                        ))}
+                      </Box>
+                    </Box>
+                  </Box>
                 </CardContent>
               </Card>
-              <Box className="sc-home-foundation-stack">
-                {foundationHighlights.map((item) => (
-                  <Card className="sc-card sc-reveal" key={item.title}>
-                    <CardContent>
-                      <Typography className="sc-home-card-title">
-                        {item.title}
-                      </Typography>
-                      <Typography className="sc-mini-tease">
-                        {item.body}
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                ))}
-              </Box>
             </Box>
           </section>
 
           <section className="sc-section" id="plans">
-            <Typography variant="h2" className="sc-section-title sc-reveal">
-              Simple Plans
-            </Typography>
-            <Typography
-              variant="body1"
-              className="sc-section-subtitle sc-reveal"
-            >
-              From accounts on existing NuQloud run instances, to your own fully
-              branded and managed cloud built specifically for your
-              organization, the choice is yours!
-            </Typography>
             <Card className="sc-card sc-plan-overview sc-reveal">
               <CardContent>
                 <Typography className="sc-card-label">
@@ -1236,102 +1427,162 @@ function App() {
               </CardContent>
             </Card>
             <Stack spacing={2.1} className="sc-plan-stack">
-              {planGroups.map((group) => (
-                <Box key={group.id} className="sc-plan-section sc-reveal">
-                  <Box className="sc-plan-section-head">
-                    <Typography className="sc-path-title">
-                      {group.title}
-                    </Typography>
-                  </Box>
-                  {"intro" in group && group.intro ? (
-                    <Typography className="sc-mini-tease sc-plan-group-intro">
-                      {group.intro}
-                    </Typography>
-                  ) : null}
-                  <Box className="sc-plan-grid">
-                    {group.plans.map((plan) => (
-                      <Card className="sc-card sc-plan-card" key={plan.slug}>
-                        <CardContent>
-                          <Typography className="sc-card-label">
-                            Plan
-                          </Typography>
-                          <Box className="sc-plan-card-head">
-                            <Box className="sc-plan-card-copy">
-                              <Typography className="sc-home-card-title">
-                                {plan.name}
-                              </Typography>
-                              <Typography className="sc-mini-tease">
-                                {plan.description}
-                              </Typography>
-                            </Box>
-                            {"price" in plan && plan.price ? (
-                              <Box className="sc-plan-price-wrap">
-                                <Typography className="sc-plan-price">
-                                  {plan.price}
-                                  <Box component="span" className="sc-plan-cadence">
-                                    {plan.cadence || ""}
-                                  </Box>
-                                </Typography>
-                                {"setupFee" in plan && plan.setupFee ? (
-                                  <Typography className="sc-plan-setup">
-                                    {plan.setupFee}
-                                  </Typography>
-                                ) : null}
-                              </Box>
-                            ) : null}
-                          </Box>
-                          {"summary" in plan && plan.summary ? (
-                            <Typography className="sc-plan-summary">
-                              {plan.summary}
+              {planGroups.map((group) => {
+                const model = serviceModels.find(
+                  (entry) => entry.id === group.modelId,
+                );
+
+                return (
+                  <Box
+                    key={group.id}
+                    className={`sc-plan-section sc-plan-section--${group.tone} sc-reveal`}
+                    id={
+                      group.id === "dedicated" ? "dedicated-cloud" : undefined
+                    }
+                  >
+                    <Box className="sc-plan-section-head">
+                      <Typography className="sc-path-title sc-plan-section-title">
+                        {group.title}
+                      </Typography>
+                    </Box>
+                    {"intro" in group && group.intro ? (
+                      <Typography className="sc-mini-tease sc-plan-group-intro">
+                        {group.intro}
+                      </Typography>
+                    ) : null}
+                    {model ? (
+                      <Box className="sc-plan-model-card-wrap">
+                        <Card
+                          className={`sc-card sc-home-model-card sc-home-model-card--${model.tone} sc-plan-model-card`}
+                        >
+                          <CardContent>
+                            <Typography className="sc-path-title sc-home-model-title">
+                              {model.title}
                             </Typography>
-                          ) : null}
-                          {"publishingCredits" in plan && plan.publishingCredits ? (
-                            <Typography className="sc-plan-credits">
-                              {plan.publishingCredits}
+                            <Typography className="sc-path-copy">
+                              {model.subtitle}
                             </Typography>
-                          ) : null}
-                          {"bullets" in plan && Array.isArray(plan.bullets) && plan.bullets.length ? (
-                            <Box component="ul" className="sc-detail-list sc-plan-detail-list">
-                              {plan.bullets.map((item) => (
-                                <Box component="li" className="sc-detail-item" key={item}>
+                            <Typography className="sc-home-model-best-for">
+                              {model.bestFor}
+                            </Typography>
+                            <Box component="ul" className="sc-detail-list">
+                              {model.bullets.map((item) => (
+                                <Box
+                                  component="li"
+                                  className="sc-detail-item"
+                                  key={item}
+                                >
                                   {item}
                                 </Box>
                               ))}
                             </Box>
-                          ) : null}
-                          {"note" in plan && plan.note ? (
-                            <Typography className="sc-plan-note">
-                              {plan.note}
+                          </CardContent>
+                        </Card>
+                      </Box>
+                    ) : null}
+                    <Box className={`sc-plan-grid sc-plan-grid--${group.tone}`}>
+                      {group.plans.map((plan) => (
+                        <Card
+                          className={`sc-card sc-plan-card sc-plan-card--${group.tone}`}
+                          key={plan.slug}
+                        >
+                          <CardContent>
+                            <Typography className="sc-card-label">
+                              Plan
                             </Typography>
-                          ) : null}
-                          <Box className="sc-plan-actions">
-                            <Button
-                              className="sc-btn-primary sc-plan-buy-btn"
-                              onClick={() => handlePlanCheckout(plan.slug)}
-                            >
-                              Buy Now
-                            </Button>
-                            <Button
-                              className="sc-btn-link sc-plan-detail-link"
-                              onClick={() => handlePlanDetails(plan.slug)}
-                            >
-                              View Details
-                            </Button>
-                            {"teamSlug" in plan && plan.teamSlug ? (
-                              <Button
-                                className="sc-btn-link sc-plan-team-link"
-                                onClick={() => handlePlanDetails(plan.teamSlug)}
-                              >
-                                {plan.teamLabel || "View Team Version"}
-                              </Button>
+                            <Box className="sc-plan-card-head">
+                              <Box className="sc-plan-card-copy">
+                                <Typography className="sc-home-card-title">
+                                  {plan.name}
+                                </Typography>
+                                <Typography className="sc-mini-tease">
+                                  {plan.description}
+                                </Typography>
+                              </Box>
+                              {"price" in plan && plan.price ? (
+                                <Box className="sc-plan-price-wrap">
+                                  <Typography className="sc-plan-price">
+                                    {plan.price}
+                                    <Box
+                                      component="span"
+                                      className="sc-plan-cadence"
+                                    >
+                                      {plan.cadence || ""}
+                                    </Box>
+                                  </Typography>
+                                  {"setupFee" in plan && plan.setupFee ? (
+                                    <Typography className="sc-plan-setup">
+                                      {plan.setupFee}
+                                    </Typography>
+                                  ) : null}
+                                </Box>
+                              ) : null}
+                            </Box>
+                            {"summary" in plan && plan.summary ? (
+                              <Typography className="sc-plan-summary">
+                                {plan.summary}
+                              </Typography>
                             ) : null}
-                          </Box>
-                        </CardContent>
-                      </Card>
-                    ))}
+                            {"publishingCredits" in plan &&
+                            plan.publishingCredits ? (
+                              <Typography className="sc-plan-credits">
+                                {plan.publishingCredits}
+                              </Typography>
+                            ) : null}
+                            {"bullets" in plan &&
+                            Array.isArray(plan.bullets) &&
+                            plan.bullets.length ? (
+                              <Box
+                                component="ul"
+                                className="sc-detail-list sc-plan-detail-list"
+                              >
+                                {plan.bullets.map((item) => (
+                                  <Box
+                                    component="li"
+                                    className="sc-detail-item"
+                                    key={item}
+                                  >
+                                    {item}
+                                  </Box>
+                                ))}
+                              </Box>
+                            ) : null}
+                            {"note" in plan && plan.note ? (
+                              <Typography className="sc-plan-note">
+                                {plan.note}
+                              </Typography>
+                            ) : null}
+                            <Box className="sc-plan-actions">
+                              <Button
+                                className={`sc-btn-primary sc-plan-buy-btn sc-plan-buy-btn--${group.tone}`}
+                                onClick={() => handlePlanCheckout(plan.slug)}
+                              >
+                                Buy Now
+                              </Button>
+                              <Button
+                                className="sc-btn-link sc-plan-detail-link"
+                                onClick={() => handlePlanDetails(plan.slug)}
+                              >
+                                View Details
+                              </Button>
+                              {"teamSlug" in plan && plan.teamSlug ? (
+                                <Button
+                                  className="sc-btn-link sc-plan-team-link"
+                                  onClick={() =>
+                                    handlePlanDetails(plan.teamSlug)
+                                  }
+                                >
+                                  {plan.teamLabel || "View Team Version"}
+                                </Button>
+                              ) : null}
+                            </Box>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </Box>
                   </Box>
-                </Box>
-              ))}
+                );
+              })}
             </Stack>
           </section>
 

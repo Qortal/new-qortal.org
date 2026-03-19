@@ -13,8 +13,12 @@ Landing site for NuQloud, built as a Qortal-publishable React app (via `create-q
   - `/feature-details/:storyId` preserved in-depth feature pages sourced from the archived MSP content model
 - Root landing page now uses a private-cloud-first marketing structure:
   - direct hero messaging for normal buyers
+  - updated hero/about positioning around NuQloud as a private digital world and gateway to decentralized data/apps
   - plain-language explanation of what NuQloud is
-  - a scroll-driven feature-story section with animated workflows, readable big-tech replacement groups, and `Read More` links into preserved detail pages
+  - a scroll-driven feature-story section with animated workflows, larger bundled color replacement-provider logos, and `Read More` links into preserved detail pages
+  - a curated real screenshot gallery for the NuQloud dashboard, network identity/publishing flow, decentralized apps, files, conversations, and collaborative editing
+  - communications replacement logos now avoid duplicate entries and include additional real bundled service marks for messaging apps like Telegram and WhatsApp
+  - plans now render as two coordinated lanes, with the `NuQloud Accounts` and `Dedicated Branded NuQloud Instances` summary cards centered above their matching plan groups and accent styling carried through to the plan cards and buy buttons
   - differentiation, service-model split, stack summary, and plan preview sections
 - Self-hosting route remains available for the plugin-first audience with separate messaging and navigation, and now clearly notes that the plugin package is being finalized for near-term release.
 - Previous dense MSP homepage content is preserved in:
@@ -56,6 +60,10 @@ Logo/hero graphics are loaded from:
 
 - `public/NuQloud-Nucleus-logoOnly-favicon.png`
 - `public/NuQloud-Block-logo-noBG-2.png`
+
+Replacement-provider icons and the `Powered by Qortal` badge are bundled locally in `src/assets/` so they continue to work in QDN-hosted builds without remote asset dependencies.
+
+The interface gallery screenshots are also bundled locally under `src/assets/interface-gallery/` with stable renamed filenames so the gallery works the same in both standard hosting and QDN-published deployments.
 
 ## Development
 

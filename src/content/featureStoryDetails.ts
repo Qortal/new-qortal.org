@@ -62,13 +62,13 @@ export const featureStoryDetails: Record<FeatureStoryId, FeatureStoryDetail> = {
     kicker: "Files, Sync, Sharing, and Backup",
     title: "Store, Sync, Share, and Publish",
     summary:
-      "NuQloud keeps your files, sync, sharing, collaboration, and off-network backup options in one private workflow instead of scattering them across separate storage tools.",
+      "NuQloud keeps your files available across devices, lets you choose what to sync, supports public or private sharing, and adds optional decentralized publishing in the same private workflow.",
     supportCopy:
-      "Files, collaboration, controlled sharing, and resilient publishing stay in one managed environment instead of being split across storage, backup, and link-sharing services.",
+      "Files, collaboration, controlled sharing, and optional encrypted decentralized publishing stay in one managed environment instead of being split across separate storage, backup, and link-sharing services.",
     replaceSummary: [
-      "Dropbox / OneDrive / Box / iCloud Drive",
-      "Google Drive / Workspace Files",
-      "Add-on backup tooling and public-link patchwork",
+      "Dropbox / Google Drive / Box / iCloud",
+      "Google Docs / Notion / Airtable",
+      "Public-link and backup patchwork",
     ],
     archivedSections: [
       getArchivedSection("workspace-core"),
@@ -90,13 +90,13 @@ export const featureStoryDetails: Record<FeatureStoryId, FeatureStoryDetail> = {
     kicker: "Shared Workspaces and Coordination",
     title: "Share and Collaborate in One Place",
     summary:
-      "NuQloud keeps document work, team coordination, project tracking, and shared knowledge in one private workspace so collaboration does not sprawl across disconnected apps.",
+      "NuQloud keeps document work, coordination, shared editing, and optional decentralized publishing in one private workspace so collaboration does not sprawl across disconnected apps.",
     supportCopy:
-      "Document work, shared context, workflow tracking, and team coordination stay attached to the same private cloud instead of being distributed across multiple vendors.",
+      "Document work, shared context, workflow tracking, and coordinated sharing stay attached to the same private cloud instead of being distributed across multiple vendors.",
     replaceSummary: [
-      "Google Workspace / Microsoft 365",
-      "Notion / Confluence / Airtable",
-      "Trello / Asana / Jira",
+      "Google Docs / Notion / Confluence",
+      "Trello / Asana / Jira / Airtable",
+      "Disconnected client-share workflows",
     ],
     archivedSections: [
       getArchivedSection("office-layer"),
@@ -112,16 +112,16 @@ export const featureStoryDetails: Record<FeatureStoryId, FeatureStoryDetail> = {
   },
   communicate: {
     id: "communicate",
-    kicker: "Messaging, Calls, and Team Context",
-    title: "Communicate Without Stack Sprawl",
+    kicker: "Messaging, Calls, Meetings, and Team Context",
+    title: "Communicate Securely and Privately",
     summary:
-      "NuQloud brings messaging, calls, meeting links, recordings, and team context together so internal and external communication stays in the same private environment.",
+      "NuQloud brings messaging, calls, meetings, recordings, and team context together so internal and external communication stays in the same private environment.",
     supportCopy:
-      "Conversations, calls, scheduling context, and operational visibility remain in one environment so teams can communicate without another app stack.",
+      "Conversations, calls, scheduling context, and permissions remain in one environment so teams can communicate without another app stack.",
     replaceSummary: [
-      "Slack / Teams / Zoom",
-      "Discord / meeting-link sprawl",
-      "Separated scheduling and coordination silos",
+      "Google Chat / Google Meet / Zoom",
+      "Discord and extra communication silos",
+      "Meeting-link and scheduling sprawl",
     ],
     archivedSections: [
       getArchivedSection("comms-layer"),
@@ -138,15 +138,15 @@ export const featureStoryDetails: Record<FeatureStoryId, FeatureStoryDetail> = {
   "publish-resilience": {
     id: "publish-resilience",
     kicker: "QDN Publishing and Resilience",
-    title: "Publish with Off-Network Resilience",
+    title: "Publish to Decentralized Data Network",
     summary:
-      "NuQloud can publish content to QDN for access with or without the cloud, preserve verifiable audit trails, and layer encrypted chunked off-network resilience into the same file workflow.",
+      "NuQloud can publish selected files to QDN for access with or without the cloud, using encrypted chunked off-network distribution tied to the same file workflow.",
     supportCopy:
-      "Publishing, backup resilience, and broader off-network access can be part of the same file workflow instead of a separate backup or distribution system.",
+      "Publishing, encrypted chunking, and broader off-network access can be part of the same file workflow instead of a separate backup or distribution system.",
     replaceSummary: [
-      "Public drive links / expiring shares",
-      "Docs portals and static knowledge silos",
-      "Centralized publishing platforms",
+      "Server-dependent shared links",
+      "Centralized document portals",
+      "Single-platform publishing flows",
     ],
     archivedSections: [
       getArchivedSection("publish-layer"),

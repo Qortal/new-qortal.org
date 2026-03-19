@@ -1623,12 +1623,12 @@
   margin-top: 1.15rem;
   display: grid;
   gap: 1rem;
-  grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
+  grid-template-columns: minmax(0, 0.76fr) minmax(0, 1.24fr);
 }
 
 .sc-showcase-list {
   display: grid;
-  gap: 0.85rem;
+  gap: 0.72rem;
   max-height: min(78rem, 82vh);
   overflow: auto;
   padding-right: 0.35rem;
@@ -1638,10 +1638,10 @@
   width: 100%;
   border: 1px solid var(--sc-border);
   border-radius: 1rem;
-  padding: 1rem;
+  padding: 0.82rem 0.88rem;
   display: flex;
   align-items: flex-start;
-  gap: 0.9rem;
+  gap: 0.72rem;
   background: color-mix(in srgb, var(--sc-bg-card) 86%, transparent);
   color: inherit;
   text-align: left;
@@ -1661,6 +1661,15 @@
 
 .sc-showcase-tab-copy {
   min-width: 0;
+}
+
+.sc-showcase-tab-copy .sc-card-label {
+  margin-bottom: 0.28rem !important;
+}
+
+.sc-showcase-tab-copy .sc-home-card-title {
+  font-size: 0.96rem !important;
+  line-height: 1.28 !important;
 }
 
 .sc-showcase-preview {
@@ -1713,6 +1722,7 @@
   border-radius: 0.95rem;
   overflow: hidden;
   border: 1px solid color-mix(in srgb, var(--sc-border-strong) 68%, transparent);
+  position: relative;
   background:
     radial-gradient(
       circle at 18% 20%,
@@ -1727,11 +1737,53 @@
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
+.sc-showcase-screenshot-button {
+  width: 100%;
+  padding: 0;
+  text-align: left;
+  appearance: none;
+  color: inherit;
+  cursor: zoom-in;
+  transition:
+    transform 200ms ease,
+    border-color 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.sc-showcase-screenshot-button:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--sc-primary) 56%, #d2ebff);
+  box-shadow:
+    0 16px 36px rgba(6, 18, 38, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.sc-showcase-screenshot-button:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--sc-primary) 82%, white 12%);
+  outline-offset: 3px;
+}
+
 .sc-showcase-screenshot {
   width: 100%;
   height: auto;
   display: block;
   object-fit: cover;
+}
+
+.sc-showcase-screenshot-hint {
+  position: absolute;
+  right: 0.8rem;
+  bottom: 0.8rem;
+  padding: 0.42rem 0.68rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--sc-border-strong) 82%, transparent);
+  background: color-mix(in srgb, var(--sc-bg-card) 90%, rgba(1, 5, 13, 0.42));
+  color: var(--sc-text);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  pointer-events: none;
+  backdrop-filter: blur(10px);
 }
 
 .sc-showcase-frame-hero {
@@ -1782,6 +1834,54 @@
   background: color-mix(in srgb, var(--sc-chip) 88%, transparent);
   color: var(--sc-text);
   font-size: 0.84rem;
+}
+
+.sc-showcase-lightbox .MuiDialog-paper {
+  border-radius: 1.2rem;
+  border: 1px solid color-mix(in srgb, var(--sc-border-strong) 72%, transparent);
+  background:
+    linear-gradient(
+      155deg,
+      color-mix(in srgb, var(--sc-bg-card) 96%, transparent),
+      color-mix(in srgb, var(--sc-bg-soft) 94%, transparent)
+    );
+  color: var(--sc-text);
+  box-shadow: var(--sc-shadow);
+  overflow: hidden;
+}
+
+.sc-showcase-lightbox-content {
+  padding: 1rem !important;
+}
+
+.sc-showcase-lightbox-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.9rem;
+}
+
+.sc-showcase-lightbox-title {
+  color: var(--sc-text);
+  font-weight: 700 !important;
+  font-size: clamp(1.15rem, 2vw, 1.55rem) !important;
+}
+
+.sc-showcase-lightbox-image-shell {
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--sc-border-strong) 68%, transparent);
+  background: color-mix(in srgb, var(--sc-bg-soft) 78%, transparent);
+}
+
+.sc-showcase-lightbox-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  max-height: calc(100vh - 13rem);
+  object-fit: contain;
+  margin: 0 auto;
 }
 
 .sc-full-details-wrap {
@@ -2117,6 +2217,17 @@
 
   .sc-showcase-tab {
     padding: 0.9rem;
+  }
+
+  .sc-showcase-screenshot-hint {
+    right: 0.65rem;
+    bottom: 0.65rem;
+    font-size: 0.72rem;
+  }
+
+  .sc-showcase-lightbox-head {
+    flex-direction: column;
+    align-items: stretch;
   }
 
   .sc-story-provider-pill {

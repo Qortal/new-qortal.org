@@ -24,6 +24,8 @@ import {
   CardContent,
   Chip,
   Container,
+  Dialog,
+  DialogContent,
   IconButton,
   Stack,
   Typography,
@@ -86,11 +88,11 @@ const PLAN_CHECKOUT_URLS: Record<string, string> = {
   "nuqloud-team-pro":
     "https://payment.crowetic.com/products/nuqloud/nuqloud-professional-team/checkout",
   "nuqloud-branded-starter":
-    "https://payment.crowetic.com/products/nuqloud-branded/nuqloud-branded-starter/checkout",
-  "nuqloud-branded-advanced":
-    "https://payment.crowetic.com/products/nuqloud-branded/nuqloud-branded-pro/checkout",
+    "https://payment.crowetic.com/products/nuqloud/nuqloud-branded-starter/checkout",
+  "nuqloud-branded-pro":
+    "https://payment.crowetic.com/products/nuqloud/nuqloud-branded-pro/checkout",
   "nuqloud-branded-enterprise":
-    "https://payment.crowetic.com/products/nuqloud-branded/nuqloud-branded-enterprise-default/checkout",
+    "https://payment.crowetic.com/products/nuqloud/nuqloud-branded-enterprise-default/checkout",
 };
 const CONTACT_TICKET_URL = "https://payment.crowetic.com/tickets/create";
 
@@ -201,7 +203,8 @@ const featureStories = [
     body: "Work with internal and external clients, teams, and family members in one private cloud without worrying about your data.",
     detail:
       "A single file can be edited in place by multiple parties, then optionally published to the decentralized data network for stronger security and wider availability.",
-    actionLabel: "Collaborate in place, then publish selected work when needed.",
+    actionLabel:
+      "Collaborate in place, then publish selected work when needed.",
     successLabel: "Shared and active",
     scene: "share",
     Icon: WorkspacesRoundedIcon,
@@ -391,7 +394,8 @@ const interfaceShowcaseSlides = [
       "Confirmation shown in the dashboard",
     ],
     image: filesPublishApprovalImage,
-    imageAlt: "NuQloud register name dialog with decentralized identity registration details.",
+    imageAlt:
+      "NuQloud register name dialog with decentralized identity registration details.",
     Icon: VerifiedUserRoundedIcon,
   },
   {
@@ -406,7 +410,8 @@ const interfaceShowcaseSlides = [
       "Clear confirmation history",
     ],
     image: networkTransactionsImage,
-    imageAlt: "NuQloud transactions section showing publishing and account activity.",
+    imageAlt:
+      "NuQloud transactions section showing publishing and account activity.",
     Icon: LanRoundedIcon,
   },
   {
@@ -466,7 +471,8 @@ const interfaceShowcaseSlides = [
       "One file, not copies",
     ],
     image: collaborativeDocSharingImage,
-    imageAlt: "Collaborative document editing with the NuQloud sharing sidebar open.",
+    imageAlt:
+      "Collaborative document editing with the NuQloud sharing sidebar open.",
     Icon: DescriptionRoundedIcon,
   },
   {
@@ -496,7 +502,8 @@ const interfaceShowcaseSlides = [
       "No app switching",
     ],
     image: sharedFileInConversationImage,
-    imageAlt: "A NuQloud conversation with a shared document attached in the active discussion.",
+    imageAlt:
+      "A NuQloud conversation with a shared document attached in the active discussion.",
     Icon: ShareRoundedIcon,
   },
   {
@@ -511,7 +518,8 @@ const interfaceShowcaseSlides = [
       "Private cloud workflow",
     ],
     image: liveDocumentCollaborationImage,
-    imageAlt: "Collaborative document editing while a NuQloud conversation remains visible beside it.",
+    imageAlt:
+      "Collaborative document editing while a NuQloud conversation remains visible beside it.",
     Icon: WorkspacesRoundedIcon,
   },
 ];
@@ -540,7 +548,8 @@ const planGroups = [
       {
         slug: "nuqloud-advanced",
         name: "NuQloud Advanced",
-        description: "$21/month with more storage and initial publishing credits.",
+        description:
+          "$21/month with more storage and initial publishing credits.",
         price: "$21",
         cadence: "/month",
         summary: "25GB on-server + 25GB decentralized encrypted publish space.",
@@ -552,10 +561,12 @@ const planGroups = [
       {
         slug: "nuqloud-pro",
         name: "NuQloud Professional",
-        description: "$36/month with more storage and initial publishing credits.",
+        description:
+          "$36/month with more storage and initial publishing credits.",
         price: "$36",
         cadence: "/month",
-        summary: "100GB on-server + 100GB decentralized encrypted publish space.",
+        summary:
+          "100GB on-server + 100GB decentralized encrypted publish space.",
         publishingCredits: "5,000 initial publishing credits included.",
         note: "Team versions available",
         teamSlug: "nuqloud-team-pro",
@@ -574,8 +585,7 @@ const planGroups = [
       {
         slug: "nuqloud-branded-starter",
         name: "NuQloud Branded Starter",
-        description:
-          "$175/month with a $500 one-time initial setup fee.",
+        description: "$175/month with a $500 one-time initial setup fee.",
         price: "$175",
         cadence: "/month",
         setupFee: "$500 one-time setup",
@@ -587,14 +597,14 @@ const planGroups = [
         ],
       },
       {
-        slug: "nuqloud-branded-advanced",
-        name: "NuQloud Branded Advanced",
-        description:
-          "$350/month with a $1,000 one-time initial setup fee.",
+        slug: "nuqloud-branded-pro",
+        name: "NuQloud Branded Pro",
+        description: "$350/month with a $1,000 one-time initial setup fee.",
         price: "$350",
         cadence: "/month",
         setupFee: "$1,000 one-time setup",
-        summary: "500GB on-instance storage + 500GB decentralized publishing space.",
+        summary:
+          "500GB on-instance storage + 500GB decentralized publishing space.",
         publishingCredits: "25,000 initial publishing credits included.",
         bullets: [
           "Expansion options available",
@@ -610,7 +620,8 @@ const planGroups = [
         price: "$1,500",
         cadence: "/month",
         setupFee: "$3,500 one-time setup",
-        summary: "1TB per instance + 1TB per instance decentralized publishing space.",
+        summary:
+          "1TB per instance + 1TB per instance decentralized publishing space.",
         publishingCredits: "100,000 initial publishing credits per instance.",
         bullets: [
           "Multiple expansion options",
@@ -625,7 +636,7 @@ const planGroups = [
 const topNavSections = pageSections.filter((section) => section.topNav);
 
 const initialFeatureStoryProgress = Object.fromEntries(
-  featureStories.map((story) => [story.id, 0]),
+  featureStories.map((story) => [story.id, 0])
 ) as Record<(typeof featureStories)[number]["id"], number>;
 
 function clampProgress(value: number) {
@@ -653,11 +664,7 @@ function getStoryStickyTop(viewportWidth: number, viewportHeight: number) {
 }
 
 const featureSceneIconSequence: Record<FeatureSceneId, ElementType[]> = {
-  sync: [
-    InsertDriveFileRoundedIcon,
-    FolderRoundedIcon,
-    SyncRoundedIcon,
-  ],
+  sync: [InsertDriveFileRoundedIcon, FolderRoundedIcon, SyncRoundedIcon],
   share: [DescriptionRoundedIcon, ShareRoundedIcon, GroupsRoundedIcon],
   communicate: [ForumRoundedIcon, CallRoundedIcon, GroupsRoundedIcon],
   publish: [DescriptionRoundedIcon, HubRoundedIcon, PublicRoundedIcon],
@@ -666,7 +673,7 @@ const featureSceneIconSequence: Record<FeatureSceneId, ElementType[]> = {
 function renderFeatureScene(
   scene: FeatureSceneId,
   progress: number,
-  successLabel: string,
+  successLabel: string
 ) {
   const sceneStyles = {
     ["--sc-story-progress" as string]: progress.toFixed(3),
@@ -676,7 +683,7 @@ function renderFeatureScene(
   const stageProgress = Math.min(progress / 0.72, 0.999);
   const activeIndex = Math.min(
     iconSequence.length - 1,
-    Math.floor(stageProgress * iconSequence.length),
+    Math.floor(stageProgress * iconSequence.length)
   );
 
   return (
@@ -723,19 +730,21 @@ function App() {
   const [scrollY, setScrollY] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeSection, setActiveSection] = useState<string>(
-    pageSections[0].id,
+    pageSections[0].id
   );
   const [featureStoryProgress, setFeatureStoryProgress] = useState(
-    initialFeatureStoryProgress,
+    initialFeatureStoryProgress
   );
   const [activeShowcaseSlideId, setActiveShowcaseSlideId] = useState(
-    interfaceShowcaseSlides[0].id,
+    interfaceShowcaseSlides[0].id
   );
+  const [isShowcaseLightboxOpen, setIsShowcaseLightboxOpen] = useState(false);
   const { contextActionFeedback, openOrCopyInternetLink } = useAccessContext();
   const isDark = theme === EnumTheme.DARK;
   const activeShowcaseSlide =
-    interfaceShowcaseSlides.find((slide) => slide.id === activeShowcaseSlideId) ??
-    interfaceShowcaseSlides[0];
+    interfaceShowcaseSlides.find(
+      (slide) => slide.id === activeShowcaseSlideId
+    ) ?? interfaceShowcaseSlides[0];
 
   const pageMotionStyles = useMemo(
     () =>
@@ -747,12 +756,12 @@ function App() {
         ["--sc-spin-c" as string]: `${Math.round((scrollY * 0.07) % 360)}deg`,
         ["--sc-depth" as string]: `${(1 + Math.sin(scrollY / 260) * 0.04).toFixed(3)}`,
       }) as CSSProperties,
-    [scrollY],
+    [scrollY]
   );
 
   useEffect(() => {
     const items = Array.from(
-      document.querySelectorAll<HTMLElement>(".sc-reveal"),
+      document.querySelectorAll<HTMLElement>(".sc-reveal")
     );
     if (!items.length) {
       return;
@@ -770,7 +779,7 @@ function App() {
           }
         });
       },
-      { threshold: 0.2, rootMargin: "0px 0px -10% 0px" },
+      { threshold: 0.2, rootMargin: "0px 0px -10% 0px" }
     );
 
     items.forEach((item) => observer.observe(item));
@@ -784,7 +793,7 @@ function App() {
 
       const maxScrollable = Math.max(
         document.documentElement.scrollHeight - window.innerHeight,
-        1,
+        1
       );
       setScrollProgress(Math.min(nextY / maxScrollable, 1));
 
@@ -815,7 +824,7 @@ function App() {
       const nextFeatureProgress = { ...initialFeatureStoryProgress };
       const stickyTop = getStoryStickyTop(
         window.innerWidth,
-        window.innerHeight,
+        window.innerHeight
       );
       const completionTravelFactor = window.innerWidth <= 720 ? 0.8 : 0.84;
 
@@ -835,7 +844,7 @@ function App() {
         const progressEndTop =
           stickyTop - pinnedTravel * completionTravelFactor;
         const progress = clampProgress(
-          (progressStartTop - rect.top) / (progressStartTop - progressEndTop),
+          (progressStartTop - rect.top) / (progressStartTop - progressEndTop)
         );
         nextFeatureProgress[story.id] = progress;
       }
@@ -862,13 +871,15 @@ function App() {
   const handlePlanCheckout = useCallback(
     (planSlug?: string) => {
       const normalizedSlug = String(planSlug || "").trim();
-      const url = normalizedSlug ? PLAN_CHECKOUT_URLS[normalizedSlug] || "" : "";
+      const url = normalizedSlug
+        ? PLAN_CHECKOUT_URLS[normalizedSlug] || ""
+        : "";
       if (!url) {
         return;
       }
       void openOrCopyInternetLink(url);
     },
-    [openOrCopyInternetLink],
+    [openOrCopyInternetLink]
   );
 
   const handlePlanDetails = useCallback(
@@ -883,12 +894,20 @@ function App() {
       }
       void openOrCopyInternetLink(detailsUrl);
     },
-    [openOrCopyInternetLink],
+    [openOrCopyInternetLink]
   );
 
   const handleSalesAction = useCallback(() => {
     void openOrCopyInternetLink(CONTACT_TICKET_URL);
   }, [openOrCopyInternetLink]);
+
+  const openShowcaseLightbox = useCallback(() => {
+    setIsShowcaseLightboxOpen(true);
+  }, []);
+
+  const closeShowcaseLightbox = useCallback(() => {
+    setIsShowcaseLightboxOpen(false);
+  }, []);
 
   return (
     <Box
@@ -1117,16 +1136,20 @@ function App() {
                     className="sc-detail-list sc-home-checklist"
                   >
                     <Box component="li" className="sc-detail-item">
-                      Private file sync/storage across multiple devices (mobile and desktop)
+                      Private file sync/storage across multiple devices (mobile
+                      and desktop)
                     </Box>
                     <Box component="li" className="sc-detail-item">
-                      Private collaboration for teams, communities, organizations and families
+                      Private collaboration for teams, communities,
+                      organizations and families
                     </Box>
                     <Box component="li" className="sc-detail-item">
-                      Encrypted and private voice, video, screensharing and meetings with easy scheduling and E-Mail notifications.
+                      Encrypted and private voice, video, screensharing and
+                      meetings with easy scheduling and E-Mail notifications.
                     </Box>
                     <Box component="li" className="sc-detail-item">
-                      Off-internet decentralized data backups and decentralized applications access.
+                      Off-internet decentralized data backups and decentralized
+                      applications access.
                     </Box>
                     <Box component="li" className="sc-detail-item">
                       A feature set no other cloud can provide.
@@ -1251,7 +1274,7 @@ function App() {
                                                   className="sc-story-provider-icon"
                                                 />
                                               </Box>
-                                            ),
+                                            )
                                           )}
                                         </Box>
                                       </Box>
@@ -1286,7 +1309,7 @@ function App() {
                             {renderFeatureScene(
                               story.scene,
                               sceneProgress,
-                              story.successLabel,
+                              story.successLabel
                             )}
                           </Box>
                         </Box>
@@ -1339,8 +1362,8 @@ function App() {
               className="sc-section-subtitle sc-reveal"
             >
               Real NuQloud interface screenshots, organized from account setup
-              and decentralized publishing through apps, files,
-              conversations, and live collaboration.
+              and decentralized publishing through apps, files, conversations,
+              and live collaboration.
             </Typography>
             <Box className="sc-showcase-grid">
               <Box className="sc-showcase-list sc-reveal">
@@ -1387,13 +1410,21 @@ function App() {
                       <Box className="sc-showcase-dot" />
                     </Box>
                     <Box className="sc-showcase-frame-body">
-                      <Box className="sc-showcase-screenshot-shell">
+                      <button
+                        type="button"
+                        className="sc-showcase-screenshot-shell sc-showcase-screenshot-button"
+                        onClick={openShowcaseLightbox}
+                        aria-label={`Open enlarged screenshot for ${activeShowcaseSlide.title}`}
+                      >
                         <img
                           src={activeShowcaseSlide.image}
                           alt={activeShowcaseSlide.imageAlt}
                           className="sc-showcase-screenshot"
                         />
-                      </Box>
+                        <Box className="sc-showcase-screenshot-hint">
+                          Click to enlarge
+                        </Box>
+                      </button>
                       <Box className="sc-showcase-chip-grid">
                         {activeShowcaseSlide.highlights.map((item) => (
                           <Box className="sc-showcase-chip" key={item}>
@@ -1406,6 +1437,42 @@ function App() {
                 </CardContent>
               </Card>
             </Box>
+            <Dialog
+              open={isShowcaseLightboxOpen}
+              onClose={closeShowcaseLightbox}
+              maxWidth="xl"
+              fullWidth
+              className="sc-showcase-lightbox"
+            >
+              <DialogContent className="sc-showcase-lightbox-content">
+                <Box className="sc-showcase-lightbox-head">
+                  <Box>
+                    <Typography className="sc-card-label">
+                      {activeShowcaseSlide.eyebrow}
+                    </Typography>
+                    <Typography className="sc-showcase-lightbox-title">
+                      {activeShowcaseSlide.title}
+                    </Typography>
+                  </Box>
+                  <Button
+                    className="sc-btn-ghost"
+                    onClick={closeShowcaseLightbox}
+                  >
+                    Close
+                  </Button>
+                </Box>
+                <Box className="sc-showcase-lightbox-image-shell">
+                  <img
+                    src={activeShowcaseSlide.image}
+                    alt={activeShowcaseSlide.imageAlt}
+                    className="sc-showcase-lightbox-image"
+                  />
+                </Box>
+                <Typography className="sc-mini-tease">
+                  {activeShowcaseSlide.body}
+                </Typography>
+              </DialogContent>
+            </Dialog>
           </section>
 
           <section className="sc-section" id="plans">
@@ -1429,7 +1496,7 @@ function App() {
             <Stack spacing={2.1} className="sc-plan-stack">
               {planGroups.map((group) => {
                 const model = serviceModels.find(
-                  (entry) => entry.id === group.modelId,
+                  (entry) => entry.id === group.modelId
                 );
 
                 return (
@@ -1440,16 +1507,6 @@ function App() {
                       group.id === "dedicated" ? "dedicated-cloud" : undefined
                     }
                   >
-                    <Box className="sc-plan-section-head">
-                      <Typography className="sc-path-title sc-plan-section-title">
-                        {group.title}
-                      </Typography>
-                    </Box>
-                    {"intro" in group && group.intro ? (
-                      <Typography className="sc-mini-tease sc-plan-group-intro">
-                        {group.intro}
-                      </Typography>
-                    ) : null}
                     {model ? (
                       <Box className="sc-plan-model-card-wrap">
                         <Card

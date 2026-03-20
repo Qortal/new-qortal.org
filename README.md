@@ -37,6 +37,7 @@ Landing site for NuQloud, built as a Qortal-publishable React app (via `create-q
 - On-page theme toggle plus iframe theme compatibility.
 - Percent-based content width (intentionally narrower than full viewport to expose animated side objects).
 - Active-section navigation (sticky top nav + side progress rail on wide viewports).
+- The sticky header navigation now includes a direct `Screenshots` jump link for the interface gallery section.
 - Scroll choreography includes side-slide reveal cards for deeper replacement details.
 - Responsive layout for desktop/tablet/mobile.
 - Reveal-on-scroll section animation with staggered choreography, parallax background response, and scroll-reactive geometric objects.

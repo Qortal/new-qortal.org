@@ -104,7 +104,7 @@ const pageSections = [
   { id: "features", label: "Features", topNav: true },
   { id: "why", label: "Why", topNav: false },
   { id: "dedicated-cloud", label: "Dedicated Cloud", topNav: true },
-  { id: "foundation", label: "Interface", topNav: false },
+  { id: "foundation", label: "Screenshots", topNav: true },
   { id: "plans", label: "Plans", topNav: true },
   { id: "contact", label: "Contact", topNav: true },
 ] as const;

@@ -99,14 +99,14 @@ const PLAN_CHECKOUT_URLS: Record<string, string> = {
 const CONTACT_TICKET_URL = "https://payment.crowetic.com/tickets/create";
 
 const pageSections = [
-  { id: "overview", label: "Home", topNav: true },
-  { id: "about", label: "About", topNav: true },
-  { id: "features", label: "Features", topNav: true },
-  { id: "why", label: "Why", topNav: false },
-  { id: "dedicated-cloud", label: "Dedicated Cloud", topNav: true },
-  { id: "foundation", label: "Screenshots", topNav: true },
-  { id: "plans", label: "Plans", topNav: true },
-  { id: "contact", label: "Contact", topNav: true },
+  { id: "overview", label: "Home", shortLabel: "Hm", topNav: true },
+  { id: "about", label: "About", shortLabel: "Abt", topNav: true },
+  { id: "features", label: "Features", shortLabel: "Feat", topNav: true },
+  { id: "why", label: "Why", shortLabel: "Why", topNav: false },
+  { id: "dedicated-cloud", label: "Dedicated Cloud", shortLabel: "Cloud", topNav: true },
+  { id: "foundation", label: "Screenshots", shortLabel: "Shots", topNav: true },
+  { id: "plans", label: "Plans", shortLabel: "Plan", topNav: true },
+  { id: "contact", label: "Contact", shortLabel: "Info", topNav: true },
 ] as const;
 
 const heroHighlights = [
@@ -114,6 +114,8 @@ const heroHighlights = [
   "Managed for you",
   "Optional resilient publishing",
 ];
+
+const MOBILE_COMPACT_BREAKPOINT = 720;
 
 const heroQuickWins = [
   {
@@ -734,6 +736,9 @@ function App() {
   const [activeSection, setActiveSection] = useState<string>(
     pageSections[0].id
   );
+  const [isCompactMobile, setIsCompactMobile] = useState(
+    () => window.innerWidth <= MOBILE_COMPACT_BREAKPOINT
+  );
   const [featureStoryProgress, setFeatureStoryProgress] = useState(
     initialFeatureStoryProgress
   );
@@ -741,6 +746,8 @@ function App() {
     interfaceShowcaseSlides[0].id
   );
   const [isShowcaseLightboxOpen, setIsShowcaseLightboxOpen] = useState(false);
+  const [isShowcaseLightboxZoomed, setIsShowcaseLightboxZoomed] =
+    useState(false);
   const { contextActionFeedback, openOrCopyInternetLink } = useAccessContext();
   const isDark = theme === EnumTheme.DARK;
   const activeShowcaseSlide =
@@ -792,6 +799,16 @@ function App() {
 
     items.forEach((item) => observer.observe(item));
     return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsCompactMobile(window.innerWidth <= MOBILE_COMPACT_BREAKPOINT);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
@@ -910,14 +927,17 @@ function App() {
   }, [openOrCopyInternetLink]);
 
   const openShowcaseLightbox = useCallback(() => {
+    setIsShowcaseLightboxZoomed(false);
     setIsShowcaseLightboxOpen(true);
   }, []);
 
   const closeShowcaseLightbox = useCallback(() => {
+    setIsShowcaseLightboxZoomed(false);
     setIsShowcaseLightboxOpen(false);
   }, []);
 
   const showPreviousShowcaseSlide = useCallback(() => {
+    setIsShowcaseLightboxZoomed(false);
     setActiveShowcaseSlideId((currentId) => {
       const currentIndex = interfaceShowcaseSlides.findIndex(
         (slide) => slide.id === currentId
@@ -931,6 +951,7 @@ function App() {
   }, []);
 
   const showNextShowcaseSlide = useCallback(() => {
+    setIsShowcaseLightboxZoomed(false);
     setActiveShowcaseSlideId((currentId) => {
       const currentIndex = interfaceShowcaseSlides.findIndex(
         (slide) => slide.id === currentId
@@ -977,7 +998,9 @@ function App() {
 
       <Container maxWidth={false} disableGutters className="sc-shell">
         <Box className="sc-shell-inner">
-          <Box className="sc-topbar sc-reveal">
+          <Box
+            className={`sc-topbar sc-reveal ${isCompactMobile ? "is-mobile-compact" : ""}`}
+          >
             <Stack direction="row" spacing={1.2} alignItems="center">
               <img
                 src={BRAND_HEADER_LOGO}
@@ -1003,24 +1026,26 @@ function App() {
                     onClick={() => scrollToId(section.id)}
                     size="small"
                   >
-                    {section.label}
+                    {isCompactMobile ? section.shortLabel : section.label}
                   </Button>
                 ))}
               </Stack>
-              <Button
-                component={Link}
-                to="/self-hosting"
-                size="small"
-                className="sc-nav-link"
-              >
-                Self-Hosting
-              </Button>
+              {!isCompactMobile ? (
+                <Button
+                  component={Link}
+                  to="/self-hosting"
+                  size="small"
+                  className="sc-nav-link"
+                >
+                  Self-Hosting
+                </Button>
+              ) : null}
               <Button
                 className="sc-btn-primary sc-nav-cta"
                 size="small"
                 onClick={() => scrollToId("plans")}
               >
-                View Plans
+                {isCompactMobile ? "Buy" : "View Plans"}
               </Button>
               <IconButton
                 className="sc-theme-toggle"
@@ -1043,7 +1068,7 @@ function App() {
                 Your Private Cloud, Without Big Tech.
               </Typography>
               <Typography variant="body1" className="sc-subline">
-                secure, private options to run your digital world
+                Secure, private options to run your digital world
               </Typography>
               <Stack
                 direction={{ xs: "column", sm: "row" }}
@@ -1058,7 +1083,7 @@ function App() {
                 </Button>
               </Stack>
               <Typography className="sc-home-support-copy">
-                ...from encrypted voice/video calls and meetings to
+                From encrypted voice/video calls and meetings to
                 collaboration, to sync/storage and decentralized encrypted data
                 and apps, NuQloud is your private digital world. The features
                 you need, without harvesting your data, and a gateway to a
@@ -1367,20 +1392,22 @@ function App() {
               {differenceCards.map((card) => {
                 const Icon = card.Icon;
                 return (
-                  <Card className="sc-card sc-reveal" key={card.title}>
-                    <CardContent>
-                      <Box className="sc-home-icon-wrap sc-home-icon-wrap--section">
-                        <Icon fontSize="small" />
-                      </Box>
-                      <Typography className="sc-home-card-title">
-                        {card.title}
-                      </Typography>
-                      <Typography className="sc-mini-tease">
-                        {card.body}
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                );
+                    <Card className="sc-card sc-reveal" key={card.title}>
+                      <CardContent>
+                        <Box className="sc-capability-head">
+                          <Box className="sc-home-icon-wrap sc-home-icon-wrap--section">
+                            <Icon fontSize="small" />
+                          </Box>
+                          <Typography className="sc-home-card-title">
+                            {card.title}
+                          </Typography>
+                        </Box>
+                        <Typography className="sc-mini-tease">
+                          {card.body}
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  );
               })}
             </Box>
           </section>
@@ -1520,7 +1547,26 @@ function App() {
                     Close
                   </Button>
                 </Box>
-                <Box className="sc-showcase-lightbox-image-shell">
+                <Stack
+                  direction={{ xs: "column", sm: "row" }}
+                  spacing={1}
+                  className="sc-showcase-lightbox-actions"
+                >
+                  <Button
+                    className="sc-btn-ghost"
+                    onClick={() =>
+                      setIsShowcaseLightboxZoomed((prev) => !prev)
+                    }
+                  >
+                    {isShowcaseLightboxZoomed ? "Fit" : "Zoom"}
+                  </Button>
+                  <Typography className="sc-mini-tease">
+                    On mobile, use Zoom and drag the image to inspect details.
+                  </Typography>
+                </Stack>
+                <Box
+                  className={`sc-showcase-lightbox-image-shell ${isShowcaseLightboxZoomed ? "is-zoomed" : ""}`}
+                >
                   <Button
                     className="sc-showcase-lightbox-nav sc-showcase-lightbox-nav--prev"
                     onClick={showPreviousShowcaseSlide}
@@ -1531,7 +1577,10 @@ function App() {
                   <img
                     src={activeShowcaseSlide.image}
                     alt={activeShowcaseSlide.imageAlt}
-                    className="sc-showcase-lightbox-image"
+                    className={`sc-showcase-lightbox-image ${isShowcaseLightboxZoomed ? "is-zoomed" : ""}`}
+                    onClick={() =>
+                      setIsShowcaseLightboxZoomed((prev) => !prev)
+                    }
                   />
                   <Button
                     className="sc-showcase-lightbox-nav sc-showcase-lightbox-nav--next"
@@ -1545,7 +1594,7 @@ function App() {
                   {activeShowcaseSlideIndex + 1} /{" "}
                   {interfaceShowcaseSlides.length}
                 </Typography>
-                <Typography className="sc-mini-tease">
+                <Typography className="sc-mini-tease sc-showcase-lightbox-note">
                   {activeShowcaseSlide.body}
                 </Typography>
               </DialogContent>

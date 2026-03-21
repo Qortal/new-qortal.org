@@ -1,7 +1,7 @@
 {
-  "name": "sovereign-website",
+  "name": "NuQloud-website",
   "private": true,
-  "version": "0.0.6",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "build": "tsc -b && vite build",

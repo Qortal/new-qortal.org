@@ -22,6 +22,18 @@ Landing site for NuQloud, built as a Qortal-publishable React app (via `create-q
   - plans now render as two coordinated lanes, with the `NuQloud Accounts` and `Dedicated Branded NuQloud Instances` summary cards centered above their matching plan groups and accent styling carried through to the plan cards and buy buttons
   - differentiation, service-model split, stack summary, and plan preview sections
 - Self-hosting route remains available for the plugin-first audience with separate messaging and navigation, and now clearly notes that the plugin package is being finalized for near-term release.
+- The self-hosting/plugin route now mirrors the main page structure more closely:
+  - hero + launch-status banner
+  - about/data snapshot
+  - core functionality section
+  - explicit add-on catalog (`qortal_files_bridge`, `qortal_talk_bridge`, `custom_pwa`)
+  - architecture/flow section
+  - implemented screenshot gallery
+  - launch-prep CTA section
+- Plugin-page copy now uses product-aware naming:
+  - `NuQloud for Nextcloud` for the plugin package
+  - Qortal nomenclature for decentralized functions and app surfaces
+- Shared layout/CSS now clamps horizontal overflow more aggressively to prevent the sideways mobile scroll issue.
 - Previous dense MSP homepage content is preserved in:
   - `src/content/mspLegacyArchive.ts`
 - Branding refresh:

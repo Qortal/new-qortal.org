@@ -72,8 +72,10 @@ Legacy MSP homepage content from the earlier detailed landing build is preserved
 
 Logo/hero graphics are loaded from:
 
-- `public/NuQloud-Nucleus-logoOnly-favicon.png`
-- `public/NuQloud-Block-logo-noBG-2.png`
+- `public/NuQloud-Nucleus-logoOnly-favicon-512x512.png`
+- `public/NuQloud-Nucleus-logo-noBG-1024x1024.png`
+- `public/NuQloud-Block-logoOnly-512x512.png`
+- `public/NuQloud-Block-logo-noBG-1024x1024.png`
 
 Replacement-provider icons and the `Powered by Qortal` badge are bundled locally in `src/assets/` so they continue to work in QDN-hosted builds without remote asset dependencies.
 

@@ -102,7 +102,6 @@ const pageSections = [
   { id: "overview", label: "Home", shortLabel: "Hm", topNav: true },
   { id: "about", label: "About", shortLabel: "Abt", topNav: true },
   { id: "features", label: "Features", shortLabel: "Feat", topNav: true },
-  { id: "why", label: "Why", shortLabel: "Why", topNav: false },
   {
     id: "dedicated-cloud",
     label: "Dedicated Cloud",
@@ -1461,7 +1460,75 @@ function App() {
               and live collaboration.
             </Typography>
             <Box className="sc-showcase-grid">
-              <Box className="sc-showcase-list sc-showcase-list--bottom sc-reveal">
+              <Card className="sc-card sc-showcase-preview sc-reveal">
+                <CardContent>
+                  <Box className="sc-showcase-preview-nav">
+                    <IconButton
+                      className="sc-showcase-preview-arrow"
+                      onClick={showPreviousShowcaseSlide}
+                      aria-label="Show previous screenshot"
+                    >
+                      <ChevronLeftRoundedIcon />
+                    </IconButton>
+                    <Typography className="sc-showcase-preview-position">
+                      {activeShowcaseSlideIndex + 1} /{" "}
+                      {interfaceShowcaseSlides.length}
+                    </Typography>
+                    <IconButton
+                      className="sc-showcase-preview-arrow"
+                      onClick={showNextShowcaseSlide}
+                      aria-label="Show next screenshot"
+                    >
+                      <ChevronRightRoundedIcon />
+                    </IconButton>
+                  </Box>
+                  <Box className="sc-showcase-frame">
+                    <Box className="sc-showcase-frame-bar">
+                      <Box className="sc-showcase-dot" />
+                      <Box className="sc-showcase-dot" />
+                      <Box className="sc-showcase-dot" />
+                    </Box>
+                    <Box className="sc-showcase-frame-body">
+                      <button
+                        type="button"
+                        className="sc-showcase-screenshot-shell sc-showcase-screenshot-button"
+                        onClick={openShowcaseLightbox}
+                        aria-label={`Open enlarged screenshot for ${activeShowcaseSlide.title}`}
+                      >
+                        <img
+                          src={activeShowcaseSlide.image}
+                          alt={activeShowcaseSlide.imageAlt}
+                          className="sc-showcase-screenshot"
+                        />
+                        <Box className="sc-showcase-screenshot-hint">
+                          Click to enlarge
+                        </Box>
+                      </button>
+                    </Box>
+                  </Box>
+                  <Box className="sc-showcase-preview-nav sc-showcase-preview-nav--bottom">
+                    <IconButton
+                      className="sc-showcase-preview-arrow"
+                      onClick={showPreviousShowcaseSlide}
+                      aria-label="Show previous screenshot"
+                    >
+                      <ChevronLeftRoundedIcon />
+                    </IconButton>
+                    <Typography className="sc-showcase-preview-position">
+                      {activeShowcaseSlideIndex + 1} /{" "}
+                      {interfaceShowcaseSlides.length}
+                    </Typography>
+                    <IconButton
+                      className="sc-showcase-preview-arrow"
+                      onClick={showNextShowcaseSlide}
+                      aria-label="Show next screenshot"
+                    >
+                      <ChevronRightRoundedIcon />
+                    </IconButton>
+                  </Box>
+                </CardContent>
+              </Card>
+              <Box className="sc-showcase-list sc-reveal">
                 {interfaceShowcaseSlides.map((slide) => {
                   const SlideIcon = slide.Icon;
                   const isActive = slide.id === activeShowcaseSlide.id;
@@ -1487,77 +1554,6 @@ function App() {
                   );
                 })}
               </Box>
-              <Card className="sc-card sc-showcase-preview sc-reveal">
-                <CardContent>
-                  <Typography className="sc-card-label">
-                    {activeShowcaseSlide.eyebrow}
-                  </Typography>
-                  <Typography className="sc-showcase-preview-title">
-                    {activeShowcaseSlide.title}
-                  </Typography>
-                  <Typography className="sc-feature-copy">
-                    {activeShowcaseSlide.body}
-                  </Typography>
-                  <Box className="sc-showcase-frame">
-                    <Box className="sc-showcase-frame-bar">
-                      <Box className="sc-showcase-dot" />
-                      <Box className="sc-showcase-dot" />
-                      <Box className="sc-showcase-dot" />
-                    </Box>
-                    <Box className="sc-showcase-frame-body">
-                      <button
-                        type="button"
-                        className="sc-showcase-screenshot-shell sc-showcase-screenshot-button"
-                        onClick={openShowcaseLightbox}
-                        aria-label={`Open enlarged screenshot for ${activeShowcaseSlide.title}`}
-                      >
-                        <img
-                          src={activeShowcaseSlide.image}
-                          alt={activeShowcaseSlide.imageAlt}
-                          className="sc-showcase-screenshot"
-                        />
-                        <Box className="sc-showcase-screenshot-hint">
-                          Click to enlarge
-                        </Box>
-                      </button>
-                      <Box className="sc-showcase-chip-grid">
-                        {activeShowcaseSlide.highlights.map((item) => (
-                          <Box className="sc-showcase-chip" key={item}>
-                            {item}
-                          </Box>
-                        ))}
-                      </Box>
-                      <Box className="sc-showcase-mobile-tabs">
-                        {interfaceShowcaseSlides.map((slide) => {
-                          const SlideIcon = slide.Icon;
-                          const isActive = slide.id === activeShowcaseSlide.id;
-
-                          return (
-                            <button
-                              type="button"
-                              className={`sc-showcase-tab sc-showcase-tab--mobile ${isActive ? "is-active" : ""}`}
-                              key={`mobile-${slide.id}`}
-                              onClick={() => setActiveShowcaseSlideId(slide.id)}
-                            >
-                              <Box className="sc-home-icon-wrap sc-home-icon-wrap--mobile-tab">
-                                <SlideIcon fontSize="small" />
-                              </Box>
-                              <Box className="sc-showcase-tab-copy">
-                                <Typography className="sc-card-label">
-                                  {slide.eyebrow}
-                                </Typography>
-                                <Typography className="sc-home-card-title">
-                                  {slide.title}
-                                </Typography>
-                              </Box>
-                            </button>
-                          );
-                        })}
-                      </Box>
-                    </Box>
-                  </Box>
-                </CardContent>
-              </Card>
             </Box>
             <Dialog
               open={isShowcaseLightboxOpen}

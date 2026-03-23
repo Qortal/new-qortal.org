@@ -2,6 +2,8 @@ import AccountTreeRoundedIcon from "@mui/icons-material/AccountTreeRounded";
 import ApartmentRoundedIcon from "@mui/icons-material/ApartmentRounded";
 import AppsRoundedIcon from "@mui/icons-material/AppsRounded";
 import AutoAwesomeRoundedIcon from "@mui/icons-material/AutoAwesomeRounded";
+import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
+import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
 import DarkModeRoundedIcon from "@mui/icons-material/DarkModeRounded";
 import DataObjectRoundedIcon from "@mui/icons-material/DataObjectRounded";
 import ForumRoundedIcon from "@mui/icons-material/ForumRounded";
@@ -45,7 +47,7 @@ import liveDocumentCollaborationImage from "./assets/interface-gallery/nuqloud-l
 import qdeckAccessImage from "./assets/interface-gallery/nuqloud-qdeck-access.png";
 import qmailAccessImage from "./assets/interface-gallery/nuqloud-qmail-access.png";
 import sharedFileInConversationImage from "./assets/interface-gallery/nuqloud-shared-file-in-conversation.png";
-import { BRAND_HEADER_LOGO } from "./brandAssets";
+import { PLUGIN_HEADER_LOGO, PLUGIN_HERO_LOGO } from "./brandAssets";
 import { useAccessContext } from "./hooks/useAccessContext";
 import { EnumTheme, themeAtom } from "./state/global/system";
 import "./App.css";
@@ -431,6 +433,33 @@ function SelfHostingPage() {
   const activeScreenshot =
     pluginScreenshots.find((item) => item.id === activeScreenshotId) ??
     pluginScreenshots[0];
+  const activeScreenshotIndex = Math.max(
+    0,
+    pluginScreenshots.findIndex((item) => item.id === activeScreenshot.id),
+  );
+
+  const showPreviousPluginScreenshot = useCallback(() => {
+    setActiveScreenshotId((currentId) => {
+      const currentIndex = pluginScreenshots.findIndex(
+        (item) => item.id === currentId,
+      );
+      const safeIndex = currentIndex >= 0 ? currentIndex : 0;
+      const nextIndex =
+        (safeIndex - 1 + pluginScreenshots.length) % pluginScreenshots.length;
+      return pluginScreenshots[nextIndex].id;
+    });
+  }, []);
+
+  const showNextPluginScreenshot = useCallback(() => {
+    setActiveScreenshotId((currentId) => {
+      const currentIndex = pluginScreenshots.findIndex(
+        (item) => item.id === currentId,
+      );
+      const safeIndex = currentIndex >= 0 ? currentIndex : 0;
+      const nextIndex = (safeIndex + 1) % pluginScreenshots.length;
+      return pluginScreenshots[nextIndex].id;
+    });
+  }, []);
 
   return (
     <Box
@@ -473,8 +502,8 @@ function SelfHostingPage() {
           >
             <Stack direction="row" spacing={1.2} alignItems="center">
               <img
-                src={BRAND_HEADER_LOGO}
-                alt="NuQloud"
+                src={PLUGIN_HEADER_LOGO}
+                alt="NuQloud for Nextcloud"
                 className="sc-top-logo"
               />
               <Typography variant="subtitle1" className="sc-top-title">
@@ -587,8 +616,13 @@ function SelfHostingPage() {
             </Box>
 
             <Box className="sc-hero-art">
-              <Box className="sc-home-hero-panel">
-                <Card className="sc-card sc-home-model-card sc-home-model-card--accounts">
+              <Box className="sc-home-hero-stack">
+                <img
+                  src={PLUGIN_HERO_LOGO}
+                  alt="NuQloud for Nextcloud powered by Qortal"
+                  className="sc-hero-image"
+                />
+                <Card className="sc-card sc-home-model-card sc-home-model-card--accounts sc-home-hero-panel">
                   <CardContent>
                     <Box className="sc-capability-head">
                       <Box className="sc-home-icon-wrap sc-home-icon-wrap--section">
@@ -797,43 +831,27 @@ function SelfHostingPage() {
               Nextcloud experience in practice.
             </Typography>
             <Box className="sc-showcase-grid">
-              <Box className="sc-showcase-list sc-showcase-list--bottom">
-                {pluginScreenshots.map((slide) => (
-                  <button
-                    key={slide.id}
-                    type="button"
-                    className={`sc-showcase-tab ${activeScreenshot.id === slide.id ? "is-active" : ""}`}
-                    onClick={() => setActiveScreenshotId(slide.id)}
-                  >
-                    <Box className="sc-showcase-frame-icon">
-                      <slide.Icon fontSize="small" />
-                    </Box>
-                    <Box className="sc-showcase-tab-copy">
-                      <Typography className="sc-card-label">
-                        {slide.eyebrow}
-                      </Typography>
-                      <Typography className="sc-home-card-title">
-                        {slide.title}
-                      </Typography>
-                      <Typography className="sc-mini-tease">
-                        {slide.body}
-                      </Typography>
-                    </Box>
-                  </button>
-                ))}
-              </Box>
-
               <Card className="sc-card sc-showcase-preview">
                 <CardContent>
-                  <Typography className="sc-card-label">
-                    {activeScreenshot.eyebrow}
-                  </Typography>
-                  <Typography className="sc-showcase-preview-title">
-                    {activeScreenshot.title}
-                  </Typography>
-                  <Typography className="sc-feature-copy">
-                    {activeScreenshot.body}
-                  </Typography>
+                  <Box className="sc-showcase-preview-nav">
+                    <IconButton
+                      className="sc-showcase-preview-arrow"
+                      onClick={showPreviousPluginScreenshot}
+                      aria-label="Show previous plugin screenshot"
+                    >
+                      <ChevronLeftRoundedIcon />
+                    </IconButton>
+                    <Typography className="sc-showcase-preview-position">
+                      {activeScreenshotIndex + 1} / {pluginScreenshots.length}
+                    </Typography>
+                    <IconButton
+                      className="sc-showcase-preview-arrow"
+                      onClick={showNextPluginScreenshot}
+                      aria-label="Show next plugin screenshot"
+                    >
+                      <ChevronRightRoundedIcon />
+                    </IconButton>
+                  </Box>
                   <Box className="sc-showcase-frame">
                     <Box className="sc-showcase-frame-bar">
                       <span className="sc-showcase-dot" />
@@ -851,42 +869,51 @@ function SelfHostingPage() {
                           Implemented Surface
                         </span>
                       </Box>
-                      <Box className="sc-showcase-chip-grid">
-                        {activeScreenshot.highlights.map((highlight) => (
-                          <span className="sc-showcase-chip" key={highlight}>
-                            {highlight}
-                          </span>
-                        ))}
-                      </Box>
                     </Box>
                   </Box>
-
-                  {isCompactMobile ? (
-                    <Box className="sc-showcase-mobile-tabs">
-                      {pluginScreenshots.map((slide) => (
-                        <button
-                          key={`${slide.id}-mobile`}
-                          type="button"
-                          className={`sc-showcase-tab sc-showcase-tab--mobile ${activeScreenshot.id === slide.id ? "is-active" : ""}`}
-                          onClick={() => setActiveScreenshotId(slide.id)}
-                        >
-                          <Box className="sc-showcase-frame-icon sc-home-icon-wrap--mobile-tab">
-                            <slide.Icon fontSize="small" />
-                          </Box>
-                          <Box className="sc-showcase-tab-copy">
-                            <Typography className="sc-card-label">
-                              {slide.eyebrow}
-                            </Typography>
-                            <Typography className="sc-home-card-title">
-                              {slide.title}
-                            </Typography>
-                          </Box>
-                        </button>
-                      ))}
-                    </Box>
-                  ) : null}
+                  <Box className="sc-showcase-preview-nav sc-showcase-preview-nav--bottom">
+                    <IconButton
+                      className="sc-showcase-preview-arrow"
+                      onClick={showPreviousPluginScreenshot}
+                      aria-label="Show previous plugin screenshot"
+                    >
+                      <ChevronLeftRoundedIcon />
+                    </IconButton>
+                    <Typography className="sc-showcase-preview-position">
+                      {activeScreenshotIndex + 1} / {pluginScreenshots.length}
+                    </Typography>
+                    <IconButton
+                      className="sc-showcase-preview-arrow"
+                      onClick={showNextPluginScreenshot}
+                      aria-label="Show next plugin screenshot"
+                    >
+                      <ChevronRightRoundedIcon />
+                    </IconButton>
+                  </Box>
                 </CardContent>
               </Card>
+              <Box className="sc-showcase-list">
+                {pluginScreenshots.map((slide) => (
+                  <button
+                    key={slide.id}
+                    type="button"
+                    className={`sc-showcase-tab ${activeScreenshot.id === slide.id ? "is-active" : ""}`}
+                    onClick={() => setActiveScreenshotId(slide.id)}
+                  >
+                    <Box className="sc-showcase-frame-icon">
+                      <slide.Icon fontSize="small" />
+                    </Box>
+                    <Box className="sc-showcase-tab-copy">
+                      <Typography className="sc-card-label">
+                        {slide.eyebrow}
+                      </Typography>
+                      <Typography className="sc-home-card-title">
+                        {slide.title}
+                      </Typography>
+                    </Box>
+                  </button>
+                ))}
+              </Box>
             </Box>
           </section>
 

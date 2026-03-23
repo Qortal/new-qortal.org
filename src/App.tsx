@@ -103,11 +103,18 @@ const pageSections = [
   { id: "about", label: "About", shortLabel: "Abt", topNav: true },
   { id: "features", label: "Features", shortLabel: "Feat", topNav: true },
   { id: "why", label: "Why", shortLabel: "Why", topNav: false },
-  { id: "dedicated-cloud", label: "Dedicated Cloud", shortLabel: "Cloud", topNav: true },
+  {
+    id: "dedicated-cloud",
+    label: "Dedicated Cloud",
+    shortLabel: "Cloud",
+    topNav: true,
+  },
   { id: "foundation", label: "Screenshots", shortLabel: "Shots", topNav: true },
   { id: "plans", label: "Plans", shortLabel: "Plan", topNav: true },
   { id: "contact", label: "Contact", shortLabel: "Info", topNav: true },
 ] as const;
+
+type PageSectionId = (typeof pageSections)[number]["id"];
 
 const heroHighlights = [
   "Private cloud",
@@ -116,6 +123,31 @@ const heroHighlights = [
 ];
 
 const MOBILE_COMPACT_BREAKPOINT = 720;
+
+function getTopbarOffset(): number {
+  const topbar = document.querySelector<HTMLElement>(".sc-topbar");
+  const topbarHeight = topbar?.offsetHeight ?? 0;
+  return topbarHeight + 18;
+}
+
+function getOrderedSectionAnchors(
+  scrollY: number
+): Array<{ id: PageSectionId; top: number }> {
+  return pageSections
+    .map((section) => {
+      const element = document.getElementById(section.id);
+      if (!element) {
+        return null;
+      }
+      const top = element.getBoundingClientRect().top + scrollY;
+      return {
+        id: section.id,
+        top,
+      };
+    })
+    .filter((item): item is { id: PageSectionId; top: number } => item !== null)
+    .sort((a, b) => a.top - b.top);
+}
 
 const heroQuickWins = [
   {
@@ -540,7 +572,8 @@ const planGroups = [
       {
         slug: "nuqloud-starter",
         name: "NuQloud Starter",
-        description: "Starting at $12/month.",
+        description:
+          "The base NuQloud package for individuals getting started.",
         price: "$12",
         cadence: "/month",
         summary: "10GB on-server + 10GB decentralized encrypted publish space.",
@@ -553,7 +586,7 @@ const planGroups = [
         slug: "nuqloud-advanced",
         name: "NuQloud Advanced",
         description:
-          "$21/month with more storage and initial publishing credits.",
+          "More storage and initial publishing credits for heavier day-to-day use.",
         price: "$21",
         cadence: "/month",
         summary: "25GB on-server + 25GB decentralized encrypted publish space.",
@@ -566,7 +599,7 @@ const planGroups = [
         slug: "nuqloud-pro",
         name: "NuQloud Professional",
         description:
-          "$36/month with more storage and initial publishing credits.",
+          "Larger personal or small-team capacity with stronger publishing headroom.",
         price: "$36",
         cadence: "/month",
         summary:
@@ -589,7 +622,8 @@ const planGroups = [
       {
         slug: "nuqloud-branded-starter",
         name: "NuQloud Branded Starter",
-        description: "$175/month with a $500 one-time initial setup fee.",
+        description:
+          "Entry branded private cloud option for smaller organizations.",
         price: "$175",
         cadence: "/month",
         setupFee: "$500 one-time setup",
@@ -603,7 +637,8 @@ const planGroups = [
       {
         slug: "nuqloud-branded-pro",
         name: "NuQloud Branded Pro",
-        description: "$350/month with a $1,000 one-time initial setup fee.",
+        description:
+          "Expanded branded deployment for more active organizations and teams.",
         price: "$350",
         cadence: "/month",
         setupFee: "$1,000 one-time setup",
@@ -620,7 +655,7 @@ const planGroups = [
         slug: "nuqloud-branded-enterprise",
         name: "NuQloud Branded Enterprise",
         description:
-          "Multi-instance options starting at $1,500/month with a $3,500 one-time setup fee for an initial 3-instance configuration.",
+          "Customized larger instances, or multi-instance enterprise options starting at $1,500/month with a $3,500 one-time setup fee for base enterprise configurations.",
         price: "$1,500",
         cadence: "/month",
         setupFee: "$3,500 one-time setup",
@@ -629,7 +664,7 @@ const planGroups = [
         publishingCredits: "100,000 initial publishing credits per instance.",
         bullets: [
           "Multiple expansion options",
-          "Cross-communication, cross-instance sharing, conversations, and meetings between instances",
+          "100+ active users and optional multi-instance",
           "Access to early beta options",
         ],
       },
@@ -822,26 +857,25 @@ function App() {
       );
       setScrollProgress(Math.min(nextY / maxScrollable, 1));
 
-      const viewportMid = window.innerHeight * 0.5;
-      let nextActive: string = pageSections[0].id;
-      let nearestDistance = Number.POSITIVE_INFINITY;
+      const orderedAnchors = getOrderedSectionAnchors(nextY);
+      let nextActive: string = orderedAnchors[0]?.id ?? pageSections[0].id;
+      const activationLine =
+        nextY + getTopbarOffset() + window.innerHeight * 0.24;
 
-      for (const section of pageSections) {
-        const sectionEl = document.getElementById(section.id);
-        if (!sectionEl) {
+      for (const anchor of orderedAnchors) {
+        if (activationLine >= anchor.top) {
+          nextActive = anchor.id;
           continue;
         }
-        const rect = sectionEl.getBoundingClientRect();
-        if (rect.bottom < 0 || rect.top > window.innerHeight) {
-          continue;
-        }
+        break;
+      }
 
-        const sectionMid = rect.top + rect.height / 2;
-        const distance = Math.abs(sectionMid - viewportMid);
-        if (distance < nearestDistance) {
-          nearestDistance = distance;
-          nextActive = section.id;
-        }
+      if (
+        nextY + window.innerHeight >=
+        document.documentElement.scrollHeight - 6
+      ) {
+        nextActive =
+          orderedAnchors[orderedAnchors.length - 1]?.id ?? nextActive;
       }
 
       setActiveSection((prev) => (prev === nextActive ? prev : nextActive));
@@ -890,7 +924,9 @@ function App() {
     if (!el) {
       return;
     }
-    el.scrollIntoView({ behavior: "smooth", block: "start" });
+    const absoluteTop = el.getBoundingClientRect().top + window.scrollY;
+    const targetTop = Math.max(absoluteTop - getTopbarOffset(), 0);
+    window.scrollTo({ top: targetTop, behavior: "smooth" });
   }, []);
 
   const handlePlanCheckout = useCallback(
@@ -1083,11 +1119,11 @@ function App() {
                 </Button>
               </Stack>
               <Typography className="sc-home-support-copy">
-                From encrypted voice/video calls and meetings to
-                collaboration, to sync/storage and decentralized encrypted data
-                and apps, NuQloud is your private digital world. The features
-                you need, without harvesting your data, and a gateway to a
-                post-quantum decentralized future.
+                From encrypted voice/video calls and meetings to collaboration,
+                to sync/storage and decentralized encrypted data and apps,
+                NuQloud is your private digital world. The features you need,
+                without harvesting your data, and a gateway to a post-quantum
+                decentralized future.
               </Typography>
               <Stack
                 direction="row"
@@ -1392,22 +1428,22 @@ function App() {
               {differenceCards.map((card) => {
                 const Icon = card.Icon;
                 return (
-                    <Card className="sc-card sc-reveal" key={card.title}>
-                      <CardContent>
-                        <Box className="sc-capability-head">
-                          <Box className="sc-home-icon-wrap sc-home-icon-wrap--section">
-                            <Icon fontSize="small" />
-                          </Box>
-                          <Typography className="sc-home-card-title">
-                            {card.title}
-                          </Typography>
+                  <Card className="sc-card sc-reveal" key={card.title}>
+                    <CardContent>
+                      <Box className="sc-capability-head">
+                        <Box className="sc-home-icon-wrap sc-home-icon-wrap--section">
+                          <Icon fontSize="small" />
                         </Box>
-                        <Typography className="sc-mini-tease">
-                          {card.body}
+                        <Typography className="sc-home-card-title">
+                          {card.title}
                         </Typography>
-                      </CardContent>
-                    </Card>
-                  );
+                      </Box>
+                      <Typography className="sc-mini-tease">
+                        {card.body}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                );
               })}
             </Box>
           </section>
@@ -1425,7 +1461,7 @@ function App() {
               and live collaboration.
             </Typography>
             <Box className="sc-showcase-grid">
-              <Box className="sc-showcase-list sc-reveal">
+              <Box className="sc-showcase-list sc-showcase-list--bottom sc-reveal">
                 {interfaceShowcaseSlides.map((slide) => {
                   const SlideIcon = slide.Icon;
                   const isActive = slide.id === activeShowcaseSlide.id;
@@ -1554,9 +1590,7 @@ function App() {
                 >
                   <Button
                     className="sc-btn-ghost"
-                    onClick={() =>
-                      setIsShowcaseLightboxZoomed((prev) => !prev)
-                    }
+                    onClick={() => setIsShowcaseLightboxZoomed((prev) => !prev)}
                   >
                     {isShowcaseLightboxZoomed ? "Fit" : "Zoom"}
                   </Button>
@@ -1578,9 +1612,7 @@ function App() {
                     src={activeShowcaseSlide.image}
                     alt={activeShowcaseSlide.imageAlt}
                     className={`sc-showcase-lightbox-image ${isShowcaseLightboxZoomed ? "is-zoomed" : ""}`}
-                    onClick={() =>
-                      setIsShowcaseLightboxZoomed((prev) => !prev)
-                    }
+                    onClick={() => setIsShowcaseLightboxZoomed((prev) => !prev)}
                   />
                   <Button
                     className="sc-showcase-lightbox-nav sc-showcase-lightbox-nav--next"
@@ -1684,6 +1716,9 @@ function App() {
                               </Box>
                               {"price" in plan && plan.price ? (
                                 <Box className="sc-plan-price-wrap">
+                                  <Typography className="sc-plan-price-kicker">
+                                    Starting at
+                                  </Typography>
                                   <Typography className="sc-plan-price">
                                     {plan.price}
                                     <Box

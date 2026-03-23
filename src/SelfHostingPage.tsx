@@ -797,7 +797,7 @@ function SelfHostingPage() {
               Nextcloud experience in practice.
             </Typography>
             <Box className="sc-showcase-grid">
-              <Box className="sc-showcase-list">
+              <Box className="sc-showcase-list sc-showcase-list--bottom">
                 {pluginScreenshots.map((slide) => (
                   <button
                     key={slide.id}

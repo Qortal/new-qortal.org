@@ -1670,6 +1670,15 @@
   text-align: right;
 }
 
+.sc-plan-price-kicker {
+  margin-bottom: 0.14rem !important;
+  color: var(--sc-text-soft);
+  font-size: 0.64rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
 .sc-plan-price {
   color: var(--sc-text);
   font-family: "Orbitron", "Inter", sans-serif !important;
@@ -1781,8 +1790,17 @@
   gap: 0.72rem;
   max-height: min(78rem, 82vh);
   overflow: auto;
+  align-content: start;
   padding-top: 0.28rem;
   padding-right: 0.35rem;
+}
+
+.sc-showcase-list--bottom {
+  align-content: end;
+}
+
+.sc-showcase-list--center {
+  align-content: center;
 }
 
 .sc-showcase-mobile-tabs {
@@ -2318,6 +2336,7 @@
     order: 2;
     max-height: none;
     overflow: visible;
+    align-content: stretch;
     padding-right: 0;
   }
 

@@ -780,8 +780,6 @@ function App() {
     interfaceShowcaseSlides[0].id
   );
   const [isShowcaseLightboxOpen, setIsShowcaseLightboxOpen] = useState(false);
-  const [isShowcaseLightboxZoomed, setIsShowcaseLightboxZoomed] =
-    useState(false);
   const { contextActionFeedback, openOrCopyInternetLink } = useAccessContext();
   const isDark = theme === EnumTheme.DARK;
   const activeShowcaseSlide =
@@ -962,17 +960,14 @@ function App() {
   }, [openOrCopyInternetLink]);
 
   const openShowcaseLightbox = useCallback(() => {
-    setIsShowcaseLightboxZoomed(false);
     setIsShowcaseLightboxOpen(true);
   }, []);
 
   const closeShowcaseLightbox = useCallback(() => {
-    setIsShowcaseLightboxZoomed(false);
     setIsShowcaseLightboxOpen(false);
   }, []);
 
   const showPreviousShowcaseSlide = useCallback(() => {
-    setIsShowcaseLightboxZoomed(false);
     setActiveShowcaseSlideId((currentId) => {
       const currentIndex = interfaceShowcaseSlides.findIndex(
         (slide) => slide.id === currentId
@@ -986,7 +981,6 @@ function App() {
   }, []);
 
   const showNextShowcaseSlide = useCallback(() => {
-    setIsShowcaseLightboxZoomed(false);
     setActiveShowcaseSlideId((currentId) => {
       const currentIndex = interfaceShowcaseSlides.findIndex(
         (slide) => slide.id === currentId
@@ -1564,67 +1558,58 @@ function App() {
             >
               <DialogContent className="sc-showcase-lightbox-content">
                 <Box className="sc-showcase-lightbox-head">
-                  <Box>
+                  <Box className="sc-showcase-lightbox-copy">
                     <Typography className="sc-card-label">
                       {activeShowcaseSlide.eyebrow}
                     </Typography>
                     <Typography className="sc-showcase-lightbox-title">
                       {activeShowcaseSlide.title}
                     </Typography>
+                    <Typography className="sc-mini-tease sc-showcase-lightbox-summary">
+                      {activeShowcaseSlide.body}
+                    </Typography>
                   </Box>
-                  <Button
-                    className="sc-btn-ghost"
-                    onClick={closeShowcaseLightbox}
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    alignItems="center"
+                    className="sc-showcase-lightbox-head-actions"
                   >
-                    Close
-                  </Button>
+                    <Typography className="sc-showcase-lightbox-position">
+                      {activeShowcaseSlideIndex + 1} /{" "}
+                      {interfaceShowcaseSlides.length}
+                    </Typography>
+                    <Button
+                      className="sc-btn-ghost"
+                      onClick={closeShowcaseLightbox}
+                    >
+                      Close
+                    </Button>
+                  </Stack>
                 </Box>
-                <Stack
-                  direction={{ xs: "column", sm: "row" }}
-                  spacing={1}
-                  className="sc-showcase-lightbox-actions"
-                >
-                  <Button
-                    className="sc-btn-ghost"
-                    onClick={() => setIsShowcaseLightboxZoomed((prev) => !prev)}
-                  >
-                    {isShowcaseLightboxZoomed ? "Fit" : "Zoom"}
-                  </Button>
-                  <Typography className="sc-mini-tease">
-                    On mobile, use Zoom and drag the image to inspect details.
-                  </Typography>
-                </Stack>
-                <Box
-                  className={`sc-showcase-lightbox-image-shell ${isShowcaseLightboxZoomed ? "is-zoomed" : ""}`}
-                >
-                  <Button
-                    className="sc-showcase-lightbox-nav sc-showcase-lightbox-nav--prev"
-                    onClick={showPreviousShowcaseSlide}
-                    aria-label="Show previous screenshot"
-                  >
-                    <ChevronLeftRoundedIcon />
-                  </Button>
-                  <img
-                    src={activeShowcaseSlide.image}
-                    alt={activeShowcaseSlide.imageAlt}
-                    className={`sc-showcase-lightbox-image ${isShowcaseLightboxZoomed ? "is-zoomed" : ""}`}
-                    onClick={() => setIsShowcaseLightboxZoomed((prev) => !prev)}
-                  />
-                  <Button
-                    className="sc-showcase-lightbox-nav sc-showcase-lightbox-nav--next"
-                    onClick={showNextShowcaseSlide}
-                    aria-label="Show next screenshot"
-                  >
-                    <ChevronRightRoundedIcon />
-                  </Button>
+                <Box className="sc-showcase-lightbox-stage">
+                  <Box className="sc-showcase-lightbox-image-shell">
+                    <Button
+                      className="sc-showcase-lightbox-nav sc-showcase-lightbox-nav--prev"
+                      onClick={showPreviousShowcaseSlide}
+                      aria-label="Show previous screenshot"
+                    >
+                      <ChevronLeftRoundedIcon />
+                    </Button>
+                    <img
+                      src={activeShowcaseSlide.image}
+                      alt={activeShowcaseSlide.imageAlt}
+                      className="sc-showcase-lightbox-image"
+                    />
+                    <Button
+                      className="sc-showcase-lightbox-nav sc-showcase-lightbox-nav--next"
+                      onClick={showNextShowcaseSlide}
+                      aria-label="Show next screenshot"
+                    >
+                      <ChevronRightRoundedIcon />
+                    </Button>
+                  </Box>
                 </Box>
-                <Typography className="sc-showcase-lightbox-position">
-                  {activeShowcaseSlideIndex + 1} /{" "}
-                  {interfaceShowcaseSlides.length}
-                </Typography>
-                <Typography className="sc-mini-tease sc-showcase-lightbox-note">
-                  {activeShowcaseSlide.body}
-                </Typography>
               </DialogContent>
             </Dialog>
           </section>

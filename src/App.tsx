@@ -97,6 +97,8 @@ const PLAN_CHECKOUT_URLS: Record<string, string> = {
     "https://payment.crowetic.com/products/nuqloud/nuqloud-branded-enterprise-default/checkout",
 };
 const CONTACT_TICKET_URL = "https://payment.crowetic.com/tickets/create";
+const QORTAL_QMAIL_CONTACT_URL = "qortal://APP/Q-Mail/to/crowetic";
+const QORTAL_CHDC_URL = "qortal://CHDC";
 
 const pageSections = [
   { id: "overview", label: "Home", shortLabel: "Hm", topNav: true },
@@ -780,8 +782,11 @@ function App() {
     interfaceShowcaseSlides[0].id
   );
   const [isShowcaseLightboxOpen, setIsShowcaseLightboxOpen] = useState(false);
-  const { contextActionFeedback, openOrCopyInternetLink } = useAccessContext();
+  const [qortalPurchasePlanName, setQortalPurchasePlanName] = useState("");
+  const { accessContext, contextActionFeedback, openOrCopyInternetLink } =
+    useAccessContext();
   const isDark = theme === EnumTheme.DARK;
+  const isQortalEnvironment = accessContext.mode !== "internet";
   const activeShowcaseSlide =
     interfaceShowcaseSlides.find(
       (slide) => slide.id === activeShowcaseSlideId
@@ -927,7 +932,11 @@ function App() {
   }, []);
 
   const handlePlanCheckout = useCallback(
-    (planSlug?: string) => {
+    (planSlug?: string, planName?: string) => {
+      if (isQortalEnvironment) {
+        setQortalPurchasePlanName(String(planName || "this plan").trim());
+        return;
+      }
       const normalizedSlug = String(planSlug || "").trim();
       const url = normalizedSlug
         ? PLAN_CHECKOUT_URLS[normalizedSlug] || ""
@@ -937,11 +946,15 @@ function App() {
       }
       void openOrCopyInternetLink(url);
     },
-    [openOrCopyInternetLink]
+    [isQortalEnvironment, openOrCopyInternetLink]
   );
 
   const handlePlanDetails = useCallback(
-    (planSlug?: string) => {
+    (planSlug?: string, planName?: string) => {
+      if (isQortalEnvironment) {
+        setQortalPurchasePlanName(String(planName || "this plan").trim());
+        return;
+      }
       const normalizedSlug = String(planSlug || "").trim();
       const checkoutUrl = normalizedSlug
         ? PLAN_CHECKOUT_URLS[normalizedSlug] || ""
@@ -952,8 +965,19 @@ function App() {
       }
       void openOrCopyInternetLink(detailsUrl);
     },
-    [openOrCopyInternetLink]
+    [isQortalEnvironment, openOrCopyInternetLink]
   );
+
+  const closeQortalPurchaseModal = useCallback(() => {
+    setQortalPurchasePlanName("");
+  }, []);
+
+  const openQortalDeepLink = useCallback((href: string) => {
+    if (!href) {
+      return;
+    }
+    window.location.assign(href);
+  }, []);
 
   const handleSalesAction = useCallback(() => {
     void openOrCopyInternetLink(CONTACT_TICKET_URL);
@@ -1112,11 +1136,11 @@ function App() {
                 </Button>
               </Stack>
               <Typography className="sc-home-support-copy">
-                From encrypted voice/video calls and meetings to collaboration,
-                to sync/storage and decentralized encrypted data and apps,
-                NuQloud is your private digital world. The features you need,
-                without harvesting your data, and a gateway to a post-quantum
-                decentralized future.
+                From ENCRYPTED voice/video calls, meetings, and real-time
+                collaboration, to DECENTRALIZED DATA and apps, NuQloud is your
+                PRIVATE digital world. The features you need today (without
+                harvesting your data), and a gateway to a post-quantum
+                decentralized tomorrow.
               </Typography>
               <Stack
                 direction="row"
@@ -1754,13 +1778,17 @@ function App() {
                             <Box className="sc-plan-actions">
                               <Button
                                 className={`sc-btn-primary sc-plan-buy-btn sc-plan-buy-btn--${group.tone}`}
-                                onClick={() => handlePlanCheckout(plan.slug)}
+                                onClick={() =>
+                                  handlePlanCheckout(plan.slug, plan.name)
+                                }
                               >
                                 Buy Now
                               </Button>
                               <Button
                                 className="sc-btn-link sc-plan-detail-link"
-                                onClick={() => handlePlanDetails(plan.slug)}
+                                onClick={() =>
+                                  handlePlanDetails(plan.slug, plan.name)
+                                }
                               >
                                 View Details
                               </Button>
@@ -1768,7 +1796,10 @@ function App() {
                                 <Button
                                   className="sc-btn-link sc-plan-team-link"
                                   onClick={() =>
-                                    handlePlanDetails(plan.teamSlug)
+                                    handlePlanDetails(
+                                      plan.teamSlug,
+                                      plan.teamLabel || `${plan.name} Team`
+                                    )
                                   }
                                 >
                                   {plan.teamLabel || "View Team Version"}
@@ -1801,6 +1832,64 @@ function App() {
           </section>
         </Box>
       </Container>
+      <Dialog
+        open={Boolean(qortalPurchasePlanName)}
+        onClose={closeQortalPurchaseModal}
+        className="sc-qortal-purchase-dialog"
+      >
+        <DialogContent className="sc-qortal-purchase-dialog-content">
+          <Typography className="sc-showcase-lightbox-title">
+            Qortal-native purchasing options coming soon
+          </Typography>
+          <Typography className="sc-qortal-purchase-dialog-copy">
+            Direct Qortal-native purchasing for{" "}
+            <strong>{qortalPurchasePlanName || "this plan"}</strong> is coming
+            soon. For now, contact crowetic in Q-Mail for more information, or
+            follow CHDC on QDN for updates.
+          </Typography>
+          <Box className="sc-qortal-purchase-dialog-links">
+            <Button
+              className="sc-btn-primary"
+              onClick={() => openQortalDeepLink(QORTAL_QMAIL_CONTACT_URL)}
+            >
+              Contact via Q-Mail
+            </Button>
+            <Button
+              className="sc-btn-link"
+              onClick={() => openQortalDeepLink(QORTAL_CHDC_URL)}
+            >
+              Open CHDC
+            </Button>
+          </Box>
+          <Box className="sc-qortal-purchase-dialog-meta">
+            <Typography className="sc-qortal-purchase-dialog-hint">
+              Q-Mail:{" "}
+              <Box
+                component="a"
+                className="sc-qortal-purchase-dialog-anchor"
+                href={QORTAL_QMAIL_CONTACT_URL}
+              >
+                {QORTAL_QMAIL_CONTACT_URL}
+              </Box>
+            </Typography>
+            <Typography className="sc-qortal-purchase-dialog-hint">
+              Updates:{" "}
+              <Box
+                component="a"
+                className="sc-qortal-purchase-dialog-anchor"
+                href={QORTAL_CHDC_URL}
+              >
+                {QORTAL_CHDC_URL}
+              </Box>
+            </Typography>
+          </Box>
+          <Box className="sc-qortal-purchase-dialog-actions">
+            <Button className="sc-btn-link" onClick={closeQortalPurchaseModal}>
+              Close
+            </Button>
+          </Box>
+        </DialogContent>
+      </Dialog>
     </Box>
   );
 }

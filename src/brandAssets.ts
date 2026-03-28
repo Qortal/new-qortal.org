@@ -1,5 +1,10 @@
-export const BRAND_HEADER_LOGO = "/NuQloud-Nucleus-logoOnly-favicon-512x512.png";
-export const BRAND_HERO_LOGO = "/NuQloud-Nucleus-logo-noBG-1024x1024.png";
+import brandHeaderLogo from "./assets/brand/NuQloud-Cube-logo-logoOnly-NEW-3-512x512.png";
+import brandHeroLogo from "./assets/brand/NuQloud-Cube-logo-OutlineWording-NEW-3-512x512.png";
+import brandFavicon from "./assets/brand/NuQloud-Cube-logo-logoOnly-NEW-3-512x512.png";
 
-export const PLUGIN_HEADER_LOGO = "/NuQloud-Block-logoOnly-512x512.png";
-export const PLUGIN_HERO_LOGO = "/NuQloud-Block-logo-noBG-1024x1024.png";
+export const BRAND_HEADER_LOGO = brandHeaderLogo;
+export const BRAND_HERO_LOGO = brandHeroLogo;
+export const BRAND_FAVICON = brandFavicon;
+
+export const PLUGIN_HEADER_LOGO = brandHeaderLogo;
+export const PLUGIN_HERO_LOGO = brandHeroLogo;

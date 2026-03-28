@@ -2179,6 +2179,68 @@
   background: color-mix(in srgb, var(--sc-bg-card) 96%, rgba(2, 7, 16, 0.9));
 }
 
+.sc-qortal-purchase-dialog .MuiDialog-paper {
+  width: min(92vw, 34rem);
+  margin: 1rem;
+  border-radius: 1.2rem;
+  border: 1px solid color-mix(in srgb, var(--sc-border-strong) 72%, transparent);
+  background:
+    linear-gradient(
+      155deg,
+      color-mix(in srgb, var(--sc-bg-card) 97%, transparent),
+      color-mix(in srgb, var(--sc-bg-soft) 95%, transparent)
+    );
+  box-shadow: var(--sc-shadow);
+}
+
+.sc-qortal-purchase-dialog-content {
+  padding: clamp(1.05rem, 2.4vw, 1.5rem) !important;
+  display: grid;
+  gap: 1rem;
+}
+
+.sc-qortal-purchase-dialog-copy {
+  color: var(--sc-text-soft) !important;
+  line-height: 1.65 !important;
+}
+
+.sc-qortal-purchase-dialog-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.sc-qortal-purchase-dialog-meta {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.9rem 1rem;
+  border-radius: 1rem;
+  border: 1px solid color-mix(in srgb, var(--sc-border) 78%, transparent);
+  background: color-mix(in srgb, var(--sc-bg-soft) 78%, transparent);
+}
+
+.sc-qortal-purchase-dialog-hint {
+  color: var(--sc-text-soft) !important;
+  font-size: 0.92rem !important;
+  overflow-wrap: anywhere;
+}
+
+.sc-qortal-purchase-dialog-anchor {
+  color: var(--sc-accent);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.sc-qortal-purchase-dialog-anchor:hover {
+  text-decoration: underline;
+}
+
+.sc-qortal-purchase-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .sc-full-details-wrap {
   margin-top: 1rem;
   display: flex;
@@ -2424,6 +2486,28 @@
 }
 
 @media (max-width: 720px) {
+  .sc-qortal-purchase-dialog .MuiDialog-paper {
+    width: min(96vw, 34rem);
+    margin: 0.75rem;
+  }
+
+  .sc-qortal-purchase-dialog-links {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .sc-qortal-purchase-dialog-links .sc-btn-primary,
+  .sc-qortal-purchase-dialog-links .sc-btn-link,
+  .sc-qortal-purchase-dialog-actions .sc-btn-link {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .sc-qortal-purchase-dialog-actions {
+    justify-content: stretch;
+  }
+
   .sc-topbar.is-mobile-compact {
     flex-direction: row;
     align-items: center;

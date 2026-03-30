@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "../App";
+import AffiliateProgramPage from "../AffiliateProgramPage";
 import { AppWrapper } from "../AppWrapper";
 import FeatureDetailsPage from "../FeatureDetailsPage";
 import SelfHostingPage from "../SelfHostingPage";
@@ -25,6 +26,10 @@ export function Routes() {
           {
             path: "self-hosting",
             element: <SelfHostingPage />,
+          },
+          {
+            path: "affiliate-program",
+            element: <AffiliateProgramPage />,
           },
           {
             path: "feature-details/:storyId",

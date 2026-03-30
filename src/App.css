@@ -600,6 +600,10 @@
   margin-top: 0.8rem !important;
 }
 
+.sc-affiliate-chip-row {
+  margin-top: 1rem;
+}
+
 .sc-btn-primary {
   border-radius: 999px !important;
   text-transform: none !important;
@@ -1585,6 +1589,68 @@
   margin-top: 0;
 }
 
+.sc-affiliate-inline {
+  margin-top: 1rem;
+}
+
+.sc-affiliate-inline-head {
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.sc-affiliate-toggle,
+.sc-affiliate-clear {
+  min-width: 0 !important;
+  padding-inline: 0 !important;
+  align-self: flex-start;
+}
+
+.sc-affiliate-inline-panel {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.sc-affiliate-field .MuiInputLabel-root {
+  color: var(--sc-text-soft);
+}
+
+.sc-affiliate-field .MuiOutlinedInput-root {
+  color: var(--sc-text);
+  border-radius: 0.95rem;
+  background: color-mix(in srgb, var(--sc-bg-soft) 72%, transparent);
+}
+
+.sc-affiliate-field .MuiOutlinedInput-notchedOutline {
+  border-color: var(--sc-border);
+}
+
+.sc-affiliate-field .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: var(--sc-border-strong);
+}
+
+.sc-affiliate-field .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: var(--sc-primary);
+}
+
+.sc-affiliate-field .MuiFormHelperText-root {
+  color: var(--sc-text-soft);
+}
+
+.sc-affiliate-inline-actions {
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.sc-affiliate-inline-url {
+  color: var(--sc-text);
+  font-weight: 700;
+}
+
+.sc-affiliate-active-chip {
+  background: color-mix(in srgb, var(--sc-chip) 84%, transparent) !important;
+}
+
 .sc-plan-models {
   margin-top: 1.5rem;
 }
@@ -1715,6 +1781,13 @@
   color: var(--sc-text-soft);
 }
 
+.sc-plan-addon-note {
+  margin-top: 0.42rem !important;
+  color: var(--sc-primary);
+  font-size: 0.82rem !important;
+  font-weight: 600 !important;
+}
+
 .sc-plan-detail-list {
   margin-top: 0.8rem;
   margin-bottom: 0;
@@ -1773,6 +1846,76 @@
 .sc-plan-team-link:hover {
   background: color-mix(in srgb, var(--sc-chip) 58%, transparent) !important;
   border-color: color-mix(in srgb, var(--sc-primary) 58%, #d7edff) !important;
+}
+
+.sc-affiliate-hero-panel {
+  width: min(100%, 34rem);
+}
+
+.sc-affiliate-metric-list {
+  margin-top: 1rem;
+}
+
+.sc-affiliate-metric-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.8rem 0.85rem;
+  border-radius: 0.95rem;
+  border: 1px solid color-mix(in srgb, var(--sc-border) 82%, transparent);
+  background: color-mix(in srgb, var(--sc-bg-soft) 68%, transparent);
+}
+
+.sc-affiliate-metric-copy {
+  min-width: 0;
+}
+
+.sc-affiliate-metric-label {
+  color: var(--sc-text-soft);
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.sc-affiliate-metric-value {
+  margin-top: 0.24rem !important;
+  color: var(--sc-text);
+  font-family: "Orbitron", "Inter", sans-serif !important;
+  font-size: clamp(1.2rem, 2.2vw, 1.75rem) !important;
+  line-height: 1.05 !important;
+}
+
+.sc-affiliate-card-copy {
+  margin-top: 0.5rem !important;
+  color: var(--sc-text-soft);
+}
+
+.sc-affiliate-step-number {
+  width: 2.3rem;
+  height: 2.3rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.8rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--sc-primary) 62%, #fff);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--sc-primary) 28%, transparent),
+    color-mix(in srgb, var(--sc-bg-soft) 82%, transparent)
+  );
+  color: var(--sc-text);
+  font-family: "Orbitron", "Inter", sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.sc-affiliate-fineprint {
+  margin-top: 1rem !important;
+  color: var(--sc-text-soft);
+  font-size: 0.82rem !important;
 }
 
 .sc-story-detail-actions {

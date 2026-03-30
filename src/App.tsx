@@ -30,10 +30,12 @@ import {
   DialogContent,
   IconButton,
   Stack,
+  TextField,
   Typography,
 } from "@mui/material";
 import { useAtom } from "jotai";
 import {
+  type ChangeEvent,
   CSSProperties,
   type ElementType,
   useCallback,
@@ -99,6 +101,8 @@ const PLAN_CHECKOUT_URLS: Record<string, string> = {
 const CONTACT_TICKET_URL = "https://payment.crowetic.com/tickets/create";
 const QORTAL_QMAIL_CONTACT_URL = "qortal://APP/Q-Mail/to/crowetic";
 const QORTAL_CHDC_URL = "qortal://CHDC";
+const AFFILIATE_CODE_STORAGE_KEY = "nuqloud-affiliate-code";
+const AFFILIATE_CODE_MAX_LENGTH = 64;
 
 const pageSections = [
   { id: "overview", label: "Home", shortLabel: "Hm", topNav: true },
@@ -131,6 +135,33 @@ function getTopbarOffset(): number {
   return topbarHeight + 18;
 }
 
+function normalizeAffiliateCode(value: string): string {
+  return String(value || "")
+    .trim()
+    .replace(/\s+/g, "")
+    .replace(/[^A-Za-z0-9._-]/g, "")
+    .slice(0, AFFILIATE_CODE_MAX_LENGTH);
+}
+
+function appendAffiliateCode(url: string, affiliateCode: string): string {
+  if (!url) {
+    return "";
+  }
+
+  const normalizedAffiliateCode = normalizeAffiliateCode(affiliateCode);
+  if (!normalizedAffiliateCode) {
+    return url;
+  }
+
+  try {
+    const nextUrl = new URL(url);
+    nextUrl.searchParams.set("ref", normalizedAffiliateCode);
+    return nextUrl.toString();
+  } catch {
+    return url;
+  }
+}
+
 function getOrderedSectionAnchors(
   scrollY: number
 ): Array<{ id: PageSectionId; top: number }> {
@@ -158,12 +189,12 @@ const heroQuickWins = [
   },
   {
     title: "Secure Communications",
-    body: "Encrypted, and Private video/voice/meetings and project management",
+    body: "Encrypted, Private video/voice/meetings and project management",
     Icon: WorkspacesRoundedIcon,
   },
   {
-    title: "Private and Forward-Thinking",
-    body: "Privacy by default, with unstoppable end-to-end decentralized files + apps",
+    title: "Private and Next-Gen",
+    body: "Fully Private + off-server decentralized files + apps",
     Icon: ShieldRoundedIcon,
   },
 ];
@@ -783,10 +814,31 @@ function App() {
   );
   const [isShowcaseLightboxOpen, setIsShowcaseLightboxOpen] = useState(false);
   const [qortalPurchasePlanName, setQortalPurchasePlanName] = useState("");
+  const [affiliateCode, setAffiliateCode] = useState(() => {
+    if (typeof window === "undefined") {
+      return "";
+    }
+
+    return normalizeAffiliateCode(
+      window.localStorage.getItem(AFFILIATE_CODE_STORAGE_KEY) || ""
+    );
+  });
+  const [isAffiliateInputOpen, setIsAffiliateInputOpen] = useState(() => {
+    if (typeof window === "undefined") {
+      return false;
+    }
+
+    return Boolean(
+      normalizeAffiliateCode(
+        window.localStorage.getItem(AFFILIATE_CODE_STORAGE_KEY) || ""
+      )
+    );
+  });
   const { accessContext, contextActionFeedback, openOrCopyInternetLink } =
     useAccessContext();
   const isDark = theme === EnumTheme.DARK;
   const isQortalEnvironment = accessContext.mode !== "internet";
+  const hasAffiliateCode = Boolean(affiliateCode);
   const activeShowcaseSlide =
     interfaceShowcaseSlides.find(
       (slide) => slide.id === activeShowcaseSlideId
@@ -847,6 +899,22 @@ function App() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    if (affiliateCode) {
+      window.localStorage.setItem(
+        AFFILIATE_CODE_STORAGE_KEY,
+        affiliateCode
+      );
+      return;
+    }
+
+    window.localStorage.removeItem(AFFILIATE_CODE_STORAGE_KEY);
+  }, [affiliateCode]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -931,22 +999,55 @@ function App() {
     window.scrollTo({ top: targetTop, behavior: "smooth" });
   }, []);
 
+  const getPlanCheckoutUrl = useCallback(
+    (planSlug?: string) => {
+      const normalizedSlug = String(planSlug || "").trim();
+      const checkoutUrl = normalizedSlug
+        ? PLAN_CHECKOUT_URLS[normalizedSlug] || ""
+        : "";
+
+      return appendAffiliateCode(checkoutUrl, affiliateCode);
+    },
+    [affiliateCode]
+  );
+
+  const getPlanDetailsUrl = useCallback(
+    (planSlug?: string) => {
+      const checkoutUrl = getPlanCheckoutUrl(planSlug);
+      if (!checkoutUrl) {
+        return "";
+      }
+
+      return checkoutUrl.replace(/\/checkout\/?(\?.*)?$/, "$1");
+    },
+    [getPlanCheckoutUrl]
+  );
+
+  const handleAffiliateCodeChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      setAffiliateCode(normalizeAffiliateCode(event.target.value));
+    },
+    []
+  );
+
+  const clearAffiliateCode = useCallback(() => {
+    setAffiliateCode("");
+    setIsAffiliateInputOpen(false);
+  }, []);
+
   const handlePlanCheckout = useCallback(
     (planSlug?: string, planName?: string) => {
       if (isQortalEnvironment) {
         setQortalPurchasePlanName(String(planName || "this plan").trim());
         return;
       }
-      const normalizedSlug = String(planSlug || "").trim();
-      const url = normalizedSlug
-        ? PLAN_CHECKOUT_URLS[normalizedSlug] || ""
-        : "";
+      const url = getPlanCheckoutUrl(planSlug);
       if (!url) {
         return;
       }
       void openOrCopyInternetLink(url);
     },
-    [isQortalEnvironment, openOrCopyInternetLink]
+    [getPlanCheckoutUrl, isQortalEnvironment, openOrCopyInternetLink]
   );
 
   const handlePlanDetails = useCallback(
@@ -955,17 +1056,13 @@ function App() {
         setQortalPurchasePlanName(String(planName || "this plan").trim());
         return;
       }
-      const normalizedSlug = String(planSlug || "").trim();
-      const checkoutUrl = normalizedSlug
-        ? PLAN_CHECKOUT_URLS[normalizedSlug] || ""
-        : "";
-      const detailsUrl = checkoutUrl.replace(/\/checkout\/?$/, "");
+      const detailsUrl = getPlanDetailsUrl(planSlug);
       if (!detailsUrl) {
         return;
       }
       void openOrCopyInternetLink(detailsUrl);
     },
-    [isQortalEnvironment, openOrCopyInternetLink]
+    [getPlanDetailsUrl, isQortalEnvironment, openOrCopyInternetLink]
   );
 
   const closeQortalPurchaseModal = useCallback(() => {
@@ -1086,11 +1183,31 @@ function App() {
               {!isCompactMobile ? (
                 <Button
                   component={Link}
+                  to="/affiliate-program"
+                  size="small"
+                  className="sc-nav-link"
+                >
+                  Affiliates
+                </Button>
+              ) : null}
+              {!isCompactMobile ? (
+                <Button
+                  component={Link}
                   to="/self-hosting"
                   size="small"
                   className="sc-nav-link"
                 >
                   Self-Hosting
+                </Button>
+              ) : null}
+              {isCompactMobile ? (
+                <Button
+                  component={Link}
+                  to="/affiliate-program"
+                  size="small"
+                  className="sc-nav-link"
+                >
+                  Aff
                 </Button>
               ) : null}
               <Button
@@ -1752,6 +1869,9 @@ function App() {
                                 {plan.publishingCredits}
                               </Typography>
                             ) : null}
+                            <Typography className="sc-plan-addon-note">
+                              Data add-on packages available.
+                            </Typography>
                             {"bullets" in plan &&
                             Array.isArray(plan.bullets) &&
                             plan.bullets.length ? (
@@ -1784,6 +1904,67 @@ function App() {
                               >
                                 Buy Now
                               </Button>
+                              <Button
+                                className="sc-btn-link sc-affiliate-toggle"
+                                onClick={() => setIsAffiliateInputOpen(true)}
+                              >
+                                {hasAffiliateCode
+                                  ? "Update affiliate code"
+                                  : "Have an affiliate code?"}
+                              </Button>
+                              {isAffiliateInputOpen || hasAffiliateCode ? (
+                                <Box className="sc-affiliate-inline-panel">
+                                  <TextField
+                                    className="sc-affiliate-field"
+                                    label="Affiliate code"
+                                    placeholder="Enter affiliate code"
+                                    size="small"
+                                    fullWidth
+                                    value={affiliateCode}
+                                    onChange={handleAffiliateCodeChange}
+                                    helperText="Letters, numbers, dashes, underscores, and periods only."
+                                    inputProps={{
+                                      autoCapitalize: "none",
+                                      autoCorrect: "off",
+                                      maxLength: AFFILIATE_CODE_MAX_LENGTH,
+                                      pattern: "[A-Za-z0-9._-]*",
+                                      spellCheck: "false",
+                                    }}
+                                  />
+                                  <Stack
+                                    direction={{ xs: "column", sm: "row" }}
+                                    spacing={1}
+                                    alignItems={{ xs: "flex-start", sm: "center" }}
+                                    className="sc-affiliate-inline-actions"
+                                  >
+                                    <Typography className="sc-mini-tease">
+                                      Checkout links to{" "}
+                                      <Box
+                                        component="span"
+                                        className="sc-affiliate-inline-url"
+                                      >
+                                        payment.crowetic.com
+                                      </Box>{" "}
+                                      will automatically include your referral
+                                      code.
+                                    </Typography>
+                                    {hasAffiliateCode ? (
+                                      <Chip
+                                        className="sc-chip sc-affiliate-active-chip"
+                                        label={`Using code: ${affiliateCode}`}
+                                      />
+                                    ) : null}
+                                    {hasAffiliateCode ? (
+                                      <Button
+                                        className="sc-btn-link sc-affiliate-clear"
+                                        onClick={clearAffiliateCode}
+                                      >
+                                        Clear code
+                                      </Button>
+                                    ) : null}
+                                  </Stack>
+                                </Box>
+                              ) : null}
                               <Button
                                 className="sc-btn-link sc-plan-detail-link"
                                 onClick={() =>

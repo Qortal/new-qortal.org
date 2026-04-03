@@ -33,7 +33,6 @@ import {
 import { useAtom } from "jotai";
 import {
   CSSProperties,
-  type ElementType,
   useCallback,
   useEffect,
   useMemo,
@@ -70,10 +69,12 @@ const heroHighlights = [
   "Pre-launch documentation and screenshots available now",
 ];
 
+type IconComponent = typeof HubRoundedIcon;
+
 type PluginFeature = {
   title: string;
   body: string;
-  Icon: ElementType;
+  Icon: IconComponent;
 };
 
 const pluginQuickWins: readonly PluginFeature[] = [
@@ -158,7 +159,7 @@ const addonCards: readonly AddonCard[] = [
 type DiagramNode = {
   title: string;
   body: string;
-  Icon: ElementType;
+  Icon: IconComponent;
 };
 
 const architectureNodes: readonly DiagramNode[] = [
@@ -192,7 +193,10 @@ const architectureNodes: readonly DiagramNode[] = [
 const pluginDataPoints = [
   { label: "Core plugin packages", value: "1" },
   { label: "User-facing add-on apps", value: "3" },
-  { label: "Primary user surfaces", value: "Dashboard • Q-Apps • Files • Talk" },
+  {
+    label: "Primary user surfaces",
+    value: "Dashboard • Q-Apps • Files • Talk",
+  },
   { label: "Launch state", value: "Pre-launch / near-term release" },
 ];
 
@@ -204,7 +208,7 @@ type PluginScreenshot = {
   highlights: readonly string[];
   image: string;
   imageAlt: string;
-  Icon: ElementType;
+  Icon: IconComponent;
 };
 
 const pluginScreenshots: readonly PluginScreenshot[] = [
@@ -220,7 +224,8 @@ const pluginScreenshots: readonly PluginScreenshot[] = [
       "Decentralized auth file actions",
     ],
     image: dashboardOverviewImage,
-    imageAlt: "NuQloud dashboard overview showing app actions and account sections.",
+    imageAlt:
+      "NuQloud dashboard overview showing app actions and account sections.",
     Icon: HubRoundedIcon,
   },
   {
@@ -535,7 +540,13 @@ function SelfHostingPage() {
                 size="small"
                 className="sc-nav-link"
               >
-                {isCompactMobile ? "MSP" : <>NuQloud MSP <HomeRoundedIcon fontSize="small" /></>}
+                {isCompactMobile ? (
+                  "MSP"
+                ) : (
+                  <>
+                    NuQloud MSP <HomeRoundedIcon fontSize="small" />
+                  </>
+                )}
               </Button>
               <IconButton
                 className="sc-theme-toggle"
@@ -573,9 +584,19 @@ function SelfHostingPage() {
                 but this page documents the implemented functionality and
                 release direction ahead of launch.
               </Typography>
-              <Stack direction="row" spacing={1} useFlexGap flexWrap="wrap" className="sc-home-chip-row">
+              <Stack
+                direction="row"
+                spacing={1}
+                useFlexGap
+                flexWrap="wrap"
+                className="sc-home-chip-row"
+              >
                 {heroHighlights.map((item) => (
-                  <Chip key={item} className="sc-chip sc-home-chip" label={item} />
+                  <Chip
+                    key={item}
+                    className="sc-chip sc-home-chip"
+                    label={item}
+                  />
                 ))}
               </Stack>
               <Stack
@@ -673,7 +694,10 @@ function SelfHostingPage() {
             </Typography>
             <Box className="sc-card-grid sc-home-intro-grid">
               {pluginDataPoints.map((item) => (
-                <Card className="sc-card sc-plugin-metric-card" key={item.label}>
+                <Card
+                  className="sc-card sc-plugin-metric-card"
+                  key={item.label}
+                >
                   <CardContent>
                     <Typography className="sc-card-label">
                       {item.label}
@@ -762,10 +786,10 @@ function SelfHostingPage() {
               Architecture and flow
             </Typography>
             <Typography className="sc-section-subtitle">
-              The core upgrade path is straightforward: users stay in
-              Nextcloud, the plugin and add-ons handle Qortal-aware workflows,
-              brokered auth resolves wallet and permissions, and Qortal
-              services handle QDN, Q-Apps, and decentralized data.
+              The core upgrade path is straightforward: users stay in Nextcloud,
+              the plugin and add-ons handle Qortal-aware workflows, brokered
+              auth resolves wallet and permissions, and Qortal services handle
+              QDN, Q-Apps, and decentralized data.
             </Typography>
             <Box className="sc-plugin-diagram-grid">
               {architectureNodes.map((node, index) => (
@@ -800,8 +824,8 @@ function SelfHostingPage() {
                     QDN publishing path
                   </Typography>
                   <Typography className="sc-feature-copy">
-                    Files publish workflows target QDN, use Qortal auth,
-                    support Q-Manager-compatible filesystem updates, and keep
+                    Files publish workflows target QDN, use Qortal auth, support
+                    Q-Manager-compatible filesystem updates, and keep
                     publish-state visibility in the Files UI.
                   </Typography>
                 </CardContent>
@@ -924,7 +948,8 @@ function SelfHostingPage() {
             <Typography className="sc-cta-copy">
               NuQloud for Nextcloud is not launched yet. This page exists so
               teams can understand the product, review implemented add-ons, and
-              prepare for release without waiting for the launch day announcement.
+              prepare for release without waiting for the launch day
+              announcement.
             </Typography>
             <Box className="sc-plugin-launch-list">
               {launchChecklist.map((item) => (

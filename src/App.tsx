@@ -37,12 +37,12 @@ import { useAtom } from "jotai";
 import {
   type ChangeEvent,
   CSSProperties,
-  type ElementType,
   useCallback,
   useEffect,
   useMemo,
   useState,
 } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { Link } from "react-router-dom";
 import poweredByQortalDark from "./assets/brand/powered-by-qortal-dark-small.png";
 import poweredByQortalLight from "./assets/brand/powered-by-qortal-light-small.png";
@@ -74,6 +74,7 @@ import trelloIcon from "./assets/provider-icons/real/trello.svg";
 import whatsappIcon from "./assets/provider-icons/real/whatsapp.svg";
 import zoomIcon from "./assets/provider-icons/real/zoom.svg";
 import { BRAND_HEADER_LOGO, BRAND_HERO_LOGO } from "./brandAssets";
+import { BlackHoleScene } from "./components/BlackHoleScene";
 import { useAccessContext } from "./hooks/useAccessContext";
 import { EnumTheme, themeAtom } from "./state/global/system";
 import "./App.css";
@@ -128,6 +129,7 @@ const heroHighlights = [
 ];
 
 const MOBILE_COMPACT_BREAKPOINT = 720;
+const NAV_COMPACT_BREAKPOINT = 1180;
 
 function getTopbarOffset(): number {
   const topbar = document.querySelector<HTMLElement>(".sc-topbar");
@@ -163,7 +165,7 @@ function appendAffiliateCode(url: string, affiliateCode: string): string {
 }
 
 function getOrderedSectionAnchors(
-  scrollY: number
+  scrollY: number,
 ): Array<{ id: PageSectionId; top: number }> {
   return pageSections
     .map((section) => {
@@ -209,6 +211,8 @@ type ReplacementGroup = {
   providers: ProviderLogo[];
 };
 
+type IconComponent = typeof CloudRoundedIcon;
+
 type FeatureSceneId = "sync" | "share" | "communicate" | "publish";
 
 type FeatureStory = {
@@ -219,7 +223,7 @@ type FeatureStory = {
   actionLabel: string;
   successLabel: string;
   scene: FeatureSceneId;
-  Icon: ElementType;
+  Icon: IconComponent;
   steps: readonly string[];
   replacements: readonly ReplacementGroup[];
   badgeImageLight?: string;
@@ -707,7 +711,7 @@ const planGroups = [
 const topNavSections = pageSections.filter((section) => section.topNav);
 
 const initialFeatureStoryProgress = Object.fromEntries(
-  featureStories.map((story) => [story.id, 0])
+  featureStories.map((story) => [story.id, 0]),
 ) as Record<(typeof featureStories)[number]["id"], number>;
 
 function clampProgress(value: number) {
@@ -734,7 +738,7 @@ function getStoryStickyTop(viewportWidth: number, viewportHeight: number) {
   return Math.min(Math.max(78, viewportHeight * 0.085), 118);
 }
 
-const featureSceneIconSequence: Record<FeatureSceneId, ElementType[]> = {
+const featureSceneIconSequence: Record<FeatureSceneId, IconComponent[]> = {
   sync: [InsertDriveFileRoundedIcon, FolderRoundedIcon, SyncRoundedIcon],
   share: [DescriptionRoundedIcon, ShareRoundedIcon, GroupsRoundedIcon],
   communicate: [ForumRoundedIcon, CallRoundedIcon, GroupsRoundedIcon],
@@ -744,7 +748,7 @@ const featureSceneIconSequence: Record<FeatureSceneId, ElementType[]> = {
 function renderFeatureScene(
   scene: FeatureSceneId,
   progress: number,
-  successLabel: string
+  successLabel: string,
 ) {
   const sceneStyles = {
     ["--sc-story-progress" as string]: progress.toFixed(3),
@@ -754,7 +758,7 @@ function renderFeatureScene(
   const stageProgress = Math.min(progress / 0.72, 0.999);
   const activeIndex = Math.min(
     iconSequence.length - 1,
-    Math.floor(stageProgress * iconSequence.length)
+    Math.floor(stageProgress * iconSequence.length),
   );
 
   return (
@@ -800,17 +804,21 @@ function App() {
   const [theme, setTheme] = useAtom(themeAtom);
   const [scrollY, setScrollY] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const prefersReducedMotion = useReducedMotion() ?? false;
   const [activeSection, setActiveSection] = useState<string>(
-    pageSections[0].id
+    pageSections[0].id,
+  );
+  const [isCondensedNav, setIsCondensedNav] = useState(
+    () => window.innerWidth <= NAV_COMPACT_BREAKPOINT,
   );
   const [isCompactMobile, setIsCompactMobile] = useState(
-    () => window.innerWidth <= MOBILE_COMPACT_BREAKPOINT
+    () => window.innerWidth <= MOBILE_COMPACT_BREAKPOINT,
   );
   const [featureStoryProgress, setFeatureStoryProgress] = useState(
-    initialFeatureStoryProgress
+    initialFeatureStoryProgress,
   );
   const [activeShowcaseSlideId, setActiveShowcaseSlideId] = useState(
-    interfaceShowcaseSlides[0].id
+    interfaceShowcaseSlides[0].id,
   );
   const [isShowcaseLightboxOpen, setIsShowcaseLightboxOpen] = useState(false);
   const [qortalPurchasePlanName, setQortalPurchasePlanName] = useState("");
@@ -820,7 +828,7 @@ function App() {
     }
 
     return normalizeAffiliateCode(
-      window.localStorage.getItem(AFFILIATE_CODE_STORAGE_KEY) || ""
+      window.localStorage.getItem(AFFILIATE_CODE_STORAGE_KEY) || "",
     );
   });
   const [isAffiliateInputOpen, setIsAffiliateInputOpen] = useState(() => {
@@ -830,8 +838,8 @@ function App() {
 
     return Boolean(
       normalizeAffiliateCode(
-        window.localStorage.getItem(AFFILIATE_CODE_STORAGE_KEY) || ""
-      )
+        window.localStorage.getItem(AFFILIATE_CODE_STORAGE_KEY) || "",
+      ),
     );
   });
   const { accessContext, contextActionFeedback, openOrCopyInternetLink } =
@@ -841,13 +849,13 @@ function App() {
   const hasAffiliateCode = Boolean(affiliateCode);
   const activeShowcaseSlide =
     interfaceShowcaseSlides.find(
-      (slide) => slide.id === activeShowcaseSlideId
+      (slide) => slide.id === activeShowcaseSlideId,
     ) ?? interfaceShowcaseSlides[0];
   const activeShowcaseSlideIndex = Math.max(
     0,
     interfaceShowcaseSlides.findIndex(
-      (slide) => slide.id === activeShowcaseSlide.id
-    )
+      (slide) => slide.id === activeShowcaseSlide.id,
+    ),
   );
 
   const pageMotionStyles = useMemo(
@@ -859,13 +867,40 @@ function App() {
         ["--sc-spin-b" as string]: `${Math.round((scrollY * -0.03) % 360)}deg`,
         ["--sc-spin-c" as string]: `${Math.round((scrollY * 0.07) % 360)}deg`,
         ["--sc-depth" as string]: `${(1 + Math.sin(scrollY / 260) * 0.04).toFixed(3)}`,
+        ["--sc-scroll-progress" as string]: scrollProgress.toFixed(3),
+        ["--sc-singularity-scale" as string]: `${(1 + scrollProgress * 1.45).toFixed(3)}`,
+        ["--sc-singularity-drift" as string]: `${Math.round(scrollY * 0.02)}px`,
+        ["--sc-singularity-visibility" as string]: `${Math.max(
+          0,
+          Math.min((scrollProgress - 0.05) / 0.68, 1),
+        ).toFixed(3)}`,
       }) as CSSProperties,
-    [scrollY]
+    [scrollProgress, scrollY],
+  );
+
+  const getRevealMotion = useCallback(
+    (delay = 0, y = 56, x = 0, amount = 0.2) => {
+      if (prefersReducedMotion) {
+        return {};
+      }
+
+      return {
+        initial: { opacity: 0, x, y, scale: 0.985 },
+        whileInView: { opacity: 1, x: 0, y: 0, scale: 1 },
+        viewport: { once: true, amount },
+        transition: {
+          duration: 0.95,
+          delay,
+          ease: [0.16, 1, 0.3, 1] as const,
+        },
+      };
+    },
+    [prefersReducedMotion],
   );
 
   useEffect(() => {
     const items = Array.from(
-      document.querySelectorAll<HTMLElement>(".sc-reveal")
+      document.querySelectorAll<HTMLElement>(".sc-reveal"),
     );
     if (!items.length) {
       return;
@@ -883,7 +918,7 @@ function App() {
           }
         });
       },
-      { threshold: 0.2, rootMargin: "0px 0px -10% 0px" }
+      { threshold: 0.2, rootMargin: "0px 0px -10% 0px" },
     );
 
     items.forEach((item) => observer.observe(item));
@@ -892,6 +927,7 @@ function App() {
 
   useEffect(() => {
     const handleResize = () => {
+      setIsCondensedNav(window.innerWidth <= NAV_COMPACT_BREAKPOINT);
       setIsCompactMobile(window.innerWidth <= MOBILE_COMPACT_BREAKPOINT);
     };
 
@@ -906,10 +942,7 @@ function App() {
     }
 
     if (affiliateCode) {
-      window.localStorage.setItem(
-        AFFILIATE_CODE_STORAGE_KEY,
-        affiliateCode
-      );
+      window.localStorage.setItem(AFFILIATE_CODE_STORAGE_KEY, affiliateCode);
       return;
     }
 
@@ -923,7 +956,7 @@ function App() {
 
       const maxScrollable = Math.max(
         document.documentElement.scrollHeight - window.innerHeight,
-        1
+        1,
       );
       setScrollProgress(Math.min(nextY / maxScrollable, 1));
 
@@ -953,9 +986,13 @@ function App() {
       const nextFeatureProgress = { ...initialFeatureStoryProgress };
       const stickyTop = getStoryStickyTop(
         window.innerWidth,
-        window.innerHeight
+        window.innerHeight,
       );
-      const completionTravelFactor = window.innerWidth <= 720 ? 0.8 : 0.84;
+      const completionTravelFactor = window.innerWidth <= 720 ? 0.96 : 0.9;
+      const progressLead =
+        window.innerWidth <= 720
+          ? window.innerHeight * -0.08
+          : window.innerHeight * -0.12;
 
       for (const story of featureStories) {
         const stageEl = document.getElementById(`feature-story-${story.id}`);
@@ -973,7 +1010,8 @@ function App() {
         const progressEndTop =
           stickyTop - pinnedTravel * completionTravelFactor;
         const progress = clampProgress(
-          (progressStartTop - rect.top) / (progressStartTop - progressEndTop)
+          (progressStartTop + progressLead - rect.top) /
+            (progressStartTop - progressEndTop),
         );
         nextFeatureProgress[story.id] = progress;
       }
@@ -1008,7 +1046,7 @@ function App() {
 
       return appendAffiliateCode(checkoutUrl, affiliateCode);
     },
-    [affiliateCode]
+    [affiliateCode],
   );
 
   const getPlanDetailsUrl = useCallback(
@@ -1020,14 +1058,14 @@ function App() {
 
       return checkoutUrl.replace(/\/checkout\/?(\?.*)?$/, "$1");
     },
-    [getPlanCheckoutUrl]
+    [getPlanCheckoutUrl],
   );
 
   const handleAffiliateCodeChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       setAffiliateCode(normalizeAffiliateCode(event.target.value));
     },
-    []
+    [],
   );
 
   const clearAffiliateCode = useCallback(() => {
@@ -1047,7 +1085,7 @@ function App() {
       }
       void openOrCopyInternetLink(url);
     },
-    [getPlanCheckoutUrl, isQortalEnvironment, openOrCopyInternetLink]
+    [getPlanCheckoutUrl, isQortalEnvironment, openOrCopyInternetLink],
   );
 
   const handlePlanDetails = useCallback(
@@ -1062,7 +1100,7 @@ function App() {
       }
       void openOrCopyInternetLink(detailsUrl);
     },
-    [getPlanDetailsUrl, isQortalEnvironment, openOrCopyInternetLink]
+    [getPlanDetailsUrl, isQortalEnvironment, openOrCopyInternetLink],
   );
 
   const closeQortalPurchaseModal = useCallback(() => {
@@ -1091,7 +1129,7 @@ function App() {
   const showPreviousShowcaseSlide = useCallback(() => {
     setActiveShowcaseSlideId((currentId) => {
       const currentIndex = interfaceShowcaseSlides.findIndex(
-        (slide) => slide.id === currentId
+        (slide) => slide.id === currentId,
       );
       const safeIndex = currentIndex >= 0 ? currentIndex : 0;
       const nextIndex =
@@ -1104,7 +1142,7 @@ function App() {
   const showNextShowcaseSlide = useCallback(() => {
     setActiveShowcaseSlideId((currentId) => {
       const currentIndex = interfaceShowcaseSlides.findIndex(
-        (slide) => slide.id === currentId
+        (slide) => slide.id === currentId,
       );
       const safeIndex = currentIndex >= 0 ? currentIndex : 0;
       const nextIndex = (safeIndex + 1) % interfaceShowcaseSlides.length;
@@ -1117,21 +1155,18 @@ function App() {
       className={`sc-page sc-page--msp ${isDark ? "sc-theme-dark" : "sc-theme-light"}`}
       style={pageMotionStyles}
     >
+      <BlackHoleScene
+        isDark={isDark}
+        progress={scrollProgress}
+        reducedMotion={prefersReducedMotion}
+      />
       <Box
         className="sc-scroll-progress"
         aria-hidden
         style={{ transform: `scaleX(${scrollProgress})` }}
       />
-      <Box className="sc-bg-orb sc-bg-orb-a" />
-      <Box className="sc-bg-orb sc-bg-orb-b" />
-      <Box className="sc-bg-grid sc-bg-grid--square" />
+      <Box className="sc-bg-grid sc-bg-grid--circle" />
       <Box className="sc-bg-vignette" />
-      <Box className="sc-geo-layer" aria-hidden>
-        <Box className="sc-geo sc-geo-ring" />
-        <Box className="sc-geo sc-geo-cube" />
-        <Box className="sc-geo sc-geo-diamond" />
-        <Box className="sc-geo sc-geo-trail" />
-      </Box>
 
       <Box className="sc-progress-rail" aria-hidden>
         {pageSections.map((section) => (
@@ -1149,7 +1184,7 @@ function App() {
       <Container maxWidth={false} disableGutters className="sc-shell">
         <Box className="sc-shell-inner">
           <Box
-            className={`sc-topbar sc-reveal ${isCompactMobile ? "is-mobile-compact" : ""}`}
+            className={`sc-topbar sc-reveal ${isCondensedNav ? "is-condensed" : ""} ${isCompactMobile ? "is-mobile-compact" : ""}`}
           >
             <Stack direction="row" spacing={1.2} alignItems="center">
               <img
@@ -1176,7 +1211,7 @@ function App() {
                     onClick={() => scrollToId(section.id)}
                     size="small"
                   >
-                    {isCompactMobile ? section.shortLabel : section.label}
+                    {isCondensedNav ? section.shortLabel : section.label}
                   </Button>
                 ))}
               </Stack>
@@ -1187,7 +1222,7 @@ function App() {
                   size="small"
                   className="sc-nav-link"
                 >
-                  Affiliates
+                  {isCondensedNav ? "Aff" : "Affiliates"}
                 </Button>
               ) : null}
               {!isCompactMobile ? (
@@ -1197,7 +1232,7 @@ function App() {
                   size="small"
                   className="sc-nav-link"
                 >
-                  Self-Hosting
+                  {isCondensedNav ? "Self" : "Self-Hosting"}
                 </Button>
               ) : null}
               {isCompactMobile ? (
@@ -1215,7 +1250,11 @@ function App() {
                 size="small"
                 onClick={() => scrollToId("plans")}
               >
-                {isCompactMobile ? "Buy" : "View Plans"}
+                {isCompactMobile
+                  ? "Buy"
+                  : isCondensedNav
+                    ? "Plans"
+                    : "View Plans"}
               </Button>
               <IconButton
                 className="sc-theme-toggle"
@@ -1229,8 +1268,15 @@ function App() {
             </Stack>
           </Box>
 
-          <section className="sc-hero sc-home-hero sc-reveal" id="overview">
-            <Box className="sc-hero-copy">
+          <motion.section
+            className="sc-hero sc-home-hero sc-reveal"
+            id="overview"
+            {...getRevealMotion(0, 44)}
+          >
+            <motion.div
+              className="sc-hero-copy"
+              {...getRevealMotion(0.08, 34, -26)}
+            >
               <Typography variant="overline" className="sc-kicker">
                 Managed Private Cloud
               </Typography>
@@ -1282,8 +1328,11 @@ function App() {
                   {contextActionFeedback}
                 </Typography>
               ) : null}
-            </Box>
-            <Box className="sc-hero-art">
+            </motion.div>
+            <motion.div
+              className="sc-hero-art"
+              {...getRevealMotion(0.18, 34, 26)}
+            >
               <Box className="sc-home-hero-stack">
                 <img
                   src={BRAND_HERO_LOGO}
@@ -1318,10 +1367,14 @@ function App() {
                   </CardContent>
                 </Card>
               </Box>
-            </Box>
-          </section>
+            </motion.div>
+          </motion.section>
 
-          <section className="sc-section" id="about">
+          <motion.section
+            className="sc-section sc-section--cinematic"
+            id="about"
+            {...getRevealMotion(0.02, 64)}
+          >
             <Typography variant="h2" className="sc-section-title sc-reveal">
               What Is NuQloud
             </Typography>
@@ -1385,9 +1438,13 @@ function App() {
                 </CardContent>
               </Card>
             </Box>
-          </section>
+          </motion.section>
 
-          <section className="sc-section" id="features">
+          <motion.section
+            className="sc-section sc-section--cinematic"
+            id="features"
+            {...getRevealMotion(0.04, 72, 0, 0.01)}
+          >
             <Typography variant="h2" className="sc-section-title sc-reveal">
               What NuQloud Does
             </Typography>
@@ -1406,7 +1463,16 @@ function App() {
                 const bulletSpan =
                   story.steps.length > 1 ? 0.58 / (story.steps.length - 1) : 0;
                 const replacementCardsVisible = progress > 0.08;
-                const replacementCrossed = progress > 0.74;
+                const replacementResolved = progress > 0.74;
+                const totalReplacementProviders = story.replacements.reduce(
+                  (total, replacement) => total + replacement.providers.length,
+                  0,
+                );
+                const providerSpan =
+                  totalReplacementProviders > 1
+                    ? 0.54 / (totalReplacementProviders - 1)
+                    : 0;
+                let providerSequence = 0;
                 return (
                   <Box
                     className="sc-story-stage"
@@ -1473,10 +1539,10 @@ function App() {
                               className={`sc-story-replacements ${replacementExpanded ? "is-expanded" : ""}`}
                             >
                               <Typography className="sc-story-replace-title">
-                                REPLACE
+                                NUCLOUD COVERS
                               </Typography>
                               <Box
-                                className={`sc-story-replacements-stage ${replacementCardsVisible ? "is-visible" : ""} ${replacementCrossed ? "is-crossed" : ""}`}
+                                className={`sc-story-replacements-stage ${replacementCardsVisible ? "is-visible" : ""} ${replacementResolved ? "is-resolved" : ""}`}
                               >
                                 <Box className="sc-story-replacements-grid">
                                   {story.replacements.map((replacement) => {
@@ -1487,21 +1553,48 @@ function App() {
                                         aria-label={replacement.label}
                                         title={replacement.label}
                                       >
+                                        <Typography className="sc-story-replacement-label">
+                                          {replacement.label}
+                                        </Typography>
                                         <Box className="sc-story-provider-strip">
                                           {replacement.providers.map(
-                                            (provider) => (
-                                              <Box
-                                                className="sc-story-provider-pill"
-                                                key={provider.name}
-                                                title={provider.name}
-                                              >
-                                                <img
-                                                  src={provider.icon}
-                                                  alt={provider.name}
-                                                  className="sc-story-provider-icon"
-                                                />
-                                              </Box>
-                                            )
+                                            (provider) => {
+                                              const activationPoint =
+                                                0.12 +
+                                                providerSequence * providerSpan;
+                                              const isProviderRetired =
+                                                progress > activationPoint;
+                                              const isProviderImpacting =
+                                                progress >
+                                                  activationPoint - 0.04 &&
+                                                progress <
+                                                  activationPoint + 0.055;
+                                              providerSequence += 1;
+
+                                              return (
+                                                <Box
+                                                  className={`sc-story-provider-pill ${isProviderRetired ? "is-retired" : ""} ${isProviderImpacting ? "is-impacting" : ""}`}
+                                                  key={provider.name}
+                                                  title={provider.name}
+                                                >
+                                                  <Box
+                                                    className="sc-story-provider-impact"
+                                                    aria-hidden
+                                                  />
+                                                  <img
+                                                    src={provider.icon}
+                                                    alt={provider.name}
+                                                    className="sc-story-provider-icon"
+                                                  />
+                                                  <Box
+                                                    className="sc-story-provider-check"
+                                                    aria-hidden
+                                                  >
+                                                    <CheckCircleRoundedIcon fontSize="inherit" />
+                                                  </Box>
+                                                </Box>
+                                              );
+                                            },
                                           )}
                                         </Box>
                                       </Box>
@@ -1536,7 +1629,7 @@ function App() {
                             {renderFeatureScene(
                               story.scene,
                               sceneProgress,
-                              story.successLabel
+                              story.successLabel,
                             )}
                           </Box>
                         </Box>
@@ -1546,9 +1639,13 @@ function App() {
                 );
               })}
             </Box>
-          </section>
+          </motion.section>
 
-          <section className="sc-section" id="why">
+          <motion.section
+            className="sc-section sc-section--cinematic"
+            id="why"
+            {...getRevealMotion(0.05, 68)}
+          >
             <Typography variant="h2" className="sc-section-title sc-reveal">
               Why Choose NuQloud
             </Typography>
@@ -1580,9 +1677,13 @@ function App() {
                 );
               })}
             </Box>
-          </section>
+          </motion.section>
 
-          <section className="sc-section" id="foundation">
+          <motion.section
+            className="sc-section sc-section--cinematic"
+            id="foundation"
+            {...getRevealMotion(0.06, 72)}
+          >
             <Typography variant="h2" className="sc-section-title sc-reveal">
               NuQloud Interface and Features
             </Typography>
@@ -1753,9 +1854,13 @@ function App() {
                 </Box>
               </DialogContent>
             </Dialog>
-          </section>
+          </motion.section>
 
-          <section className="sc-section" id="plans">
+          <motion.section
+            className="sc-section sc-section--cinematic"
+            id="plans"
+            {...getRevealMotion(0.08, 74)}
+          >
             <Card className="sc-card sc-plan-overview sc-reveal">
               <CardContent>
                 <Typography className="sc-card-label">
@@ -1776,7 +1881,7 @@ function App() {
             <Stack spacing={2.1} className="sc-plan-stack">
               {planGroups.map((group) => {
                 const model = serviceModels.find(
-                  (entry) => entry.id === group.modelId
+                  (entry) => entry.id === group.modelId,
                 );
 
                 return (
@@ -1934,7 +2039,10 @@ function App() {
                                   <Stack
                                     direction={{ xs: "column", sm: "row" }}
                                     spacing={1}
-                                    alignItems={{ xs: "flex-start", sm: "center" }}
+                                    alignItems={{
+                                      xs: "flex-start",
+                                      sm: "center",
+                                    }}
                                     className="sc-affiliate-inline-actions"
                                   >
                                     <Typography className="sc-mini-tease">
@@ -1979,7 +2087,7 @@ function App() {
                                   onClick={() =>
                                     handlePlanDetails(
                                       plan.teamSlug,
-                                      plan.teamLabel || `${plan.name} Team`
+                                      plan.teamLabel || `${plan.name} Team`,
                                     )
                                   }
                                 >
@@ -1995,9 +2103,13 @@ function App() {
                 );
               })}
             </Stack>
-          </section>
+          </motion.section>
 
-          <section className="sc-cta sc-reveal" id="contact">
+          <motion.section
+            className="sc-cta sc-reveal"
+            id="contact"
+            {...getRevealMotion(0.04, 58)}
+          >
             <Typography variant="h3" className="sc-cta-title">
               Have Questions? Need something specific? Reach out.
             </Typography>
@@ -2010,7 +2122,7 @@ function App() {
                 Contact
               </Button>
             </Stack>
-          </section>
+          </motion.section>
         </Box>
       </Container>
       <Dialog

@@ -1,7 +1,7 @@
 {
   "name": "NuQloud-website",
   "private": true,
-  "version": "0.1.2",
+  "version": "0.1.3",
   "type": "module",
   "scripts": {
     "build": "tsc -b && vite build",
@@ -18,13 +18,17 @@
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^7.0.1",
     "@mui/material": "^7.0.1",
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.5.0",
+    "framer-motion": "^12.38.0",
     "i18next": "^25.1.2",
     "jotai": "^2.12.4",
     "qapp-core": "^1.0.74",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-i18next": "^15.5.1",
-    "react-router-dom": "^7.3.0"
+    "react-router-dom": "^7.3.0",
+    "three": "^0.183.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
@@ -32,11 +36,11 @@
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react": "^4.3.4",
     "eslint": "^9.21.0",
-    "globals": "^15.15.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.4.0",
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^15.15.0",
     "prettier": "^3.5.3",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.24.1",

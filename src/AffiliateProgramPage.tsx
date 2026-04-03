@@ -18,8 +18,11 @@ import {
   Typography,
 } from "@mui/material";
 import { useAtom } from "jotai";
+import { useReducedMotion } from "framer-motion";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { BRAND_HEADER_LOGO } from "./brandAssets";
+import { AffiliateSpaceScene } from "./components/AffiliateSpaceScene";
 import { EnumTheme, themeAtom } from "./state/global/system";
 import "./App.css";
 
@@ -256,25 +259,47 @@ const termsCards = [
 function AffiliateProgramPage() {
   const [theme, setTheme] = useAtom(themeAtom);
   const isDark = theme === EnumTheme.DARK;
+  const prefersReducedMotion = useReducedMotion() ?? false;
+
+  useEffect(() => {
+    const items = Array.from(
+      document.querySelectorAll<HTMLElement>(".sc-reveal"),
+    );
+    if (!items.length) {
+      return;
+    }
+
+    items.forEach((item, index) => {
+      item.style.setProperty("--sc-delay", `${Math.min(index * 56, 420)}ms`);
+    });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+          }
+        });
+      },
+      { threshold: 0.2, rootMargin: "0px 0px -10% 0px" },
+    );
+
+    items.forEach((item) => observer.observe(item));
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <Box
-      className={`sc-page sc-page--msp ${isDark ? "sc-theme-dark" : "sc-theme-light"}`}
+      className={`sc-page sc-page--msp sc-page--affiliate ${isDark ? "sc-theme-dark" : "sc-theme-light"}`}
     >
-      <Box className="sc-bg-orb sc-bg-orb-a" />
-      <Box className="sc-bg-orb sc-bg-orb-b" />
-      <Box className="sc-bg-grid sc-bg-grid--square" />
-      <Box className="sc-bg-vignette" />
-      <Box className="sc-geo-layer" aria-hidden>
-        <Box className="sc-geo sc-geo-ring" />
-        <Box className="sc-geo sc-geo-cube" />
-        <Box className="sc-geo sc-geo-diamond" />
-        <Box className="sc-geo sc-geo-trail" />
-      </Box>
+      <AffiliateSpaceScene
+        isDark={isDark}
+        reducedMotion={prefersReducedMotion}
+      />
 
       <Container maxWidth={false} disableGutters className="sc-shell">
         <Box className="sc-shell-inner">
-          <Box className="sc-topbar sc-reveal is-visible">
+          <Box className="sc-topbar sc-reveal">
             <Stack direction="row" spacing={1.2} alignItems="center">
               <img
                 src={BRAND_HEADER_LOGO}
@@ -327,7 +352,7 @@ function AffiliateProgramPage() {
             </Stack>
           </Box>
 
-          <section className="sc-hero sc-reveal is-visible" id="affiliate-overview">
+          <section className="sc-hero sc-reveal" id="affiliate-overview">
             <Box className="sc-hero-copy">
               <Typography variant="overline" className="sc-kicker">
                 NuQloud Affiliate Program
@@ -349,7 +374,11 @@ function AffiliateProgramPage() {
                 className="sc-affiliate-chip-row"
               >
                 {heroHighlights.map((item) => (
-                  <Chip key={item} className="sc-chip sc-home-chip" label={item} />
+                  <Chip
+                    key={item}
+                    className="sc-chip sc-home-chip"
+                    label={item}
+                  />
                 ))}
               </Stack>
               <Stack
@@ -366,11 +395,7 @@ function AffiliateProgramPage() {
                 >
                   Create Account
                 </Button>
-                <Button
-                  className="sc-btn-ghost"
-                  component={Link}
-                  to="/"
-                >
+                <Button className="sc-btn-ghost" component={Link} to="/">
                   View NuQloud Plans
                 </Button>
               </Stack>
@@ -387,7 +412,10 @@ function AffiliateProgramPage() {
                       const Icon = metric.Icon;
 
                       return (
-                        <Box className="sc-affiliate-metric-row" key={metric.label}>
+                        <Box
+                          className="sc-affiliate-metric-row"
+                          key={metric.label}
+                        >
                           <Box className="sc-home-icon-wrap sc-home-icon-wrap--section">
                             <Icon fontSize="small" />
                           </Box>
@@ -412,17 +440,17 @@ function AffiliateProgramPage() {
           </section>
 
           <section className="sc-section">
-            <Typography className="sc-section-title sc-reveal is-visible">
+            <Typography className="sc-section-title sc-reveal">
               Commission Structure
             </Typography>
-            <Typography className="sc-section-subtitle sc-reveal is-visible">
+            <Typography className="sc-section-subtitle sc-reveal">
               Earn recurring commissions for as long as referred users remain
-              active, with higher launch tiers for early supporters and
-              existing CHD customers.
+              active, with higher launch tiers for early supporters and existing
+              CHD customers.
             </Typography>
             <Box className="sc-card-grid">
               {commissionTiers.map((tier) => (
-                <Card className="sc-card sc-reveal is-visible" key={tier.title}>
+                <Card className="sc-card sc-reveal" key={tier.title}>
                   <CardContent>
                     <Typography className="sc-card-label">
                       {tier.title}
@@ -435,7 +463,11 @@ function AffiliateProgramPage() {
                     </Typography>
                     <Box component="ul" className="sc-detail-list">
                       {tier.bullets.map((point) => (
-                        <Box component="li" className="sc-detail-item" key={point}>
+                        <Box
+                          component="li"
+                          className="sc-detail-item"
+                          key={point}
+                        >
                           {point}
                         </Box>
                       ))}
@@ -447,12 +479,12 @@ function AffiliateProgramPage() {
           </section>
 
           <section className="sc-section">
-            <Typography className="sc-section-title sc-reveal is-visible">
+            <Typography className="sc-section-title sc-reveal">
               Payout Terms
             </Typography>
             <Box className="sc-two-col">
               {payoutCards.map((card) => (
-                <Card className="sc-card sc-reveal is-visible" key={card.title}>
+                <Card className="sc-card sc-reveal" key={card.title}>
                   <CardContent>
                     <Typography className="sc-card-label">
                       {card.label}
@@ -462,7 +494,11 @@ function AffiliateProgramPage() {
                     </Typography>
                     <Box component="ul" className="sc-detail-list">
                       {card.points.map((point) => (
-                        <Box component="li" className="sc-detail-item" key={point}>
+                        <Box
+                          component="li"
+                          className="sc-detail-item"
+                          key={point}
+                        >
                           {point}
                         </Box>
                       ))}
@@ -474,7 +510,7 @@ function AffiliateProgramPage() {
           </section>
 
           <section className="sc-section">
-            <Typography className="sc-section-title sc-reveal is-visible">
+            <Typography className="sc-section-title sc-reveal">
               Tracking and Attribution
             </Typography>
             <Box className="sc-card-grid">
@@ -487,7 +523,7 @@ function AffiliateProgramPage() {
                 const Icon = sectionIcons[index] || VerifiedUserRoundedIcon;
 
                 return (
-                  <Card className="sc-card sc-reveal is-visible" key={card.title}>
+                  <Card className="sc-card sc-reveal" key={card.title}>
                     <CardContent>
                       <Box className="sc-capability-head">
                         <Box className="sc-home-icon-wrap sc-home-icon-wrap--section">
@@ -504,7 +540,11 @@ function AffiliateProgramPage() {
                       </Box>
                       <Box component="ul" className="sc-detail-list">
                         {card.points.map((point) => (
-                          <Box component="li" className="sc-detail-item" key={point}>
+                          <Box
+                            component="li"
+                            className="sc-detail-item"
+                            key={point}
+                          >
                             {point}
                           </Box>
                         ))}
@@ -517,12 +557,12 @@ function AffiliateProgramPage() {
           </section>
 
           <section className="sc-section">
-            <Typography className="sc-section-title sc-reveal is-visible">
+            <Typography className="sc-section-title sc-reveal">
               What Affiliates Can Promote
             </Typography>
             <Box className="sc-two-col">
               {promotionCards.map((card) => (
-                <Card className="sc-card sc-reveal is-visible" key={card.title}>
+                <Card className="sc-card sc-reveal" key={card.title}>
                   <CardContent>
                     <Typography className="sc-card-label">
                       Eligible Products
@@ -540,12 +580,12 @@ function AffiliateProgramPage() {
           </section>
 
           <section className="sc-section">
-            <Typography className="sc-section-title sc-reveal is-visible">
+            <Typography className="sc-section-title sc-reveal">
               Getting Started
             </Typography>
             <Box className="sc-card-grid">
               {gettingStartedSteps.map((step) => (
-                <Card className="sc-card sc-reveal is-visible" key={step.step}>
+                <Card className="sc-card sc-reveal" key={step.step}>
                   <CardContent>
                     <Box className="sc-affiliate-step-number">{step.step}</Box>
                     <Typography className="sc-home-card-title">
@@ -553,7 +593,11 @@ function AffiliateProgramPage() {
                     </Typography>
                     <Box component="ul" className="sc-detail-list">
                       {step.points.map((point) => (
-                        <Box component="li" className="sc-detail-item" key={point}>
+                        <Box
+                          component="li"
+                          className="sc-detail-item"
+                          key={point}
+                        >
                           {point}
                         </Box>
                       ))}
@@ -565,12 +609,12 @@ function AffiliateProgramPage() {
           </section>
 
           <section className="sc-section">
-            <Typography className="sc-section-title sc-reveal is-visible">
+            <Typography className="sc-section-title sc-reveal">
               Special Programs
             </Typography>
             <Box className="sc-card-grid">
               {specialPrograms.map((program) => (
-                <Card className="sc-card sc-reveal is-visible" key={program.title}>
+                <Card className="sc-card sc-reveal" key={program.title}>
                   <CardContent>
                     <Typography className="sc-card-label">
                       Program Track
@@ -580,7 +624,11 @@ function AffiliateProgramPage() {
                     </Typography>
                     <Box component="ul" className="sc-detail-list">
                       {program.points.map((point) => (
-                        <Box component="li" className="sc-detail-item" key={point}>
+                        <Box
+                          component="li"
+                          className="sc-detail-item"
+                          key={point}
+                        >
                           {point}
                         </Box>
                       ))}
@@ -592,12 +640,12 @@ function AffiliateProgramPage() {
           </section>
 
           <section className="sc-section">
-            <Typography className="sc-section-title sc-reveal is-visible">
+            <Typography className="sc-section-title sc-reveal">
               Marketing Support
             </Typography>
             <Box className="sc-two-col">
               {marketingSupport.map((section) => (
-                <Card className="sc-card sc-reveal is-visible" key={section.title}>
+                <Card className="sc-card sc-reveal" key={section.title}>
                   <CardContent>
                     <Typography className="sc-card-label">
                       Support Assets
@@ -607,7 +655,11 @@ function AffiliateProgramPage() {
                     </Typography>
                     <Box component="ul" className="sc-detail-list">
                       {section.points.map((point) => (
-                        <Box component="li" className="sc-detail-item" key={point}>
+                        <Box
+                          component="li"
+                          className="sc-detail-item"
+                          key={point}
+                        >
                           {point}
                         </Box>
                       ))}
@@ -619,22 +671,24 @@ function AffiliateProgramPage() {
           </section>
 
           <section className="sc-section">
-            <Typography className="sc-section-title sc-reveal is-visible">
+            <Typography className="sc-section-title sc-reveal">
               Terms and Conditions
             </Typography>
             <Box className="sc-card-grid">
               {termsCards.map((card) => (
-                <Card className="sc-card sc-reveal is-visible" key={card.title}>
+                <Card className="sc-card sc-reveal" key={card.title}>
                   <CardContent>
-                    <Typography className="sc-card-label">
-                      Policy
-                    </Typography>
+                    <Typography className="sc-card-label">Policy</Typography>
                     <Typography className="sc-home-card-title">
                       {card.title}
                     </Typography>
                     <Box component="ul" className="sc-detail-list">
                       {card.points.map((point) => (
-                        <Box component="li" className="sc-detail-item" key={point}>
+                        <Box
+                          component="li"
+                          className="sc-detail-item"
+                          key={point}
+                        >
                           {point}
                         </Box>
                       ))}
@@ -645,7 +699,7 @@ function AffiliateProgramPage() {
             </Box>
           </section>
 
-          <section className="sc-cta sc-reveal is-visible">
+          <section className="sc-cta sc-reveal">
             <Typography variant="h3" className="sc-cta-title">
               Ready to start referring NuQloud?
             </Typography>

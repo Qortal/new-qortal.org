@@ -12,7 +12,10 @@ export type AccessContext = {
   primaryTarget: string;
 };
 
-type QortalRequestLike = (payload: { action: string }) => Promise<unknown>;
+type QortalRequestLike = (payload: {
+  action: string;
+  qortalLink?: string;
+}) => Promise<unknown>;
 
 const TRUSTED_GATEWAY_HOST_SUFFIXES = ['crowetic.com'];
 
@@ -84,7 +87,9 @@ function resolveQortalRequest(): QortalRequestLike | null {
 }
 
 export function useAccessContext() {
-  const [accessContext, setAccessContext] = useState<AccessContext>(DEFAULT_INTERNET_CONTEXT);
+  const [accessContext, setAccessContext] = useState<AccessContext>(
+    DEFAULT_INTERNET_CONTEXT
+  );
   const [contextActionFeedback, setContextActionFeedback] = useState('');
 
   useEffect(() => {
@@ -134,7 +139,8 @@ export function useAccessContext() {
               isGateway: false,
               isQdn: true,
               label: 'Authenticated QDN Context',
-              detail: 'Authenticated Qortal account detected via GET_USER_ACCOUNT.',
+              detail:
+                'Authenticated Qortal account detected via GET_USER_ACCOUNT.',
               primaryAction: 'See Decentralized Roadmap',
               primaryTarget: 'evolution',
             });
@@ -163,28 +169,63 @@ export function useAccessContext() {
     return () => window.clearTimeout(timer);
   }, [contextActionFeedback]);
 
-  const openOrCopyInternetLink = useCallback(async (url: string) => {
-    if (typeof window === 'undefined') {
-      return;
-    }
-
-    if (accessContext.mode === 'qdn') {
-      try {
-        await navigator.clipboard.writeText(url);
-        setContextActionFeedback('Copied internet-only link to clipboard for external browser use.');
-      } catch {
-        setContextActionFeedback(`Copy failed. Use this link manually: ${url}`);
+  const openOrCopyInternetLink = useCallback(
+    async (url: string) => {
+      if (typeof window === 'undefined') {
+        return;
       }
-      return;
-    }
 
-    window.open(url, '_blank', 'noopener,noreferrer');
-    setContextActionFeedback('Opened link in a new browser tab.');
-  }, [accessContext.mode]);
+      if (accessContext.mode === 'qdn') {
+        try {
+          await navigator.clipboard.writeText(url);
+          setContextActionFeedback(
+            'Copied internet-only link to clipboard for external browser use.'
+          );
+        } catch {
+          setContextActionFeedback(
+            `Copy failed. Use this link manually: ${url}`
+          );
+        }
+        return;
+      }
+
+      window.open(url, '_blank', 'noopener,noreferrer');
+      setContextActionFeedback('Opened link in a new browser tab.');
+    },
+    [accessContext.mode]
+  );
+
+  const openQortalLink = useCallback(
+    async (qortalLink: string) => {
+      if (typeof window === 'undefined' || !qortalLink) {
+        return;
+      }
+
+      if (accessContext.mode === 'qdn') {
+        const requester = resolveQortalRequest();
+        if (requester) {
+          try {
+            await requester({
+              action: 'OPEN_NEW_TAB',
+              qortalLink,
+            });
+            setContextActionFeedback('Opened Qortal link in a new tab.');
+            return;
+          } catch {
+            // Fall through to direct navigation if the bridge rejects the call.
+          }
+        }
+      }
+
+      window.location.assign(qortalLink);
+    },
+    [accessContext.mode]
+  );
 
   return {
     accessContext,
     contextActionFeedback,
+    openQortalLink,
     openOrCopyInternetLink,
   };
 }

@@ -28,6 +28,10 @@
   filter: saturate(1.24) contrast(1.06) brightness(1.06);
 }
 
+.sc-space-scene.is-lite-mode canvas {
+  display: none !important;
+}
+
 .sc-space-scene.is-light canvas {
   opacity: 0.72;
   filter: saturate(1.08) contrast(0.98);
@@ -244,9 +248,9 @@
   border-radius: 50%;
   background: radial-gradient(circle, #000000 0%, #000000 82%);
   box-shadow:
-    0 0 0 1px rgba(170, 220, 255, 0.025),
-    0 0 56px rgba(0, 0, 0, 0.72);
-  opacity: calc(var(--sc-singularity-visibility, 0) * 0.96);
+    0 0 0 1px rgba(170, 220, 255, 0.012),
+    0 0 70px rgba(0, 0, 0, 0.88);
+  opacity: 1;
 }
 
 .sc-black-hole-core::before {
@@ -255,10 +259,10 @@
   inset: -35%;
   border-radius: 50%;
   background:
-    radial-gradient(circle, rgba(255, 255, 255, 0.025), transparent 40%),
-    radial-gradient(circle, rgba(101, 181, 255, 0.05), transparent 68%);
+    radial-gradient(circle, rgba(255, 255, 255, 0.012), transparent 40%),
+    radial-gradient(circle, rgba(101, 181, 255, 0.02), transparent 68%);
   filter: blur(16px);
-  opacity: calc(var(--sc-singularity-visibility, 0) * 0.06);
+  opacity: calc(var(--sc-singularity-visibility, 0) * 0.025);
 }
 
 @keyframes sc-nebula-drift {
@@ -286,14 +290,14 @@
 .sc-theme-dark {
   --sc-bg: #01050d;
   --sc-bg-soft: #071325;
-  --sc-bg-card: rgba(9, 22, 44, 0.72);
+  --sc-bg-card: rgba(9, 22, 44, 0.116);
   --sc-border: rgba(112, 180, 255, 0.24);
   --sc-border-strong: rgba(124, 196, 255, 0.48);
   --sc-text: #ebf6ff;
   --sc-text-soft: #9dc2e4;
   --sc-primary: #4fa3ff;
   --sc-primary-strong: #1f6fff;
-  --sc-chip: rgba(26, 60, 105, 0.72);
+  --sc-chip: rgba(26, 60, 105, 0.13);
   --sc-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
 }
 
@@ -327,7 +331,7 @@
 .sc-page--affiliate {
   --sc-bg: #030712;
   --sc-bg-soft: #091428;
-  --sc-bg-card: rgba(8, 18, 38, 0.74);
+  --sc-bg-card: rgba(8, 18, 38, 0.096);
   --sc-border: rgba(113, 181, 255, 0.22);
   --sc-border-strong: rgba(138, 206, 255, 0.44);
 }
@@ -884,6 +888,7 @@
 }
 
 .sc-theme-toggle {
+  display: none !important;
   border: 1px solid var(--sc-border) !important;
   color: var(--sc-text) !important;
   border-radius: 0.9rem !important;
@@ -918,10 +923,10 @@
   background:
     linear-gradient(
       145deg,
-      color-mix(in srgb, var(--sc-bg-soft) 68%, transparent),
-      color-mix(in srgb, var(--sc-bg) 82%, transparent)
+      color-mix(in srgb, var(--sc-bg-soft) 16%, transparent),
+      color-mix(in srgb, var(--sc-bg) 14%, transparent)
     ),
-    var(--sc-bg-card);
+    color-mix(in srgb, var(--sc-bg-card) 100%, transparent);
   box-shadow: var(--sc-shadow);
   padding: clamp(1.4rem, 2.3vw, 2.6rem);
   display: grid;
@@ -1218,7 +1223,7 @@
 .sc-card {
   border: 1px solid var(--sc-border) !important;
   border-radius: 1rem !important;
-  background: color-mix(in srgb, var(--sc-bg-card) 88%, transparent) !important;
+  background: color-mix(in srgb, var(--sc-bg-card) 100%, transparent) !important;
   color: var(--sc-text) !important;
   box-shadow: none !important;
   transition:
@@ -1369,17 +1374,17 @@
 .sc-home-model-card--accounts {
   border-color: rgba(71, 222, 255, 0.72) !important;
   background:
-    radial-gradient(circle at 0% 0%, rgba(54, 198, 255, 0.12), transparent 34%),
-    linear-gradient(145deg, rgba(8, 20, 42, 0.96), rgba(4, 16, 34, 0.94)) !important;
+    radial-gradient(circle at 0% 0%, rgba(54, 198, 255, 0.08), transparent 34%),
+    linear-gradient(145deg, rgba(8, 20, 42, 0.12), rgba(4, 16, 34, 0.1)) !important;
   box-shadow:
-    0 0 0 1px rgba(71, 222, 255, 0.24),
-    0 22px 52px rgba(10, 112, 148, 0.18) !important;
+    0 0 0 1px rgba(71, 222, 255, 0.16),
+    0 22px 52px rgba(10, 112, 148, 0.1) !important;
 }
 
 .sc-home-model-card--accounts::before {
   background: linear-gradient(
     180deg,
-    rgba(71, 222, 255, 0.08),
+    rgba(71, 222, 255, 0.04),
     transparent 28%
   );
 }
@@ -1389,19 +1394,19 @@
   background:
     radial-gradient(
       circle at 100% 0%,
-      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.05),
       transparent 28%
     ),
-    linear-gradient(145deg, rgba(11, 21, 39, 0.97), rgba(8, 18, 34, 0.95)) !important;
+    linear-gradient(145deg, rgba(11, 21, 39, 0.12), rgba(8, 18, 34, 0.1)) !important;
   box-shadow:
-    0 0 0 1px rgba(238, 245, 255, 0.2),
-    0 22px 52px rgba(8, 18, 34, 0.2) !important;
+    0 0 0 1px rgba(238, 245, 255, 0.14),
+    0 22px 52px rgba(8, 18, 34, 0.1) !important;
 }
 
 .sc-home-model-card--dedicated::before {
   background: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.06),
+    rgba(255, 255, 255, 0.03),
     transparent 26%
   );
 }
@@ -1474,8 +1479,8 @@
     var(--sc-border-strong) 92%,
     transparent
   ) !important;
-  background: color-mix(in srgb, var(--sc-bg-card) 94%, transparent) !important;
-  box-shadow: var(--sc-shadow) !important;
+  background: color-mix(in srgb, var(--sc-bg-card) 100%, transparent) !important;
+  box-shadow: none !important;
 }
 
 .sc-story-panel-content {
@@ -1780,23 +1785,21 @@
   background:
     radial-gradient(
       circle at 18% 18%,
-      color-mix(in srgb, var(--sc-scene-accent) 44%, transparent),
+      color-mix(in srgb, var(--sc-scene-accent) 22%, transparent),
       transparent 34%
     ),
     radial-gradient(
       circle at 82% 16%,
-      color-mix(in srgb, var(--sc-scene-accent) 28%, transparent),
+      color-mix(in srgb, var(--sc-scene-accent) 14%, transparent),
       transparent 28%
     ),
     linear-gradient(
       155deg,
-      color-mix(in srgb, var(--sc-bg-soft) 82%, transparent),
-      color-mix(in srgb, var(--sc-bg) 90%, transparent)
+      color-mix(in srgb, var(--sc-bg-soft) 28%, transparent),
+      color-mix(in srgb, var(--sc-bg) 34%, transparent)
     );
   overflow: hidden;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.04),
-    0 20px 44px rgba(6, 18, 38, 0.18);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.025);
 }
 
 .sc-story-scene::after {
@@ -1851,17 +1854,15 @@
   background:
     radial-gradient(
       circle at 50% 32%,
-      color-mix(in srgb, var(--sc-scene-accent) 36%, transparent),
+      color-mix(in srgb, var(--sc-scene-accent) 16%, transparent),
       transparent 48%
     ),
     linear-gradient(
       145deg,
-      color-mix(in srgb, var(--sc-bg-card) 94%, transparent),
-      color-mix(in srgb, var(--sc-bg-soft) 92%, transparent)
+      color-mix(in srgb, var(--sc-bg-card) 100%, transparent),
+      color-mix(in srgb, var(--sc-bg-soft) 26%, transparent)
     );
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.05),
-    0 22px 44px rgba(5, 18, 38, 0.2);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
   transition:
     opacity 320ms ease,
     transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
@@ -2259,7 +2260,8 @@
 }
 
 .sc-plan-model-card {
-  width: min(100%, 54rem);
+  width: min(80%, 68rem);
+  max-width: 100%;
 }
 
 .sc-plan-card {
@@ -2425,6 +2427,19 @@
   min-width: 0;
 }
 
+.sc-affiliate-hero-actions {
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.sc-affiliate-auth-divider {
+  color: color-mix(in srgb, var(--sc-text-soft) 82%, transparent);
+  font-size: 0.82rem !important;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
 .sc-affiliate-metric-label {
   color: var(--sc-text-soft);
   font-size: 0.72rem !important;
@@ -2471,6 +2486,37 @@
   margin-top: 1rem !important;
   color: var(--sc-text-soft);
   font-size: 0.82rem !important;
+}
+
+.sc-footer-support {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.6rem;
+  padding-bottom: 0.6rem;
+}
+
+.sc-footer-support-copy {
+  color: color-mix(in srgb, var(--sc-text-soft) 88%, transparent);
+  font-size: 0.78rem !important;
+  letter-spacing: 0.01em;
+}
+
+.sc-footer-support-link {
+  color: color-mix(in srgb, var(--sc-text-soft) 78%, var(--sc-primary));
+  text-decoration: none;
+  border-bottom: 1px dotted
+    color-mix(in srgb, var(--sc-border-strong) 55%, transparent);
+  transition:
+    color 160ms ease,
+    border-color 160ms ease,
+    opacity 160ms ease;
+  opacity: 0.88;
+}
+
+.sc-footer-support-link:hover {
+  color: var(--sc-text);
+  border-color: color-mix(in srgb, var(--sc-primary) 62%, transparent);
+  opacity: 1;
 }
 
 .sc-story-detail-actions {
@@ -3210,6 +3256,10 @@
     text-align: left;
   }
 
+  .sc-plan-model-card {
+    width: 100%;
+  }
+
   .sc-detail-card {
     max-width: 100%;
     justify-self: stretch !important;
@@ -3258,6 +3308,10 @@
 }
 
 @media (max-width: 720px) {
+  .sc-progress-rail {
+    display: none;
+  }
+
   .sc-qortal-purchase-dialog .MuiDialog-paper {
     width: min(96vw, 34rem);
     margin: 0.75rem;
@@ -3407,52 +3461,57 @@
 
   .sc-story-badge {
     position: static;
-    margin-bottom: 1rem;
-    width: min(13rem, 100%);
+    margin-bottom: 0.55rem;
+    width: min(11rem, 100%);
   }
 
   .sc-story-stage {
-    min-height: clamp(92rem, 210vh, 118rem);
+    min-height: auto;
   }
 
   .sc-story-panel {
-    top: 5.25rem;
-    max-height: calc(100dvh - 6rem);
+    position: relative;
+    top: auto;
+    max-height: none;
   }
 
   .sc-story-panel-content {
     min-height: auto;
-    height: 100%;
-    max-height: calc(100dvh - 6rem);
+    height: auto;
+    max-height: none;
+    padding: 0.82rem !important;
   }
 
   .sc-story-grid {
-    height: 100%;
-    gap: 0.8rem;
-    grid-template-rows: auto minmax(0, 1fr);
-    min-height: 0;
+    height: auto;
+    gap: 0.72rem;
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+    align-items: start;
+    min-height: auto;
   }
 
   .sc-story-visual {
     order: 1;
-    max-width: min(100%, 12.5rem);
+    max-width: min(100%, 10.75rem);
+    margin-inline: auto;
   }
 
   .sc-story-copy {
     order: 2;
     min-height: 0;
-    overflow-y: auto;
-    padding-right: 0.15rem;
-    scrollbar-width: thin;
+    overflow: visible;
+    padding-right: 0;
+    scrollbar-width: auto;
   }
 
   .sc-story-scene {
-    min-height: clamp(10.5rem, 18vh, 12rem);
-    padding: 0.65rem;
+    min-height: 8.6rem;
+    padding: 0.55rem;
   }
 
   .sc-story-scene-core {
-    width: min(100%, 10.25rem);
+    width: min(100%, 8.8rem);
   }
 
   .sc-story-icon-shell {
@@ -3491,31 +3550,43 @@
   }
 
   .sc-story-title {
-    font-size: 1.18rem !important;
+    font-size: 1.02rem !important;
+    line-height: 1.12 !important;
   }
 
   .sc-story-action {
-    margin-top: 0.55rem !important;
-    font-size: 0.9rem !important;
+    margin-top: 0.42rem !important;
+    font-size: 0.84rem !important;
   }
 
   .sc-story-bullets {
-    margin-top: 0.8rem;
-    gap: 0.38rem;
+    margin-top: 0.62rem;
+    gap: 0.28rem;
   }
 
   .sc-story-bullet {
-    padding: 0.18rem 0;
-    font-size: 0.88rem;
+    gap: 0.42rem;
+    padding: 0.12rem 0;
+    font-size: 0.8rem;
   }
 
   .sc-story-replacements {
-    margin-top: 1rem;
-    min-height: 11.5rem;
+    margin-top: 0.82rem;
+    min-height: auto;
+  }
+
+  .sc-story-replacements-stage {
+    margin-top: 0.62rem;
+    min-height: auto;
+  }
+
+  .sc-story-replacement-card {
+    padding: 0.82rem 0.75rem;
+    gap: 0.58rem;
   }
 
   .sc-story-provider-strip {
-    gap: 0.62rem;
+    gap: 0.48rem;
   }
 
   .sc-showcase-tab {
@@ -3571,13 +3642,85 @@
   }
 
   .sc-story-provider-pill {
-    width: 3.55rem;
-    height: 3.55rem;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.92rem;
   }
 
   .sc-story-provider-icon {
-    width: 1.95rem;
-    height: 1.95rem;
+    width: 1.55rem;
+    height: 1.55rem;
+  }
+
+  .sc-story-provider-check {
+    width: 1.08rem;
+    height: 1.08rem;
+  }
+
+  .sc-story-detail-actions {
+    align-items: stretch;
+  }
+
+  .sc-story-detail-actions .sc-btn-ghost,
+  .sc-story-detail-actions .sc-btn-link {
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+  }
+
+  .sc-plan-stack {
+    gap: 1.3rem !important;
+  }
+
+  .sc-plan-section {
+    gap: 0.72rem;
+  }
+
+  .sc-plan-overview .MuiCardContent-root,
+  .sc-plan-card .MuiCardContent-root {
+    padding: 0.95rem !important;
+  }
+
+  .sc-plan-card-head {
+    flex-direction: column;
+    gap: 0.52rem;
+  }
+
+  .sc-plan-price {
+    font-size: clamp(1.18rem, 6.8vw, 1.58rem) !important;
+  }
+
+  .sc-plan-cadence {
+    font-size: 0.78rem;
+  }
+
+  .sc-plan-summary,
+  .sc-plan-credits,
+  .sc-plan-addon-note,
+  .sc-plan-note {
+    font-size: 0.8rem !important;
+  }
+
+  .sc-plan-detail-list .sc-detail-item {
+    font-size: 0.82rem;
+    line-height: 1.35;
+  }
+
+  .sc-plan-buy-btn,
+  .sc-plan-detail-link,
+  .sc-plan-team-link,
+  .sc-affiliate-toggle {
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+  }
+
+  .sc-plan-buy-btn {
+    min-width: 0 !important;
+  }
+
+  .sc-affiliate-inline-panel {
+    width: 100%;
   }
 
   .sc-hero,

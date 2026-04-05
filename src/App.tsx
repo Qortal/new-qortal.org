@@ -1,24 +1,24 @@
-import ApartmentRoundedIcon from "@mui/icons-material/ApartmentRounded";
-import CallRoundedIcon from "@mui/icons-material/CallRounded";
-import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
-import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
-import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
-import CloudRoundedIcon from "@mui/icons-material/CloudRounded";
-import DarkModeRoundedIcon from "@mui/icons-material/DarkModeRounded";
-import DescriptionRoundedIcon from "@mui/icons-material/DescriptionRounded";
-import FolderRoundedIcon from "@mui/icons-material/FolderRounded";
-import ForumRoundedIcon from "@mui/icons-material/ForumRounded";
-import GroupsRoundedIcon from "@mui/icons-material/GroupsRounded";
-import HubRoundedIcon from "@mui/icons-material/HubRounded";
-import InsertDriveFileRoundedIcon from "@mui/icons-material/InsertDriveFileRounded";
-import LanRoundedIcon from "@mui/icons-material/LanRounded";
-import LightModeRoundedIcon from "@mui/icons-material/LightModeRounded";
-import PublicRoundedIcon from "@mui/icons-material/PublicRounded";
-import ShareRoundedIcon from "@mui/icons-material/ShareRounded";
-import ShieldRoundedIcon from "@mui/icons-material/ShieldRounded";
-import SyncRoundedIcon from "@mui/icons-material/SyncRounded";
-import VerifiedUserRoundedIcon from "@mui/icons-material/VerifiedUserRounded";
-import WorkspacesRoundedIcon from "@mui/icons-material/WorkspacesRounded";
+import ApartmentRoundedIcon from '@mui/icons-material/ApartmentRounded';
+import CallRoundedIcon from '@mui/icons-material/CallRounded';
+import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
+import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
+import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
+import CloudRoundedIcon from '@mui/icons-material/CloudRounded';
+import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
+import DescriptionRoundedIcon from '@mui/icons-material/DescriptionRounded';
+import FolderRoundedIcon from '@mui/icons-material/FolderRounded';
+import ForumRoundedIcon from '@mui/icons-material/ForumRounded';
+import GroupsRoundedIcon from '@mui/icons-material/GroupsRounded';
+import HubRoundedIcon from '@mui/icons-material/HubRounded';
+import InsertDriveFileRoundedIcon from '@mui/icons-material/InsertDriveFileRounded';
+import LanRoundedIcon from '@mui/icons-material/LanRounded';
+import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
+import PublicRoundedIcon from '@mui/icons-material/PublicRounded';
+import ShareRoundedIcon from '@mui/icons-material/ShareRounded';
+import ShieldRoundedIcon from '@mui/icons-material/ShieldRounded';
+import SyncRoundedIcon from '@mui/icons-material/SyncRounded';
+import VerifiedUserRoundedIcon from '@mui/icons-material/VerifiedUserRounded';
+import WorkspacesRoundedIcon from '@mui/icons-material/WorkspacesRounded';
 import {
   Box,
   Button,
@@ -32,8 +32,8 @@ import {
   Stack,
   TextField,
   Typography,
-} from "@mui/material";
-import { useAtom } from "jotai";
+} from '@mui/material';
+import { useAtom } from 'jotai';
 import {
   type ChangeEvent,
   CSSProperties,
@@ -41,113 +41,114 @@ import {
   useEffect,
   useMemo,
   useState,
-} from "react";
-import { motion, useReducedMotion } from "framer-motion";
-import { Link } from "react-router-dom";
-import poweredByQortalDark from "./assets/brand/powered-by-qortal-dark-small.png";
-import poweredByQortalLight from "./assets/brand/powered-by-qortal-light-small.png";
-import collaborativeDocSharingImage from "./assets/interface-gallery/nuqloud-collaborative-doc-sharing.png";
-import createGroupConversationImage from "./assets/interface-gallery/nuqloud-create-group-conversation.png";
-import dashboardOverviewImage from "./assets/interface-gallery/nuqloud-dashboard-overview.png";
-import filesPublishApprovalImage from "./assets/interface-gallery/nuqloud-files-publish-approval.png";
-import filesPublishStatusImage from "./assets/interface-gallery/nuqloud-files-publish-status.png";
-import liveDocumentCollaborationImage from "./assets/interface-gallery/nuqloud-live-document-collaboration.png";
-import networkTransactionsImage from "./assets/interface-gallery/nuqloud-network-transactions.png";
-import qdeckAccessImage from "./assets/interface-gallery/nuqloud-qdeck-access.png";
-import qmailAccessImage from "./assets/interface-gallery/nuqloud-qmail-access.png";
-import sharedFileInConversationImage from "./assets/interface-gallery/nuqloud-shared-file-in-conversation.png";
-import airtableIcon from "./assets/provider-icons/real/airtable.svg";
-import asanaIcon from "./assets/provider-icons/real/asana.svg";
-import boxIcon from "./assets/provider-icons/real/box.svg";
-import confluenceIcon from "./assets/provider-icons/real/confluence.svg";
-import discordIcon from "./assets/provider-icons/real/discord.svg";
-import dropboxIcon from "./assets/provider-icons/real/dropbox.svg";
-import googleChatIcon from "./assets/provider-icons/real/googlechat.svg";
-import googleDocsIcon from "./assets/provider-icons/real/googledocs.svg";
-import googleDriveIcon from "./assets/provider-icons/real/googledrive.svg";
-import googleMeetIcon from "./assets/provider-icons/real/googlemeet.svg";
-import icloudIcon from "./assets/provider-icons/real/icloud.svg";
-import jiraIcon from "./assets/provider-icons/real/jira.svg";
-import notionIcon from "./assets/provider-icons/real/notion.svg";
-import telegramIcon from "./assets/provider-icons/real/telegram.svg";
-import trelloIcon from "./assets/provider-icons/real/trello.svg";
-import whatsappIcon from "./assets/provider-icons/real/whatsapp.svg";
-import zoomIcon from "./assets/provider-icons/real/zoom.svg";
-import { BRAND_HEADER_LOGO, BRAND_HERO_LOGO } from "./brandAssets";
-import { BlackHoleScene } from "./components/BlackHoleScene";
-import { useAccessContext } from "./hooks/useAccessContext";
-import { EnumTheme, themeAtom } from "./state/global/system";
-import "./App.css";
+} from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import poweredByQortalDark from './assets/brand/powered-by-qortal-dark-small.png';
+import poweredByQortalLight from './assets/brand/powered-by-qortal-light-small.png';
+import collaborativeDocSharingImage from './assets/interface-gallery/nuqloud-collaborative-doc-sharing.png';
+import createGroupConversationImage from './assets/interface-gallery/nuqloud-create-group-conversation.png';
+import dashboardOverviewImage from './assets/interface-gallery/nuqloud-dashboard-overview.png';
+import filesPublishApprovalImage from './assets/interface-gallery/nuqloud-files-publish-approval.png';
+import filesPublishStatusImage from './assets/interface-gallery/nuqloud-files-publish-status.png';
+import liveDocumentCollaborationImage from './assets/interface-gallery/nuqloud-live-document-collaboration.png';
+import networkTransactionsImage from './assets/interface-gallery/nuqloud-network-transactions.png';
+import qdeckAccessImage from './assets/interface-gallery/nuqloud-qdeck-access.png';
+import qmailAccessImage from './assets/interface-gallery/nuqloud-qmail-access.png';
+import sharedFileInConversationImage from './assets/interface-gallery/nuqloud-shared-file-in-conversation.png';
+import airtableIcon from './assets/provider-icons/real/airtable.svg';
+import asanaIcon from './assets/provider-icons/real/asana.svg';
+import boxIcon from './assets/provider-icons/real/box.svg';
+import confluenceIcon from './assets/provider-icons/real/confluence.svg';
+import discordIcon from './assets/provider-icons/real/discord.svg';
+import dropboxIcon from './assets/provider-icons/real/dropbox.svg';
+import googleChatIcon from './assets/provider-icons/real/googlechat.svg';
+import googleDocsIcon from './assets/provider-icons/real/googledocs.svg';
+import googleDriveIcon from './assets/provider-icons/real/googledrive.svg';
+import googleMeetIcon from './assets/provider-icons/real/googlemeet.svg';
+import icloudIcon from './assets/provider-icons/real/icloud.svg';
+import jiraIcon from './assets/provider-icons/real/jira.svg';
+import notionIcon from './assets/provider-icons/real/notion.svg';
+import telegramIcon from './assets/provider-icons/real/telegram.svg';
+import trelloIcon from './assets/provider-icons/real/trello.svg';
+import whatsappIcon from './assets/provider-icons/real/whatsapp.svg';
+import zoomIcon from './assets/provider-icons/real/zoom.svg';
+import { BRAND_HEADER_LOGO, BRAND_HERO_LOGO } from './brandAssets';
+import { BlackHoleScene } from './components/BlackHoleScene';
+import { useAccessContext } from './hooks/useAccessContext';
+import { EnumTheme, themeAtom } from './state/global/system';
+import './App.css';
 
 const PLAN_CHECKOUT_URLS: Record<string, string> = {
-  "nuqloud-starter":
-    "https://payment.crowetic.com/products/nuqloud/nuqloud-starter/checkout",
-  "nuqloud-advanced":
-    "https://payment.crowetic.com/products/nuqloud/nuqloud-advanced/checkout",
-  "nuqloud-pro":
-    "https://payment.crowetic.com/products/nuqloud/nuqloud-pro/checkout",
-  "nuqloud-team-starter":
-    "https://payment.crowetic.com/products/nuqloud/nuqloud-starter-team/checkout",
-  "nuqloud-team-advanced":
-    "https://payment.crowetic.com/products/nuqloud/nuqloud-advanced-team/checkout",
-  "nuqloud-team-pro":
-    "https://payment.crowetic.com/products/nuqloud/nuqloud-professional-team/checkout",
-  "nuqloud-branded-starter":
-    "https://payment.crowetic.com/products/nuqloud/nuqloud-branded-starter/checkout",
-  "nuqloud-branded-pro":
-    "https://payment.crowetic.com/products/nuqloud/nuqloud-branded-pro/checkout",
-  "nuqloud-branded-enterprise":
-    "https://payment.crowetic.com/products/nuqloud/nuqloud-branded-enterprise-default/checkout",
+  'nuqloud-starter':
+    'https://payment.crowetic.com/products/nuqloud/nuqloud-starter/checkout',
+  'nuqloud-advanced':
+    'https://payment.crowetic.com/products/nuqloud/nuqloud-advanced/checkout',
+  'nuqloud-pro':
+    'https://payment.crowetic.com/products/nuqloud/nuqloud-pro/checkout',
+  'nuqloud-team-starter':
+    'https://payment.crowetic.com/products/nuqloud/nuqloud-starter-team/checkout',
+  'nuqloud-team-advanced':
+    'https://payment.crowetic.com/products/nuqloud/nuqloud-advanced-team/checkout',
+  'nuqloud-team-pro':
+    'https://payment.crowetic.com/products/nuqloud/nuqloud-professional-team/checkout',
+  'nuqloud-branded-starter':
+    'https://payment.crowetic.com/products/nuqloud/nuqloud-branded-starter/checkout',
+  'nuqloud-branded-pro':
+    'https://payment.crowetic.com/products/nuqloud/nuqloud-branded-pro/checkout',
+  'nuqloud-branded-enterprise':
+    'https://payment.crowetic.com/products/nuqloud/nuqloud-branded-enterprise-default/checkout',
 };
-const CONTACT_TICKET_URL = "https://payment.crowetic.com/tickets/create";
-const QORTAL_QMAIL_CONTACT_URL = "qortal://APP/Q-Mail/to/crowetic";
-const QORTAL_CHDC_URL = "qortal://CHDC";
-const AFFILIATE_CODE_STORAGE_KEY = "nuqloud-affiliate-code";
+const CONTACT_TICKET_URL = 'https://payment.crowetic.com/tickets/create';
+const AI_SUPPORT_EMAIL_URL = 'mailto:info@nuqloud.com';
+const QORTAL_QMAIL_CONTACT_URL = 'qortal://APP/Q-Mail/to/crowetic';
+const QORTAL_CHDC_URL = 'qortal://CHDC';
+const AFFILIATE_CODE_STORAGE_KEY = 'nuqloud-affiliate-code';
 const AFFILIATE_CODE_MAX_LENGTH = 64;
 
 const pageSections = [
-  { id: "overview", label: "Home", shortLabel: "Hm", topNav: true },
-  { id: "about", label: "About", shortLabel: "Abt", topNav: true },
-  { id: "features", label: "Features", shortLabel: "Feat", topNav: true },
+  { id: 'overview', label: 'Home', shortLabel: 'Hm', topNav: true },
+  { id: 'about', label: 'About', shortLabel: 'Abt', topNav: true },
+  { id: 'features', label: 'Features', shortLabel: 'Feat', topNav: true },
   {
-    id: "dedicated-cloud",
-    label: "Dedicated Cloud",
-    shortLabel: "Cloud",
+    id: 'dedicated-cloud',
+    label: 'Dedicated Cloud',
+    shortLabel: 'Cloud',
     topNav: true,
   },
-  { id: "foundation", label: "Screenshots", shortLabel: "Shots", topNav: true },
-  { id: "plans", label: "Plans", shortLabel: "Plan", topNav: true },
-  { id: "contact", label: "Contact", shortLabel: "Info", topNav: true },
+  { id: 'foundation', label: 'Screenshots', shortLabel: 'Shots', topNav: true },
+  { id: 'plans', label: 'Plans', shortLabel: 'Plan', topNav: true },
+  { id: 'contact', label: 'Contact', shortLabel: 'Info', topNav: true },
 ] as const;
 
-type PageSectionId = (typeof pageSections)[number]["id"];
+type PageSectionId = (typeof pageSections)[number]['id'];
 
 const heroHighlights = [
-  "Private cloud",
-  "Managed for you",
-  "Optional resilient publishing",
+  'Private cloud',
+  'Managed for you',
+  'Optional resilient publishing',
 ];
 
 const MOBILE_COMPACT_BREAKPOINT = 720;
 const NAV_COMPACT_BREAKPOINT = 1180;
 
 function getTopbarOffset(): number {
-  const topbar = document.querySelector<HTMLElement>(".sc-topbar");
+  const topbar = document.querySelector<HTMLElement>('.sc-topbar');
   const topbarHeight = topbar?.offsetHeight ?? 0;
   return topbarHeight + 18;
 }
 
 function normalizeAffiliateCode(value: string): string {
-  return String(value || "")
+  return String(value || '')
     .trim()
-    .replace(/\s+/g, "")
-    .replace(/[^A-Za-z0-9._-]/g, "")
+    .replace(/\s+/g, '')
+    .replace(/[^A-Za-z0-9._-]/g, '')
     .slice(0, AFFILIATE_CODE_MAX_LENGTH);
 }
 
 function appendAffiliateCode(url: string, affiliateCode: string): string {
   if (!url) {
-    return "";
+    return '';
   }
 
   const normalizedAffiliateCode = normalizeAffiliateCode(affiliateCode);
@@ -157,7 +158,7 @@ function appendAffiliateCode(url: string, affiliateCode: string): string {
 
   try {
     const nextUrl = new URL(url);
-    nextUrl.searchParams.set("ref", normalizedAffiliateCode);
+    nextUrl.searchParams.set('ref', normalizedAffiliateCode);
     return nextUrl.toString();
   } catch {
     return url;
@@ -165,7 +166,7 @@ function appendAffiliateCode(url: string, affiliateCode: string): string {
 }
 
 function getOrderedSectionAnchors(
-  scrollY: number,
+  scrollY: number
 ): Array<{ id: PageSectionId; top: number }> {
   return pageSections
     .map((section) => {
@@ -185,18 +186,18 @@ function getOrderedSectionAnchors(
 
 const heroQuickWins = [
   {
-    title: "Files + Collaboration",
-    body: "Sync, share, and publish to a decentralized network",
+    title: 'Files + Collaboration',
+    body: 'Sync, share, and publish to a decentralized network',
     Icon: CloudRoundedIcon,
   },
   {
-    title: "Secure Communications",
-    body: "Encrypted, Private video/voice/meetings and project management",
+    title: 'Secure Communications',
+    body: 'Encrypted, Private video/voice/meetings and project management',
     Icon: WorkspacesRoundedIcon,
   },
   {
-    title: "Private and Next-Gen",
-    body: "Fully Private + off-server decentralized files + apps",
+    title: 'Private and Next-Gen',
+    body: 'Fully Private + off-server decentralized files + apps',
     Icon: ShieldRoundedIcon,
   },
 ];
@@ -213,7 +214,7 @@ type ReplacementGroup = {
 
 type IconComponent = typeof CloudRoundedIcon;
 
-type FeatureSceneId = "sync" | "share" | "communicate" | "publish";
+type FeatureSceneId = 'sync' | 'share' | 'communicate' | 'publish';
 
 type FeatureStory = {
   id: string;
@@ -233,151 +234,151 @@ type FeatureStory = {
 
 const featureStories = [
   {
-    id: "store-sync",
-    title: "Store & Sync",
-    body: "Keep files available across multiple devices and easily publish selected files to an encrypted decentralized data network.",
+    id: 'store-sync',
+    title: 'Store & Sync',
+    body: 'Keep files available across multiple devices and easily publish selected files to an encrypted decentralized data network.',
     detail:
-      "Keep files on any device, sync all files or only what you choose, share publicly or privately, and publish selected files to a decentralized network that stays available without a server.",
+      'Keep files on any device, sync all files or only what you choose, share publicly or privately, and publish selected files to a decentralized network that stays available without a server.',
     actionLabel:
-      "One private file workflow from sync to optional decentralized publishing.",
-    successLabel: "Files ready everywhere",
-    scene: "sync",
+      'One private file workflow from sync to optional decentralized publishing.',
+    successLabel: 'Files ready everywhere',
+    scene: 'sync',
     Icon: SyncRoundedIcon,
     steps: [
-      "Files on any device",
-      "Sync all files or only what you choose",
-      "Share publicly or privately",
-      "Publish to a decentralized network and access without a server",
+      'Files on any device',
+      'Sync all files or only what you choose',
+      'Share publicly or privately',
+      'Publish to a decentralized network and access without a server',
     ],
     replacements: [
       {
-        label: "Consumer file storage silos",
+        label: 'Consumer file storage silos',
         providers: [
-          { name: "Dropbox", icon: dropboxIcon },
-          { name: "Google Drive", icon: googleDriveIcon },
-          { name: "Box", icon: boxIcon },
-          { name: "iCloud", icon: icloudIcon },
+          { name: 'Dropbox', icon: dropboxIcon },
+          { name: 'Google Drive', icon: googleDriveIcon },
+          { name: 'Box', icon: boxIcon },
+          { name: 'iCloud', icon: icloudIcon },
         ],
       },
       {
-        label: "Separate office-file stacks",
+        label: 'Separate office-file stacks',
         providers: [
-          { name: "Google Docs", icon: googleDocsIcon },
-          { name: "Notion", icon: notionIcon },
-          { name: "Airtable", icon: airtableIcon },
+          { name: 'Google Docs', icon: googleDocsIcon },
+          { name: 'Notion', icon: notionIcon },
+          { name: 'Airtable', icon: airtableIcon },
         ],
       },
     ],
   },
   {
-    id: "share-collaborate",
-    title: "Share & Collaborate",
-    body: "Work with internal and external clients, teams, and family members in one private cloud without worrying about your data.",
+    id: 'share-collaborate',
+    title: 'Share & Collaborate',
+    body: 'Work with internal and external clients, teams, and family members in one private cloud without worrying about your data.',
     detail:
-      "A single file can be edited in place by multiple parties, then optionally published to the decentralized data network for stronger security and wider availability.",
+      'A single file can be edited in place by multiple parties, then optionally published to the decentralized data network for stronger security and wider availability.',
     actionLabel:
-      "Collaborate in place, then publish selected work when needed.",
-    successLabel: "Shared and active",
-    scene: "share",
+      'Collaborate in place, then publish selected work when needed.',
+    successLabel: 'Shared and active',
+    scene: 'share',
     Icon: WorkspacesRoundedIcon,
     steps: [
-      "Share with internal or external people",
-      "Edit one file in place with multiple parties",
-      "Keep work organized with permissions",
-      "Optionally publish finalized work to the decentralized network",
+      'Share with internal or external people',
+      'Edit one file in place with multiple parties',
+      'Keep work organized with permissions',
+      'Optionally publish finalized work to the decentralized network',
     ],
     replacements: [
       {
-        label: "Document and knowledge stacks",
+        label: 'Document and knowledge stacks',
         providers: [
-          { name: "Google Docs", icon: googleDocsIcon },
-          { name: "Notion", icon: notionIcon },
-          { name: "Confluence", icon: confluenceIcon },
+          { name: 'Google Docs', icon: googleDocsIcon },
+          { name: 'Notion', icon: notionIcon },
+          { name: 'Confluence', icon: confluenceIcon },
         ],
       },
       {
-        label: "Project and workflow stacks",
+        label: 'Project and workflow stacks',
         providers: [
-          { name: "Trello", icon: trelloIcon },
-          { name: "Asana", icon: asanaIcon },
-          { name: "Jira", icon: jiraIcon },
-          { name: "Airtable", icon: airtableIcon },
+          { name: 'Trello', icon: trelloIcon },
+          { name: 'Asana', icon: asanaIcon },
+          { name: 'Jira', icon: jiraIcon },
+          { name: 'Airtable', icon: airtableIcon },
         ],
       },
     ],
   },
   {
-    id: "communicate",
-    title: "Communicate Securely & Privately",
-    body: "Built-in messaging, calling, meetings, and collaboration tools in one place.",
+    id: 'communicate',
+    title: 'Communicate Securely & Privately',
+    body: 'Built-in messaging, calling, meetings, and collaboration tools in one place.',
     detail:
-      "Messages, meetings, and teams stay in one place, with encrypted and private communications by default.",
+      'Messages, meetings, and teams stay in one place, with encrypted and private communications by default.',
     actionLabel:
-      "Create conversations, schedule meetings, and launch voice, video, and screenshare without another app stack.",
-    successLabel: "Conversation secured",
-    scene: "communicate",
+      'Create conversations, schedule meetings, and launch voice, video, and screenshare without another app stack.',
+    successLabel: 'Conversation secured',
+    scene: 'communicate',
     Icon: ForumRoundedIcon,
     steps: [
-      "Create conversations, schedule meetings, and launch voice, video, and screenshare sessions",
-      "Keep teams organized and separated with permissions",
-      "Encrypted and private communications in one place",
-      "Optional private recording for meetings and calls",
+      'Create conversations, schedule meetings, and launch voice, video, and screenshare sessions',
+      'Keep teams organized and separated with permissions',
+      'Encrypted and private communications in one place',
+      'Optional private recording for meetings and calls',
     ],
     replacements: [
       {
-        label: "Chat and meeting stacks",
+        label: 'Chat and meeting stacks',
         providers: [
-          { name: "Google Chat", icon: googleChatIcon },
-          { name: "Google Meet", icon: googleMeetIcon },
-          { name: "Zoom", icon: zoomIcon },
+          { name: 'Google Chat', icon: googleChatIcon },
+          { name: 'Google Meet', icon: googleMeetIcon },
+          { name: 'Zoom', icon: zoomIcon },
         ],
       },
       {
-        label: "Extra communication silos",
+        label: 'Extra communication silos',
         providers: [
-          { name: "Telegram", icon: telegramIcon },
-          { name: "WhatsApp", icon: whatsappIcon },
-          { name: "Discord", icon: discordIcon },
+          { name: 'Telegram', icon: telegramIcon },
+          { name: 'WhatsApp', icon: whatsappIcon },
+          { name: 'Discord', icon: discordIcon },
         ],
       },
     ],
   },
   {
-    id: "publish-resilience",
-    title: "Publish to Decentralized Data Network",
-    body: "Optional fully off-internet publishing, powered by Qortal, lets selected files stay accessible anywhere with a single private key instead of depending on a server.",
+    id: 'publish-resilience',
+    title: 'Publish to Decentralized Data Network',
+    body: 'Optional fully off-internet publishing, powered by Qortal, lets selected files stay accessible anywhere with a single private key instead of depending on a server.',
     detail:
-      "That same private key can authenticate you to NuQloud and the Qortal Network, while your files are published as encrypted, chunked data with a single click from the NuQloud files interface.",
+      'That same private key can authenticate you to NuQloud and the Qortal Network, while your files are published as encrypted, chunked data with a single click from the NuQloud files interface.',
     actionLabel:
-      "Choose what to publish for extreme security and access without any server at all.",
-    successLabel: "Published off-network",
-    scene: "publish",
+      'Choose what to publish for extreme security and access without any server at all.',
+    successLabel: 'Published off-network',
+    scene: 'publish',
     Icon: PublicRoundedIcon,
     badgeImageLight: poweredByQortalLight,
     badgeImageDark: poweredByQortalDark,
-    badgeAlt: "Powered by Qortal",
+    badgeAlt: 'Powered by Qortal',
     steps: [
-      "Upload files to NuQloud",
-      "Choose what to publish for extreme security and accessibility",
-      "Publish with one click",
-      "Access files without any server at all",
+      'Upload files to NuQloud',
+      'Choose what to publish for extreme security and accessibility',
+      'Publish with one click',
+      'Access files without any server at all',
     ],
     replacements: [
       {
-        label: "Server-dependent shared links",
+        label: 'Server-dependent shared links',
         providers: [
-          { name: "Dropbox", icon: dropboxIcon },
-          { name: "Google Drive", icon: googleDriveIcon },
-          { name: "Box", icon: boxIcon },
-          { name: "iCloud", icon: icloudIcon },
+          { name: 'Dropbox', icon: dropboxIcon },
+          { name: 'Google Drive', icon: googleDriveIcon },
+          { name: 'Box', icon: boxIcon },
+          { name: 'iCloud', icon: icloudIcon },
         ],
       },
       {
-        label: "Centralized document portals",
+        label: 'Centralized document portals',
         providers: [
-          { name: "Google Docs", icon: googleDocsIcon },
-          { name: "Notion", icon: notionIcon },
-          { name: "Confluence", icon: confluenceIcon },
+          { name: 'Google Docs', icon: googleDocsIcon },
+          { name: 'Notion', icon: notionIcon },
+          { name: 'Confluence', icon: confluenceIcon },
         ],
       },
     ],
@@ -386,322 +387,322 @@ const featureStories = [
 
 const differenceCards = [
   {
-    title: "Privacy by Default",
-    body: "Your cloud should work for you, not turn your data into someone else’s business model.",
+    title: 'Privacy by Default',
+    body: 'Your cloud should work for you, not turn your data into someone else’s business model.',
     Icon: VerifiedUserRoundedIcon,
   },
   {
-    title: "Independent Infrastructure",
-    body: "NuQloud is designed to reduce reliance on centralized platforms and single points of failure.",
+    title: 'Independent Infrastructure',
+    body: 'NuQloud is designed to reduce reliance on centralized platforms and single points of failure.',
     Icon: LanRoundedIcon,
   },
   {
-    title: "More Than Storage",
-    body: "Storage, collaboration, communication, and optional publishing live in one managed system.",
+    title: 'More Than Storage',
+    body: 'Storage, collaboration, communication, and optional publishing live in one managed system.',
     Icon: HubRoundedIcon,
   },
   {
-    title: "Built for Ownership",
-    body: "From a personal account to a branded deployment, you keep more control over your environment.",
+    title: 'Built for Ownership',
+    body: 'From a personal account to a branded deployment, you keep more control over your environment.',
     Icon: ApartmentRoundedIcon,
   },
 ];
 
 const serviceModels = [
   {
-    id: "managed-cloud-accounts",
-    tone: "accounts",
-    title: "NuQloud Accounts",
+    id: 'managed-cloud-accounts',
+    tone: 'accounts',
+    title: 'NuQloud Accounts',
     subtitle:
-      "For single users, families, and teams that want fast access to a managed private cloud.",
+      'For single users, families, and teams that want fast access to a managed private cloud.',
     bestFor:
-      "Start on an existing NuQloud instance and expand when you need more space, users, or branded deployment.",
+      'Start on an existing NuQloud instance and expand when you need more space, users, or branded deployment.',
     bullets: [
-      "Fast onboarding to an existing NuQloud instance.",
-      "All NuQloud features provided for all accounts.",
-      "Clear upgrade options directly in the NuQloud Dashboard.",
+      'Fast onboarding to an existing NuQloud instance.',
+      'All NuQloud features provided for all accounts.',
+      'Clear upgrade options directly in the NuQloud Dashboard.',
     ],
   },
   {
-    id: "dedicated-branded-cloud",
-    tone: "dedicated",
-    title: "Dedicated Branded NuQloud Instances",
+    id: 'dedicated-branded-cloud',
+    tone: 'dedicated',
+    title: 'Dedicated Branded NuQloud Instances',
     subtitle:
-      "For organizations that would like their own private instance, or multiple linked instances, branded for their team or community.",
+      'For organizations that would like their own private instance, or multiple linked instances, branded for their team or community.',
     bestFor:
-      "A private NuQloud environment with your own domain, identity, branding, and managed environment.",
+      'A private NuQloud environment with your own domain, identity, branding, and managed environment.',
     bullets: [
-      "Dedicated branded private environment for your organization.",
-      "Optional multiple linked instances for teams or communities.",
-      "Managed operations, backups, and growth planning included in the service path.",
+      'Dedicated branded private environment for your organization.',
+      'Optional multiple linked instances for teams or communities.',
+      'Managed operations, backups, and growth planning included in the service path.',
     ],
   },
 ];
 
 const interfaceShowcaseSlides = [
   {
-    id: "dashboard",
-    eyebrow: "Account Hub",
-    title: "NuQloud Dashboard",
-    body: "Access decentralized network tools, launch NuQloud apps, and purchase NuQloud services directly from one dashboard.",
+    id: 'dashboard',
+    eyebrow: 'Account Hub',
+    title: 'NuQloud Dashboard',
+    body: 'Access decentralized network tools, launch NuQloud apps, and purchase NuQloud services directly from one dashboard.',
     highlights: [
-      "Apps and services in one place",
-      "Publish credits on the dashboard",
-      "Backup and settings tools",
-      "Private account hub",
+      'Apps and services in one place',
+      'Publish credits on the dashboard',
+      'Backup and settings tools',
+      'Private account hub',
     ],
     image: dashboardOverviewImage,
-    imageAlt: "NuQloud dashboard showing apps, publish credits, and purchases.",
+    imageAlt: 'NuQloud dashboard showing apps, publish credits, and purchases.',
     Icon: HubRoundedIcon,
   },
   {
-    id: "register-name",
-    eyebrow: "Publishing Identity",
-    title: "Register Your Network Name",
-    body: "A distributed name unlocks decentralized publishing and gives you a portable identity across NuQloud and the broader network.",
+    id: 'register-name',
+    eyebrow: 'Publishing Identity',
+    title: 'Register Your Network Name',
+    body: 'A distributed name unlocks decentralized publishing and gives you a portable identity across NuQloud and the broader network.',
     highlights: [
-      "150 publish credits to register",
-      "Admins can provide initial credits",
-      "One identity for publishing",
-      "Confirmation shown in the dashboard",
+      '150 publish credits to register',
+      'Admins can provide initial credits',
+      'One identity for publishing',
+      'Confirmation shown in the dashboard',
     ],
     image: filesPublishApprovalImage,
     imageAlt:
-      "NuQloud register name dialog with decentralized identity registration details.",
+      'NuQloud register name dialog with decentralized identity registration details.',
     Icon: VerifiedUserRoundedIcon,
   },
   {
-    id: "transactions",
-    eyebrow: "Activity History",
-    title: "See Network Transactions Clearly",
-    body: "Publishing and other decentralized network activity stays visible in one transaction history so status is easy to verify.",
+    id: 'transactions',
+    eyebrow: 'Activity History',
+    title: 'See Network Transactions Clearly',
+    body: 'Publishing and other decentralized network activity stays visible in one transaction history so status is easy to verify.',
     highlights: [
-      "Publishing activity",
-      "Incoming and outgoing records",
-      "Account actions in one view",
-      "Clear confirmation history",
+      'Publishing activity',
+      'Incoming and outgoing records',
+      'Account actions in one view',
+      'Clear confirmation history',
     ],
     image: networkTransactionsImage,
     imageAlt:
-      "NuQloud transactions section showing publishing and account activity.",
+      'NuQloud transactions section showing publishing and account activity.',
     Icon: LanRoundedIcon,
   },
   {
-    id: "publish-status",
-    eyebrow: "Files Status",
-    title: "Publish Files and Track Status",
-    body: "Publish files to the decentralized network and see decentralized availability directly from the NuQloud files experience.",
+    id: 'publish-status',
+    eyebrow: 'Files Status',
+    title: 'Publish Files and Track Status',
+    body: 'Publish files to the decentralized network and see decentralized availability directly from the NuQloud files experience.',
     highlights: [
-      "Publish from the files workflow",
-      "Decentralized status visibility",
-      "Access with or without NuQloud",
-      "No server-only dependency",
+      'Publish from the files workflow',
+      'Decentralized status visibility',
+      'Access with or without NuQloud',
+      'No server-only dependency',
     ],
     image: filesPublishStatusImage,
-    imageAlt: "NuQloud files list showing decentralized publish status icons.",
+    imageAlt: 'NuQloud files list showing decentralized publish status icons.',
     Icon: PublicRoundedIcon,
   },
   {
-    id: "qmail",
-    eyebrow: "Decentralized Mail",
-    title: "Q-Mail Inside NuQloud",
-    body: "Open fully off-internet encrypted mail directly from within NuQloud instead of switching to a separate platform.",
+    id: 'qmail',
+    eyebrow: 'Decentralized Mail',
+    title: 'Q-Mail Inside NuQloud',
+    body: 'Open fully off-internet encrypted mail directly from within NuQloud instead of switching to a separate platform.',
     highlights: [
-      "Encrypted mail access",
-      "Runs on decentralized infrastructure",
-      "Direct access inside NuQloud",
-      "Private messaging continuity",
+      'Encrypted mail access',
+      'Runs on decentralized infrastructure',
+      'Direct access inside NuQloud',
+      'Private messaging continuity',
     ],
     image: qmailAccessImage,
-    imageAlt: "Q-Mail opened inside the NuQloud interface.",
+    imageAlt: 'Q-Mail opened inside the NuQloud interface.',
     Icon: ForumRoundedIcon,
   },
   {
-    id: "qdeck",
-    eyebrow: "More Decentralized Apps",
-    title: "Access More Decentralized Applications",
-    body: "NuQloud opens the door to other decentralized applications and data that remain reachable with or without the cloud.",
+    id: 'qdeck',
+    eyebrow: 'More Decentralized Apps',
+    title: 'Access More Decentralized Applications',
+    body: 'NuQloud opens the door to other decentralized applications and data that remain reachable with or without the cloud.',
     highlights: [
-      "Project workspaces",
-      "Decentralized app access",
-      "Off-network data availability",
-      "One gateway into more tools",
+      'Project workspaces',
+      'Decentralized app access',
+      'Off-network data availability',
+      'One gateway into more tools',
     ],
     image: qdeckAccessImage,
-    imageAlt: "Q-Deck decentralized application opened from within NuQloud.",
+    imageAlt: 'Q-Deck decentralized application opened from within NuQloud.',
     Icon: HubRoundedIcon,
   },
   {
-    id: "document-sharing",
-    eyebrow: "Documents and Sharing",
-    title: "Collaborative Documents + Sharing",
-    body: "Edit documents in place, share internally or externally, and create public links without duplicating the same file across apps.",
+    id: 'document-sharing',
+    eyebrow: 'Documents and Sharing',
+    title: 'Collaborative Documents + Sharing',
+    body: 'Edit documents in place, share internally or externally, and create public links without duplicating the same file across apps.',
     highlights: [
-      "In-place editing",
-      "Internal and external shares",
-      "Public link support",
-      "One file, not copies",
+      'In-place editing',
+      'Internal and external shares',
+      'Public link support',
+      'One file, not copies',
     ],
     image: collaborativeDocSharingImage,
     imageAlt:
-      "Collaborative document editing with the NuQloud sharing sidebar open.",
+      'Collaborative document editing with the NuQloud sharing sidebar open.',
     Icon: DescriptionRoundedIcon,
   },
   {
-    id: "conversation-create",
-    eyebrow: "Meetings and Conversations",
-    title: "Create Group Conversations Fast",
-    body: "Start a private group conversation or meeting in seconds, with options for guests and controlled visibility.",
+    id: 'conversation-create',
+    eyebrow: 'Meetings and Conversations',
+    title: 'Create Group Conversations Fast',
+    body: 'Start a private group conversation or meeting in seconds, with options for guests and controlled visibility.',
     highlights: [
-      "Private group setup",
-      "Guest link options",
-      "Permissions controls",
-      "Fast meeting creation",
+      'Private group setup',
+      'Guest link options',
+      'Permissions controls',
+      'Fast meeting creation',
     ],
     image: createGroupConversationImage,
-    imageAlt: "NuQloud Talk interface creating a new group conversation.",
+    imageAlt: 'NuQloud Talk interface creating a new group conversation.',
     Icon: GroupsRoundedIcon,
   },
   {
-    id: "conversation-file-share",
-    eyebrow: "Shared Context",
-    title: "Share Files in Active Conversations",
-    body: "Share files directly inside conversations so the same document stays attached to the discussion, participants, and meeting context.",
+    id: 'conversation-file-share',
+    eyebrow: 'Shared Context',
+    title: 'Share Files in Active Conversations',
+    body: 'Share files directly inside conversations so the same document stays attached to the discussion, participants, and meeting context.',
     highlights: [
-      "File sharing in chat",
-      "Shared items sidebar",
-      "Meeting and file context together",
-      "No app switching",
+      'File sharing in chat',
+      'Shared items sidebar',
+      'Meeting and file context together',
+      'No app switching',
     ],
     image: sharedFileInConversationImage,
     imageAlt:
-      "A NuQloud conversation with a shared document attached in the active discussion.",
+      'A NuQloud conversation with a shared document attached in the active discussion.',
     Icon: ShareRoundedIcon,
   },
   {
-    id: "live-collaboration",
-    eyebrow: "Live Collaboration",
-    title: "Edit Together Without Duplication",
-    body: "Collaborative editing can happen right inside an active conversation, so everyone works on the same file instead of passing copies around.",
+    id: 'live-collaboration',
+    eyebrow: 'Live Collaboration',
+    title: 'Edit Together Without Duplication',
+    body: 'Collaborative editing can happen right inside an active conversation, so everyone works on the same file instead of passing copies around.',
     highlights: [
-      "Edit from the conversation view",
-      "Meeting-friendly collaboration",
-      "Same file for all participants",
-      "Private cloud workflow",
+      'Edit from the conversation view',
+      'Meeting-friendly collaboration',
+      'Same file for all participants',
+      'Private cloud workflow',
     ],
     image: liveDocumentCollaborationImage,
     imageAlt:
-      "Collaborative document editing while a NuQloud conversation remains visible beside it.",
+      'Collaborative document editing while a NuQloud conversation remains visible beside it.',
     Icon: WorkspacesRoundedIcon,
   },
 ];
 
 const planGroups = [
   {
-    id: "managed",
-    tone: "accounts",
-    modelId: "managed-cloud-accounts",
-    title: "NuQloud Account Plans",
+    id: 'managed',
+    tone: 'accounts',
+    modelId: 'managed-cloud-accounts',
+    title: 'NuQloud Account Plans',
     intro:
-      "All NuQloud account packages include the same core features. Plans control your on-server storage, decentralized encrypted publishing space, and the initial publishing credits included with the account.",
+      'All NuQloud account packages include the same core features. Plans control your on-server storage, decentralized encrypted publishing space, and the initial publishing credits included with the account.',
     plans: [
       {
-        slug: "nuqloud-starter",
-        name: "NuQloud Starter",
+        slug: 'nuqloud-starter',
+        name: 'NuQloud Starter',
         description:
-          "The base NuQloud package for individuals getting started.",
-        price: "$12",
-        cadence: "/month",
-        summary: "10GB on-server + 10GB decentralized encrypted publish space.",
-        publishingCredits: "500 initial publishing credits included.",
-        note: "Team versions available",
-        teamSlug: "nuqloud-team-starter",
-        teamLabel: "team - up to 5 users",
+          'The base NuQloud package for individuals getting started.',
+        price: '$12',
+        cadence: '/month',
+        summary: '10GB on-server + 10GB decentralized encrypted publish space.',
+        publishingCredits: '500 initial publishing credits included.',
+        note: 'Team versions available',
+        teamSlug: 'nuqloud-team-starter',
+        teamLabel: 'team - up to 5 users',
       },
       {
-        slug: "nuqloud-advanced",
-        name: "NuQloud Advanced",
+        slug: 'nuqloud-advanced',
+        name: 'NuQloud Advanced',
         description:
-          "More storage and initial publishing credits for heavier day-to-day use.",
-        price: "$21",
-        cadence: "/month",
-        summary: "25GB on-server + 25GB decentralized encrypted publish space.",
-        publishingCredits: "2,000 initial publishing credits included.",
-        note: "Team versions available",
-        teamSlug: "nuqloud-team-advanced",
-        teamLabel: "team - up to 5 users",
+          'More storage and initial publishing credits for heavier day-to-day use.',
+        price: '$21',
+        cadence: '/month',
+        summary: '25GB on-server + 25GB decentralized encrypted publish space.',
+        publishingCredits: '2,000 initial publishing credits included.',
+        note: 'Team versions available',
+        teamSlug: 'nuqloud-team-advanced',
+        teamLabel: 'team - up to 5 users',
       },
       {
-        slug: "nuqloud-pro",
-        name: "NuQloud Professional",
+        slug: 'nuqloud-pro',
+        name: 'NuQloud Professional',
         description:
-          "Larger personal or small-team capacity with stronger publishing headroom.",
-        price: "$36",
-        cadence: "/month",
+          'Larger personal or small-team capacity with stronger publishing headroom.',
+        price: '$36',
+        cadence: '/month',
         summary:
-          "100GB on-server + 100GB decentralized encrypted publish space.",
-        publishingCredits: "5,000 initial publishing credits included.",
-        note: "Team versions available",
-        teamSlug: "nuqloud-team-pro",
-        teamLabel: "team - up to 5 users",
+          '100GB on-server + 100GB decentralized encrypted publish space.',
+        publishingCredits: '5,000 initial publishing credits included.',
+        note: 'Team versions available',
+        teamSlug: 'nuqloud-team-pro',
+        teamLabel: 'team - up to 5 users',
       },
     ],
   },
   {
-    id: "dedicated",
-    tone: "dedicated",
-    modelId: "dedicated-branded-cloud",
-    title: "Branded Private NuQloud Servers",
+    id: 'dedicated',
+    tone: 'dedicated',
+    modelId: 'dedicated-branded-cloud',
+    title: 'Branded Private NuQloud Servers',
     intro:
-      "NuQloud Branded gives you your own fully private instance, control over your own users, and your own branding.",
+      'NuQloud Branded gives you your own fully private instance, control over your own users, and your own branding.',
     plans: [
       {
-        slug: "nuqloud-branded-starter",
-        name: "NuQloud Branded Starter",
+        slug: 'nuqloud-branded-starter',
+        name: 'NuQloud Branded Starter',
         description:
-          "Entry branded private cloud option for smaller organizations.",
-        price: "$175",
-        cadence: "/month",
-        setupFee: "$500 one-time setup",
-        summary: "150GB storage + 150GB decentralized publishing space.",
-        publishingCredits: "10,000 initial publishing credits included.",
+          'Entry branded private cloud option for smaller organizations.',
+        price: '$175',
+        cadence: '/month',
+        setupFee: '$500 one-time setup',
+        summary: '150GB storage + 150GB decentralized publishing space.',
+        publishingCredits: '10,000 initial publishing credits included.',
         bullets: [
-          "Expansion options available",
-          "Guaranteed functionality for 10+ very active users, or many more less active",
+          'Expansion options available',
+          'Guaranteed functionality for 10+ very active users, or many more less active',
         ],
       },
       {
-        slug: "nuqloud-branded-pro",
-        name: "NuQloud Branded Pro",
+        slug: 'nuqloud-branded-pro',
+        name: 'NuQloud Branded Pro',
         description:
-          "Expanded branded deployment for more active organizations and teams.",
-        price: "$350",
-        cadence: "/month",
-        setupFee: "$1,000 one-time setup",
+          'Expanded branded deployment for more active organizations and teams.',
+        price: '$350',
+        cadence: '/month',
+        setupFee: '$1,000 one-time setup',
         summary:
-          "500GB on-instance storage + 500GB decentralized publishing space.",
-        publishingCredits: "25,000 initial publishing credits included.",
+          '500GB on-instance storage + 500GB decentralized publishing space.',
+        publishingCredits: '25,000 initial publishing credits included.',
         bullets: [
-          "Expansion options available",
-          "Guaranteed functionality for 25+ very active accounts, or more less-active",
-          "Access to early beta options",
+          'Expansion options available',
+          'Guaranteed functionality for 25+ very active accounts, or more less-active',
+          'Access to early beta options',
         ],
       },
       {
-        slug: "nuqloud-branded-enterprise",
-        name: "NuQloud Branded Enterprise",
+        slug: 'nuqloud-branded-enterprise',
+        name: 'NuQloud Branded Enterprise',
         description:
-          "Customized larger instances, or multi-instance enterprise options starting at $1,500/month with a $3,500 one-time setup fee for base enterprise configurations.",
-        price: "$1,500",
-        cadence: "/month",
-        setupFee: "$3,500 one-time setup",
+          'Customized larger instances, or multi-instance enterprise options starting at $1,500/month with a $3,500 one-time setup fee for base enterprise configurations.',
+        price: '$1,500',
+        cadence: '/month',
+        setupFee: '$3,500 one-time setup',
         summary:
-          "1TB per instance + 1TB per instance decentralized publishing space.",
-        publishingCredits: "100,000 initial publishing credits per instance.",
+          '1TB per instance + 1TB per instance decentralized publishing space.',
+        publishingCredits: '100,000 initial publishing credits per instance.',
         bullets: [
-          "Multiple expansion options",
-          "100+ active users and optional multi-instance",
-          "Access to early beta options",
+          'Multiple expansion options',
+          '100+ active users and optional multi-instance',
+          'Access to early beta options',
         ],
       },
     ],
@@ -711,8 +712,8 @@ const planGroups = [
 const topNavSections = pageSections.filter((section) => section.topNav);
 
 const initialFeatureStoryProgress = Object.fromEntries(
-  featureStories.map((story) => [story.id, 0]),
-) as Record<(typeof featureStories)[number]["id"], number>;
+  featureStories.map((story) => [story.id, 0])
+) as Record<(typeof featureStories)[number]['id'], number>;
 
 function clampProgress(value: number) {
   return Math.max(0, Math.min(value, 1));
@@ -748,22 +749,22 @@ const featureSceneIconSequence: Record<FeatureSceneId, IconComponent[]> = {
 function renderFeatureScene(
   scene: FeatureSceneId,
   progress: number,
-  successLabel: string,
+  successLabel: string
 ) {
   const sceneStyles = {
-    ["--sc-story-progress" as string]: progress.toFixed(3),
+    ['--sc-story-progress' as string]: progress.toFixed(3),
   } as CSSProperties;
   const showSuccess = progress > 0.72;
   const iconSequence = featureSceneIconSequence[scene];
   const stageProgress = Math.min(progress / 0.72, 0.999);
   const activeIndex = Math.min(
     iconSequence.length - 1,
-    Math.floor(stageProgress * iconSequence.length),
+    Math.floor(stageProgress * iconSequence.length)
   );
 
   return (
     <Box
-      className={`sc-story-scene sc-story-scene--${scene} ${showSuccess ? "is-success" : ""}`}
+      className={`sc-story-scene sc-story-scene--${scene} ${showSuccess ? 'is-success' : ''}`}
       style={sceneStyles}
     >
       <Box className="sc-story-scene-core">
@@ -771,7 +772,7 @@ function renderFeatureScene(
           <Box className="sc-story-icon-swap">
             {iconSequence.map((Icon, index) => (
               <Box
-                className={`sc-story-icon-swap-item ${!showSuccess && index === activeIndex ? "is-active" : ""} ${!showSuccess && index < activeIndex ? "is-past" : ""}`}
+                className={`sc-story-icon-swap-item ${!showSuccess && index === activeIndex ? 'is-active' : ''} ${!showSuccess && index < activeIndex ? 'is-past' : ''}`}
                 key={`${scene}-${index}`}
               >
                 <Icon fontSize="inherit" />
@@ -781,13 +782,13 @@ function renderFeatureScene(
           <Box className="sc-story-progress-pips">
             {iconSequence.map((_, index) => (
               <Box
-                className={`sc-story-progress-pip ${showSuccess || index <= activeIndex ? "is-active" : ""}`}
+                className={`sc-story-progress-pip ${showSuccess || index <= activeIndex ? 'is-active' : ''}`}
                 key={`${scene}-pip-${index}`}
               />
             ))}
           </Box>
         </Box>
-        <Box className={`sc-story-status ${showSuccess ? "is-visible" : ""}`}>
+        <Box className={`sc-story-status ${showSuccess ? 'is-visible' : ''}`}>
           <Box className="sc-story-status-check">
             <CheckCircleRoundedIcon fontSize="inherit" />
           </Box>
@@ -806,76 +807,85 @@ function App() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const prefersReducedMotion = useReducedMotion() ?? false;
   const [activeSection, setActiveSection] = useState<string>(
-    pageSections[0].id,
+    pageSections[0].id
   );
   const [isCondensedNav, setIsCondensedNav] = useState(
-    () => window.innerWidth <= NAV_COMPACT_BREAKPOINT,
+    () => window.innerWidth <= NAV_COMPACT_BREAKPOINT
   );
   const [isCompactMobile, setIsCompactMobile] = useState(
-    () => window.innerWidth <= MOBILE_COMPACT_BREAKPOINT,
+    () => window.innerWidth <= MOBILE_COMPACT_BREAKPOINT
   );
   const [featureStoryProgress, setFeatureStoryProgress] = useState(
-    initialFeatureStoryProgress,
+    initialFeatureStoryProgress
   );
   const [activeShowcaseSlideId, setActiveShowcaseSlideId] = useState(
-    interfaceShowcaseSlides[0].id,
+    interfaceShowcaseSlides[0].id
   );
   const [isShowcaseLightboxOpen, setIsShowcaseLightboxOpen] = useState(false);
-  const [qortalPurchasePlanName, setQortalPurchasePlanName] = useState("");
+  const [qortalPurchasePlanName, setQortalPurchasePlanName] = useState('');
   const [affiliateCode, setAffiliateCode] = useState(() => {
-    if (typeof window === "undefined") {
-      return "";
+    if (typeof window === 'undefined') {
+      return '';
     }
 
     return normalizeAffiliateCode(
-      window.localStorage.getItem(AFFILIATE_CODE_STORAGE_KEY) || "",
+      window.localStorage.getItem(AFFILIATE_CODE_STORAGE_KEY) || ''
     );
   });
   const [isAffiliateInputOpen, setIsAffiliateInputOpen] = useState(() => {
-    if (typeof window === "undefined") {
+    if (typeof window === 'undefined') {
       return false;
     }
 
     return Boolean(
       normalizeAffiliateCode(
-        window.localStorage.getItem(AFFILIATE_CODE_STORAGE_KEY) || "",
-      ),
+        window.localStorage.getItem(AFFILIATE_CODE_STORAGE_KEY) || ''
+      )
     );
   });
-  const { accessContext, contextActionFeedback, openOrCopyInternetLink } =
-    useAccessContext();
+  const {
+    accessContext,
+    contextActionFeedback,
+    openOrCopyInternetLink,
+    openQortalLink,
+  } = useAccessContext();
   const isDark = theme === EnumTheme.DARK;
-  const isQortalEnvironment = accessContext.mode !== "internet";
+  const isQortalEnvironment = accessContext.mode !== 'internet';
   const hasAffiliateCode = Boolean(affiliateCode);
+  const isLiteSpaceMode = isCompactMobile || prefersReducedMotion;
   const activeShowcaseSlide =
     interfaceShowcaseSlides.find(
-      (slide) => slide.id === activeShowcaseSlideId,
+      (slide) => slide.id === activeShowcaseSlideId
     ) ?? interfaceShowcaseSlides[0];
   const activeShowcaseSlideIndex = Math.max(
     0,
     interfaceShowcaseSlides.findIndex(
-      (slide) => slide.id === activeShowcaseSlide.id,
-    ),
+      (slide) => slide.id === activeShowcaseSlide.id
+    )
   );
 
   const pageMotionStyles = useMemo(
     () =>
       ({
-        ["--sc-parallax-y" as string]: `${Math.round(scrollY * 0.08)}px`,
-        ["--sc-parallax-soft" as string]: `${Math.round(scrollY * 0.04)}px`,
-        ["--sc-spin-a" as string]: `${Math.round((scrollY * 0.05) % 360)}deg`,
-        ["--sc-spin-b" as string]: `${Math.round((scrollY * -0.03) % 360)}deg`,
-        ["--sc-spin-c" as string]: `${Math.round((scrollY * 0.07) % 360)}deg`,
-        ["--sc-depth" as string]: `${(1 + Math.sin(scrollY / 260) * 0.04).toFixed(3)}`,
-        ["--sc-scroll-progress" as string]: scrollProgress.toFixed(3),
-        ["--sc-singularity-scale" as string]: `${(1 + scrollProgress * 1.45).toFixed(3)}`,
-        ["--sc-singularity-drift" as string]: `${Math.round(scrollY * 0.02)}px`,
-        ["--sc-singularity-visibility" as string]: `${Math.max(
+        ['--sc-parallax-y' as string]: `${Math.round(scrollY * (isCompactMobile ? 0.02 : 0.08))}px`,
+        ['--sc-parallax-soft' as string]: `${Math.round(scrollY * (isCompactMobile ? 0.01 : 0.04))}px`,
+        ['--sc-spin-a' as string]: `${Math.round((scrollY * (isCompactMobile ? 0.012 : 0.05)) % 360)}deg`,
+        ['--sc-spin-b' as string]: `${Math.round((scrollY * (isCompactMobile ? -0.008 : -0.03)) % 360)}deg`,
+        ['--sc-spin-c' as string]: `${Math.round((scrollY * (isCompactMobile ? 0.016 : 0.07)) % 360)}deg`,
+        ['--sc-depth' as string]: `${(1 + Math.sin(scrollY / 260) * (isCompactMobile ? 0.012 : 0.04)).toFixed(3)}`,
+        ['--sc-scroll-progress' as string]: scrollProgress.toFixed(3),
+        ['--sc-singularity-scale' as string]: `${(1 + scrollProgress * (isCompactMobile ? 0.58 : 1.45)).toFixed(3)}`,
+        ['--sc-singularity-drift' as string]: `${Math.round(scrollY * (isCompactMobile ? 0.008 : 0.02))}px`,
+        ['--sc-singularity-visibility' as string]: `${Math.max(
           0,
-          Math.min((scrollProgress - 0.05) / 0.68, 1),
+          Math.min(
+            (scrollProgress - (isCompactMobile ? 0.12 : 0.05)) /
+              (isCompactMobile ? 0.78 : 0.68),
+            1
+          )
         ).toFixed(3)}`,
       }) as CSSProperties,
-    [scrollProgress, scrollY],
+    [isCompactMobile, scrollProgress, scrollY]
   );
 
   const getRevealMotion = useCallback(
@@ -895,30 +905,30 @@ function App() {
         },
       };
     },
-    [prefersReducedMotion],
+    [prefersReducedMotion]
   );
 
   useEffect(() => {
     const items = Array.from(
-      document.querySelectorAll<HTMLElement>(".sc-reveal"),
+      document.querySelectorAll<HTMLElement>('.sc-reveal')
     );
     if (!items.length) {
       return;
     }
 
     items.forEach((item, index) => {
-      item.style.setProperty("--sc-delay", `${Math.min(index * 56, 420)}ms`);
+      item.style.setProperty('--sc-delay', `${Math.min(index * 56, 420)}ms`);
     });
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
+            entry.target.classList.add('is-visible');
           }
         });
       },
-      { threshold: 0.2, rootMargin: "0px 0px -10% 0px" },
+      { threshold: 0.2, rootMargin: '0px 0px -10% 0px' }
     );
 
     items.forEach((item) => observer.observe(item));
@@ -932,12 +942,12 @@ function App() {
     };
 
     handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   useEffect(() => {
-    if (typeof window === "undefined") {
+    if (typeof window === 'undefined') {
       return;
     }
 
@@ -956,7 +966,7 @@ function App() {
 
       const maxScrollable = Math.max(
         document.documentElement.scrollHeight - window.innerHeight,
-        1,
+        1
       );
       setScrollProgress(Math.min(nextY / maxScrollable, 1));
 
@@ -984,15 +994,15 @@ function App() {
       setActiveSection((prev) => (prev === nextActive ? prev : nextActive));
 
       const nextFeatureProgress = { ...initialFeatureStoryProgress };
+      const isMobileViewport = window.innerWidth <= 720;
       const stickyTop = getStoryStickyTop(
         window.innerWidth,
-        window.innerHeight,
+        window.innerHeight
       );
-      const completionTravelFactor = window.innerWidth <= 720 ? 0.96 : 0.9;
-      const progressLead =
-        window.innerWidth <= 720
-          ? window.innerHeight * -0.08
-          : window.innerHeight * -0.12;
+      const completionTravelFactor = isMobileViewport ? 0.96 : 0.9;
+      const progressLead = isMobileViewport
+        ? window.innerHeight * 0.02
+        : window.innerHeight * -0.12;
 
       for (const story of featureStories) {
         const stageEl = document.getElementById(`feature-story-${story.id}`);
@@ -1001,29 +1011,31 @@ function App() {
         }
 
         const rect = stageEl.getBoundingClientRect();
-        const panelEl = stageEl.querySelector<HTMLElement>(".sc-story-panel");
+        const panelEl = stageEl.querySelector<HTMLElement>('.sc-story-panel');
         const panelHeight = panelEl?.offsetHeight ?? 0;
         const stageHeight = stageEl.offsetHeight;
         const pinnedTravel = Math.max(stageHeight - panelHeight, 1);
-        const entryStartTop = window.innerHeight;
-        const progressStartTop = entryStartTop;
-        const progressEndTop =
-          stickyTop - pinnedTravel * completionTravelFactor;
-        const progress = clampProgress(
-          (progressStartTop + progressLead - rect.top) /
-            (progressStartTop - progressEndTop),
-        );
+        const progress = isMobileViewport
+          ? clampProgress(
+              (window.innerHeight * 0.72 - rect.top + progressLead) /
+                Math.max(rect.height + window.innerHeight * 0.18, 1)
+            )
+          : clampProgress(
+              (window.innerHeight + progressLead - rect.top) /
+                (window.innerHeight -
+                  (stickyTop - pinnedTravel * completionTravelFactor))
+            );
         nextFeatureProgress[story.id] = progress;
       }
       setFeatureStoryProgress(nextFeatureProgress);
     };
 
     handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
     };
   }, []);
 
@@ -1034,49 +1046,49 @@ function App() {
     }
     const absoluteTop = el.getBoundingClientRect().top + window.scrollY;
     const targetTop = Math.max(absoluteTop - getTopbarOffset(), 0);
-    window.scrollTo({ top: targetTop, behavior: "smooth" });
+    window.scrollTo({ top: targetTop, behavior: 'smooth' });
   }, []);
 
   const getPlanCheckoutUrl = useCallback(
     (planSlug?: string) => {
-      const normalizedSlug = String(planSlug || "").trim();
+      const normalizedSlug = String(planSlug || '').trim();
       const checkoutUrl = normalizedSlug
-        ? PLAN_CHECKOUT_URLS[normalizedSlug] || ""
-        : "";
+        ? PLAN_CHECKOUT_URLS[normalizedSlug] || ''
+        : '';
 
       return appendAffiliateCode(checkoutUrl, affiliateCode);
     },
-    [affiliateCode],
+    [affiliateCode]
   );
 
   const getPlanDetailsUrl = useCallback(
     (planSlug?: string) => {
       const checkoutUrl = getPlanCheckoutUrl(planSlug);
       if (!checkoutUrl) {
-        return "";
+        return '';
       }
 
-      return checkoutUrl.replace(/\/checkout\/?(\?.*)?$/, "$1");
+      return checkoutUrl.replace(/\/checkout\/?(\?.*)?$/, '$1');
     },
-    [getPlanCheckoutUrl],
+    [getPlanCheckoutUrl]
   );
 
   const handleAffiliateCodeChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       setAffiliateCode(normalizeAffiliateCode(event.target.value));
     },
-    [],
+    []
   );
 
   const clearAffiliateCode = useCallback(() => {
-    setAffiliateCode("");
+    setAffiliateCode('');
     setIsAffiliateInputOpen(false);
   }, []);
 
   const handlePlanCheckout = useCallback(
     (planSlug?: string, planName?: string) => {
       if (isQortalEnvironment) {
-        setQortalPurchasePlanName(String(planName || "this plan").trim());
+        setQortalPurchasePlanName(String(planName || 'this plan').trim());
         return;
       }
       const url = getPlanCheckoutUrl(planSlug);
@@ -1085,13 +1097,13 @@ function App() {
       }
       void openOrCopyInternetLink(url);
     },
-    [getPlanCheckoutUrl, isQortalEnvironment, openOrCopyInternetLink],
+    [getPlanCheckoutUrl, isQortalEnvironment, openOrCopyInternetLink]
   );
 
   const handlePlanDetails = useCallback(
     (planSlug?: string, planName?: string) => {
       if (isQortalEnvironment) {
-        setQortalPurchasePlanName(String(planName || "this plan").trim());
+        setQortalPurchasePlanName(String(planName || 'this plan').trim());
         return;
       }
       const detailsUrl = getPlanDetailsUrl(planSlug);
@@ -1100,18 +1112,11 @@ function App() {
       }
       void openOrCopyInternetLink(detailsUrl);
     },
-    [getPlanDetailsUrl, isQortalEnvironment, openOrCopyInternetLink],
+    [getPlanDetailsUrl, isQortalEnvironment, openOrCopyInternetLink]
   );
 
   const closeQortalPurchaseModal = useCallback(() => {
-    setQortalPurchasePlanName("");
-  }, []);
-
-  const openQortalDeepLink = useCallback((href: string) => {
-    if (!href) {
-      return;
-    }
-    window.location.assign(href);
+    setQortalPurchasePlanName('');
   }, []);
 
   const handleSalesAction = useCallback(() => {
@@ -1129,7 +1134,7 @@ function App() {
   const showPreviousShowcaseSlide = useCallback(() => {
     setActiveShowcaseSlideId((currentId) => {
       const currentIndex = interfaceShowcaseSlides.findIndex(
-        (slide) => slide.id === currentId,
+        (slide) => slide.id === currentId
       );
       const safeIndex = currentIndex >= 0 ? currentIndex : 0;
       const nextIndex =
@@ -1142,7 +1147,7 @@ function App() {
   const showNextShowcaseSlide = useCallback(() => {
     setActiveShowcaseSlideId((currentId) => {
       const currentIndex = interfaceShowcaseSlides.findIndex(
-        (slide) => slide.id === currentId,
+        (slide) => slide.id === currentId
       );
       const safeIndex = currentIndex >= 0 ? currentIndex : 0;
       const nextIndex = (safeIndex + 1) % interfaceShowcaseSlides.length;
@@ -1152,12 +1157,13 @@ function App() {
 
   return (
     <Box
-      className={`sc-page sc-page--msp ${isDark ? "sc-theme-dark" : "sc-theme-light"}`}
+      className={`sc-page sc-page--msp ${isDark ? 'sc-theme-dark' : 'sc-theme-light'}`}
       style={pageMotionStyles}
     >
       <BlackHoleScene
         isDark={isDark}
         progress={scrollProgress}
+        liteMode={isLiteSpaceMode}
         reducedMotion={prefersReducedMotion}
       />
       <Box
@@ -1173,7 +1179,7 @@ function App() {
           <button
             key={section.id}
             type="button"
-            className={`sc-progress-dot ${activeSection === section.id ? "is-active" : ""}`}
+            className={`sc-progress-dot ${activeSection === section.id ? 'is-active' : ''}`}
             onClick={() => scrollToId(section.id)}
             title={section.label}
             aria-label={`Jump to ${section.label}`}
@@ -1184,7 +1190,7 @@ function App() {
       <Container maxWidth={false} disableGutters className="sc-shell">
         <Box className="sc-shell-inner">
           <Box
-            className={`sc-topbar sc-reveal ${isCondensedNav ? "is-condensed" : ""} ${isCompactMobile ? "is-mobile-compact" : ""}`}
+            className={`sc-topbar sc-reveal ${isCondensedNav ? 'is-condensed' : ''} ${isCompactMobile ? 'is-mobile-compact' : ''}`}
           >
             <Stack direction="row" spacing={1.2} alignItems="center">
               <img
@@ -1207,7 +1213,7 @@ function App() {
                 {topNavSections.map((section) => (
                   <Button
                     key={section.id}
-                    className={`sc-nav-btn ${activeSection === section.id ? "is-active" : ""}`}
+                    className={`sc-nav-btn ${activeSection === section.id ? 'is-active' : ''}`}
                     onClick={() => scrollToId(section.id)}
                     size="small"
                   >
@@ -1222,7 +1228,7 @@ function App() {
                   size="small"
                   className="sc-nav-link"
                 >
-                  {isCondensedNav ? "Aff" : "Affiliates"}
+                  {isCondensedNav ? 'Aff' : 'Affiliates'}
                 </Button>
               ) : null}
               {!isCompactMobile ? (
@@ -1232,7 +1238,7 @@ function App() {
                   size="small"
                   className="sc-nav-link"
                 >
-                  {isCondensedNav ? "Self" : "Self-Hosting"}
+                  {isCondensedNav ? 'Self' : 'Self-Hosting'}
                 </Button>
               ) : null}
               {isCompactMobile ? (
@@ -1248,13 +1254,13 @@ function App() {
               <Button
                 className="sc-btn-primary sc-nav-cta"
                 size="small"
-                onClick={() => scrollToId("plans")}
+                onClick={() => scrollToId('plans')}
               >
                 {isCompactMobile
-                  ? "Buy"
+                  ? 'Buy'
                   : isCondensedNav
-                    ? "Plans"
-                    : "View Plans"}
+                    ? 'Plans'
+                    : 'View Plans'}
               </Button>
               <IconButton
                 className="sc-theme-toggle"
@@ -1287,13 +1293,13 @@ function App() {
                 Secure, private options to run your digital world
               </Typography>
               <Stack
-                direction={{ xs: "column", sm: "row" }}
+                direction={{ xs: 'column', sm: 'row' }}
                 spacing={1.2}
                 className="sc-hero-actions"
               >
                 <Button
                   className="sc-btn-primary"
-                  onClick={() => scrollToId("plans")}
+                  onClick={() => scrollToId('plans')}
                 >
                   View Plans
                 </Button>
@@ -1466,7 +1472,7 @@ function App() {
                 const replacementResolved = progress > 0.74;
                 const totalReplacementProviders = story.replacements.reduce(
                   (total, replacement) => total + replacement.providers.length,
-                  0,
+                  0
                 );
                 const providerSpan =
                   totalReplacementProviders > 1
@@ -1480,17 +1486,17 @@ function App() {
                     key={story.id}
                   >
                     <Card
-                      className={`sc-card sc-story-panel ${replacementExpanded ? "is-open" : ""}`}
+                      className={`sc-card sc-story-panel ${replacementExpanded ? 'is-open' : ''}`}
                       style={
                         {
-                          ["--sc-story-progress" as string]:
+                          ['--sc-story-progress' as string]:
                             sceneProgress.toFixed(3),
                         } as CSSProperties
                       }
                     >
                       <CardContent className="sc-story-panel-content">
                         <Box className="sc-story-grid">
-                          {"badgeImageLight" in story &&
+                          {'badgeImageLight' in story &&
                           story.badgeImageLight &&
                           story.badgeImageDark ? (
                             <Box className="sc-story-badge">
@@ -1507,7 +1513,7 @@ function App() {
                           ) : null}
                           <Box className="sc-story-copy">
                             <Typography className="sc-card-label">
-                              Capability {String(index + 1).padStart(2, "0")}
+                              Capability {String(index + 1).padStart(2, '0')}
                             </Typography>
                             <Box className="sc-home-icon-wrap sc-home-icon-wrap--section">
                               <Icon fontSize="small" />
@@ -1527,7 +1533,7 @@ function App() {
                             <Box className="sc-story-bullets">
                               {story.steps.map((step, stepIndex) => (
                                 <Box
-                                  className={`sc-story-bullet ${progress > 0.02 + stepIndex * bulletSpan ? "is-active" : ""}`}
+                                  className={`sc-story-bullet ${progress > 0.02 + stepIndex * bulletSpan ? 'is-active' : ''}`}
                                   key={step}
                                 >
                                   <CheckCircleRoundedIcon fontSize="small" />
@@ -1536,13 +1542,13 @@ function App() {
                               ))}
                             </Box>
                             <Box
-                              className={`sc-story-replacements ${replacementExpanded ? "is-expanded" : ""}`}
+                              className={`sc-story-replacements ${replacementExpanded ? 'is-expanded' : ''}`}
                             >
                               <Typography className="sc-story-replace-title">
                                 NUCLOUD COVERS
                               </Typography>
                               <Box
-                                className={`sc-story-replacements-stage ${replacementCardsVisible ? "is-visible" : ""} ${replacementResolved ? "is-resolved" : ""}`}
+                                className={`sc-story-replacements-stage ${replacementCardsVisible ? 'is-visible' : ''} ${replacementResolved ? 'is-resolved' : ''}`}
                               >
                                 <Box className="sc-story-replacements-grid">
                                   {story.replacements.map((replacement) => {
@@ -1573,7 +1579,7 @@ function App() {
 
                                               return (
                                                 <Box
-                                                  className={`sc-story-provider-pill ${isProviderRetired ? "is-retired" : ""} ${isProviderImpacting ? "is-impacting" : ""}`}
+                                                  className={`sc-story-provider-pill ${isProviderRetired ? 'is-retired' : ''} ${isProviderImpacting ? 'is-impacting' : ''}`}
                                                   key={provider.name}
                                                   title={provider.name}
                                                 >
@@ -1594,7 +1600,7 @@ function App() {
                                                   </Box>
                                                 </Box>
                                               );
-                                            },
+                                            }
                                           )}
                                         </Box>
                                       </Box>
@@ -1604,7 +1610,7 @@ function App() {
                               </Box>
                               <Box sx={{ mt: 2 }}>
                                 <Stack
-                                  direction={{ xs: "column", sm: "row" }}
+                                  direction={{ xs: 'column', sm: 'row' }}
                                   spacing={1}
                                   className="sc-story-detail-actions"
                                 >
@@ -1617,7 +1623,7 @@ function App() {
                                   </Button>
                                   <Button
                                     className="sc-btn-link"
-                                    onClick={() => scrollToId("plans")}
+                                    onClick={() => scrollToId('plans')}
                                   >
                                     View Plans
                                   </Button>
@@ -1629,7 +1635,7 @@ function App() {
                             {renderFeatureScene(
                               story.scene,
                               sceneProgress,
-                              story.successLabel,
+                              story.successLabel
                             )}
                           </Box>
                         </Box>
@@ -1707,7 +1713,7 @@ function App() {
                       <ChevronLeftRoundedIcon />
                     </IconButton>
                     <Typography className="sc-showcase-preview-position">
-                      {activeShowcaseSlideIndex + 1} /{" "}
+                      {activeShowcaseSlideIndex + 1} /{' '}
                       {interfaceShowcaseSlides.length}
                     </Typography>
                     <IconButton
@@ -1751,7 +1757,7 @@ function App() {
                       <ChevronLeftRoundedIcon />
                     </IconButton>
                     <Typography className="sc-showcase-preview-position">
-                      {activeShowcaseSlideIndex + 1} /{" "}
+                      {activeShowcaseSlideIndex + 1} /{' '}
                       {interfaceShowcaseSlides.length}
                     </Typography>
                     <IconButton
@@ -1771,7 +1777,7 @@ function App() {
                   return (
                     <button
                       type="button"
-                      className={`sc-showcase-tab ${isActive ? "is-active" : ""}`}
+                      className={`sc-showcase-tab ${isActive ? 'is-active' : ''}`}
                       key={slide.id}
                       onClick={() => setActiveShowcaseSlideId(slide.id)}
                     >
@@ -1818,7 +1824,7 @@ function App() {
                     className="sc-showcase-lightbox-head-actions"
                   >
                     <Typography className="sc-showcase-lightbox-position">
-                      {activeShowcaseSlideIndex + 1} /{" "}
+                      {activeShowcaseSlideIndex + 1} /{' '}
                       {interfaceShowcaseSlides.length}
                     </Typography>
                     <Button
@@ -1859,7 +1865,7 @@ function App() {
           <motion.section
             className="sc-section sc-section--cinematic"
             id="plans"
-            {...getRevealMotion(0.08, 74)}
+            {...getRevealMotion(0.08, 74, 0, 0.01)}
           >
             <Card className="sc-card sc-plan-overview sc-reveal">
               <CardContent>
@@ -1881,7 +1887,7 @@ function App() {
             <Stack spacing={2.1} className="sc-plan-stack">
               {planGroups.map((group) => {
                 const model = serviceModels.find(
-                  (entry) => entry.id === group.modelId,
+                  (entry) => entry.id === group.modelId
                 );
 
                 return (
@@ -1889,7 +1895,7 @@ function App() {
                     key={group.id}
                     className={`sc-plan-section sc-plan-section--${group.tone} sc-reveal`}
                     id={
-                      group.id === "dedicated" ? "dedicated-cloud" : undefined
+                      group.id === 'dedicated' ? 'dedicated-cloud' : undefined
                     }
                   >
                     {model ? (
@@ -1941,7 +1947,7 @@ function App() {
                                   {plan.description}
                                 </Typography>
                               </Box>
-                              {"price" in plan && plan.price ? (
+                              {'price' in plan && plan.price ? (
                                 <Box className="sc-plan-price-wrap">
                                   <Typography className="sc-plan-price-kicker">
                                     Starting at
@@ -1952,10 +1958,10 @@ function App() {
                                       component="span"
                                       className="sc-plan-cadence"
                                     >
-                                      {plan.cadence || ""}
+                                      {plan.cadence || ''}
                                     </Box>
                                   </Typography>
-                                  {"setupFee" in plan && plan.setupFee ? (
+                                  {'setupFee' in plan && plan.setupFee ? (
                                     <Typography className="sc-plan-setup">
                                       {plan.setupFee}
                                     </Typography>
@@ -1963,12 +1969,12 @@ function App() {
                                 </Box>
                               ) : null}
                             </Box>
-                            {"summary" in plan && plan.summary ? (
+                            {'summary' in plan && plan.summary ? (
                               <Typography className="sc-plan-summary">
                                 {plan.summary}
                               </Typography>
                             ) : null}
-                            {"publishingCredits" in plan &&
+                            {'publishingCredits' in plan &&
                             plan.publishingCredits ? (
                               <Typography className="sc-plan-credits">
                                 {plan.publishingCredits}
@@ -1977,7 +1983,7 @@ function App() {
                             <Typography className="sc-plan-addon-note">
                               Data add-on packages available.
                             </Typography>
-                            {"bullets" in plan &&
+                            {'bullets' in plan &&
                             Array.isArray(plan.bullets) &&
                             plan.bullets.length ? (
                               <Box
@@ -1995,7 +2001,7 @@ function App() {
                                 ))}
                               </Box>
                             ) : null}
-                            {"note" in plan && plan.note ? (
+                            {'note' in plan && plan.note ? (
                               <Typography className="sc-plan-note">
                                 {plan.note}
                               </Typography>
@@ -2014,8 +2020,8 @@ function App() {
                                 onClick={() => setIsAffiliateInputOpen(true)}
                               >
                                 {hasAffiliateCode
-                                  ? "Update affiliate code"
-                                  : "Have an affiliate code?"}
+                                  ? 'Update affiliate code'
+                                  : 'Have an affiliate code?'}
                               </Button>
                               {isAffiliateInputOpen || hasAffiliateCode ? (
                                 <Box className="sc-affiliate-inline-panel">
@@ -2029,30 +2035,30 @@ function App() {
                                     onChange={handleAffiliateCodeChange}
                                     helperText="Letters, numbers, dashes, underscores, and periods only."
                                     inputProps={{
-                                      autoCapitalize: "none",
-                                      autoCorrect: "off",
+                                      autoCapitalize: 'none',
+                                      autoCorrect: 'off',
                                       maxLength: AFFILIATE_CODE_MAX_LENGTH,
-                                      pattern: "[A-Za-z0-9._-]*",
-                                      spellCheck: "false",
+                                      pattern: '[A-Za-z0-9._-]*',
+                                      spellCheck: 'false',
                                     }}
                                   />
                                   <Stack
-                                    direction={{ xs: "column", sm: "row" }}
+                                    direction={{ xs: 'column', sm: 'row' }}
                                     spacing={1}
                                     alignItems={{
-                                      xs: "flex-start",
-                                      sm: "center",
+                                      xs: 'flex-start',
+                                      sm: 'center',
                                     }}
                                     className="sc-affiliate-inline-actions"
                                   >
                                     <Typography className="sc-mini-tease">
-                                      Checkout links to{" "}
+                                      Checkout links to{' '}
                                       <Box
                                         component="span"
                                         className="sc-affiliate-inline-url"
                                       >
                                         payment.crowetic.com
-                                      </Box>{" "}
+                                      </Box>{' '}
                                       will automatically include your referral
                                       code.
                                     </Typography>
@@ -2081,17 +2087,17 @@ function App() {
                               >
                                 View Details
                               </Button>
-                              {"teamSlug" in plan && plan.teamSlug ? (
+                              {'teamSlug' in plan && plan.teamSlug ? (
                                 <Button
                                   className="sc-btn-link sc-plan-team-link"
                                   onClick={() =>
                                     handlePlanDetails(
                                       plan.teamSlug,
-                                      plan.teamLabel || `${plan.name} Team`,
+                                      plan.teamLabel || `${plan.name} Team`
                                     )
                                   }
                                 >
-                                  {plan.teamLabel || "View Team Version"}
+                                  {plan.teamLabel || 'View Team Version'}
                                 </Button>
                               ) : null}
                             </Box>
@@ -2114,7 +2120,7 @@ function App() {
               Have Questions? Need something specific? Reach out.
             </Typography>
             <Stack
-              direction={{ xs: "column", sm: "row" }}
+              direction={{ xs: 'column', sm: 'row' }}
               spacing={1.2}
               justifyContent="center"
             >
@@ -2123,6 +2129,18 @@ function App() {
               </Button>
             </Stack>
           </motion.section>
+          <Box className="sc-footer-support">
+            <Typography className="sc-footer-support-copy">
+              ...or{' '}
+              <Box
+                component="a"
+                className="sc-footer-support-link"
+                href={AI_SUPPORT_EMAIL_URL}
+              >
+                AI-powered Support
+              </Box>
+            </Typography>
+          </Box>
         </Box>
       </Container>
       <Dialog
@@ -2135,28 +2153,28 @@ function App() {
             Qortal-native purchasing options coming soon
           </Typography>
           <Typography className="sc-qortal-purchase-dialog-copy">
-            Direct Qortal-native purchasing for{" "}
-            <strong>{qortalPurchasePlanName || "this plan"}</strong> is coming
+            Direct Qortal-native purchasing for{' '}
+            <strong>{qortalPurchasePlanName || 'this plan'}</strong> is coming
             soon. For now, contact crowetic in Q-Mail for more information, or
             follow CHDC on QDN for updates.
           </Typography>
           <Box className="sc-qortal-purchase-dialog-links">
             <Button
               className="sc-btn-primary"
-              onClick={() => openQortalDeepLink(QORTAL_QMAIL_CONTACT_URL)}
+              onClick={() => void openQortalLink(QORTAL_QMAIL_CONTACT_URL)}
             >
               Contact via Q-Mail
             </Button>
             <Button
               className="sc-btn-link"
-              onClick={() => openQortalDeepLink(QORTAL_CHDC_URL)}
+              onClick={() => void openQortalLink(QORTAL_CHDC_URL)}
             >
               Open CHDC
             </Button>
           </Box>
           <Box className="sc-qortal-purchase-dialog-meta">
             <Typography className="sc-qortal-purchase-dialog-hint">
-              Q-Mail:{" "}
+              Q-Mail:{' '}
               <Box
                 component="a"
                 className="sc-qortal-purchase-dialog-anchor"
@@ -2166,7 +2184,7 @@ function App() {
               </Box>
             </Typography>
             <Typography className="sc-qortal-purchase-dialog-hint">
-              Updates:{" "}
+              Updates:{' '}
               <Box
                 component="a"
                 className="sc-qortal-purchase-dialog-anchor"

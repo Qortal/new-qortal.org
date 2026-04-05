@@ -5,11 +5,12 @@ import * as THREE from "three";
 
 type BlackHoleSceneProps = {
   isDark: boolean;
+  liteMode: boolean;
   progress: number;
   reducedMotion: boolean;
 };
 
-type SceneProps = BlackHoleSceneProps;
+type SceneProps = Omit<BlackHoleSceneProps, "liteMode">;
 
 type VortexParticle = {
   angle: number;
@@ -725,6 +726,7 @@ function VortexField({
 }
 
 function Singularity({ isDark, progress, reducedMotion }: SceneProps) {
+  const matteRef = useRef<THREE.Mesh>(null);
   const coreRef = useRef<THREE.Mesh>(null);
   const haloRef = useRef<THREE.Mesh>(null);
   const lensRef = useRef<THREE.Mesh>(null);
@@ -737,6 +739,14 @@ function Singularity({ isDark, progress, reducedMotion }: SceneProps) {
       scaleTarget.current.set(coreScale, coreScale, coreScale);
       coreRef.current.scale.lerp(
         scaleTarget.current,
+        reducedMotion ? 0.03 : 0.08,
+      );
+    }
+
+    if (matteRef.current) {
+      const matteScale = 0.98 + visibility * 1.08;
+      matteRef.current.scale.lerp(
+        new THREE.Vector3(matteScale, matteScale, matteScale),
         reducedMotion ? 0.03 : 0.08,
       );
     }
@@ -771,7 +781,7 @@ function Singularity({ isDark, progress, reducedMotion }: SceneProps) {
           blending={THREE.AdditiveBlending}
           color={isDark ? "#ff8756" : "#e59675"}
           depthWrite={false}
-          opacity={(isDark ? 0.042 : 0.02) * (0.28 + visibility * 0.52)}
+          opacity={(isDark ? 0.026 : 0.012) * (0.24 + visibility * 0.4)}
           transparent
         />
       </mesh>
@@ -781,7 +791,7 @@ function Singularity({ isDark, progress, reducedMotion }: SceneProps) {
           blending={THREE.AdditiveBlending}
           color="#ffd7c6"
           depthWrite={false}
-          opacity={(isDark ? 0.065 : 0.03) * (0.24 + visibility * 0.56)}
+          opacity={(isDark ? 0.028 : 0.014) * (0.2 + visibility * 0.34)}
           transparent
         />
       </mesh>
@@ -791,13 +801,27 @@ function Singularity({ isDark, progress, reducedMotion }: SceneProps) {
           blending={THREE.AdditiveBlending}
           color={isDark ? "#9f2b22" : "#cb7863"}
           depthWrite={false}
-          opacity={(isDark ? 0.022 : 0.01) * (0.26 + visibility * 0.44)}
+          opacity={(isDark ? 0.012 : 0.006) * (0.22 + visibility * 0.28)}
+          transparent
+        />
+      </mesh>
+      <mesh ref={matteRef} renderOrder={24}>
+        <sphereGeometry args={[1.98, 48, 48]} />
+        <meshBasicMaterial
+          color="#000000"
+          depthTest={false}
+          depthWrite={false}
+          opacity={0.96}
           transparent
         />
       </mesh>
       <mesh ref={coreRef}>
         <sphereGeometry args={[1.74, 48, 48]} />
-        <meshBasicMaterial color="#000000" />
+        <meshBasicMaterial
+          color="#000000"
+          depthTest={false}
+          depthWrite={false}
+        />
       </mesh>
     </group>
   );
@@ -916,6 +940,7 @@ function SceneRoot(props: SceneProps) {
 
 export function BlackHoleScene({
   isDark,
+  liteMode,
   progress,
   reducedMotion,
 }: BlackHoleSceneProps) {
@@ -928,20 +953,22 @@ export function BlackHoleScene({
   return (
     <div
       aria-hidden
-      className={`sc-space-scene ${isDark ? "is-dark" : "is-light"} ${reducedMotion ? "is-reduced-motion" : ""}`}
+      className={`sc-space-scene ${isDark ? "is-dark" : "is-light"} ${liteMode ? "is-lite-mode" : ""} ${reducedMotion ? "is-reduced-motion" : ""}`}
       style={sceneStyle}
     >
-      <Canvas
-        camera={{ fov: 50, position: [0.95, 0.45, 13.6] }}
-        dpr={[1, 1.6]}
-        gl={{ alpha: true, antialias: true }}
-      >
-        <SceneRoot
-          isDark={isDark}
-          progress={progress}
-          reducedMotion={reducedMotion}
-        />
-      </Canvas>
+      {!liteMode ? (
+        <Canvas
+          camera={{ fov: 50, position: [0.95, 0.45, 13.6] }}
+          dpr={[1, 1.6]}
+          gl={{ alpha: true, antialias: true }}
+        >
+          <SceneRoot
+            isDark={isDark}
+            progress={progress}
+            reducedMotion={reducedMotion}
+          />
+        </Canvas>
+      ) : null}
       <div className="sc-space-scene-overlay">
         <div className="sc-space-nebula sc-space-nebula--violet" />
         <div className="sc-space-nebula sc-space-nebula--cyan" />

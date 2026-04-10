@@ -3335,59 +3335,66 @@
   }
 
   .sc-topbar.is-mobile-compact {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.28rem;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 0.62rem;
     flex-wrap: nowrap;
-    padding: 0.7rem 0.74rem;
+    padding: 0.78rem 0.82rem;
   }
 
   .sc-topbar.is-mobile-compact .sc-top-title {
-    display: none;
+    display: block;
+    font-size: 0.88rem;
   }
 
   .sc-topbar.is-mobile-compact .MuiStack-root:first-child {
     flex: 0 0 auto;
+    justify-content: flex-start;
   }
 
   .sc-topbar.is-mobile-compact .sc-top-logo {
-    width: 1.82rem;
-    height: 1.82rem;
+    width: 2rem;
+    height: 2rem;
   }
 
   .sc-topbar.is-mobile-compact .sc-nav-actions {
-    width: auto;
-    flex: 1 1 auto;
+    width: 100%;
+    flex: 0 0 auto;
     min-width: 0;
-    flex-wrap: nowrap;
-    justify-content: flex-end;
-    gap: 0.16rem;
-    row-gap: 0;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 0.38rem;
+    row-gap: 0.38rem;
   }
 
   .sc-topbar.is-mobile-compact .sc-nav-mini {
-    flex: 1 1 auto;
+    flex: 0 0 auto;
     min-width: 0;
     width: auto;
-    overflow: hidden;
+    overflow: visible;
     padding-bottom: 0;
-    gap: 0.08rem;
-    max-width: none;
+    gap: 0.22rem;
+    max-width: 100%;
   }
 
   .sc-topbar.is-mobile-compact .sc-nav-btn,
   .sc-topbar.is-mobile-compact .sc-nav-link,
   .sc-topbar.is-mobile-compact .sc-nav-cta {
-    padding: 0.24rem 0.24rem !important;
+    padding: 0.38rem 0.56rem !important;
     min-width: 0 !important;
-    font-size: 0.58rem !important;
+    font-size: 0.72rem !important;
     letter-spacing: 0.01em;
+  }
+
+  .sc-topbar.is-mobile-compact .sc-nav-btn {
+    white-space: nowrap;
   }
 
   .sc-topbar.is-mobile-compact .sc-nav-link,
   .sc-topbar.is-mobile-compact .sc-nav-cta {
     flex: 0 0 auto;
+    white-space: nowrap;
   }
 
   .sc-topbar.is-mobile-compact .sc-theme-toggle {

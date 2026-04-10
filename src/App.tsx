@@ -110,18 +110,22 @@ const pageSections = [
   { id: 'overview', label: 'Home', shortLabel: 'Hm', topNav: true },
   { id: 'about', label: 'About', shortLabel: 'Abt', topNav: true },
   { id: 'features', label: 'Features', shortLabel: 'Feat', topNav: true },
-  {
-    id: 'dedicated-cloud',
-    label: 'Dedicated Cloud',
-    shortLabel: 'Cloud',
-    topNav: true,
-  },
   { id: 'foundation', label: 'Screenshots', shortLabel: 'Shots', topNav: true },
-  { id: 'plans', label: 'Plans', shortLabel: 'Plan', topNav: true },
+  { id: 'plans', label: 'Plans', shortLabel: 'Plan', topNav: false },
   { id: 'contact', label: 'Contact', shortLabel: 'Info', topNav: true },
 ] as const;
 
 type PageSectionId = (typeof pageSections)[number]['id'];
+
+const desktopTopNavSectionIds = new Set<PageSectionId>([
+  'overview',
+  'about',
+  'features',
+  'foundation',
+  'contact',
+]);
+
+const mobileTopNavSectionIds = new Set<PageSectionId>(['overview', 'contact']);
 
 const heroHighlights = [
   'Private cloud',
@@ -167,7 +171,7 @@ function appendAffiliateCode(url: string, affiliateCode: string): string {
 
 function getOrderedSectionAnchors(
   scrollY: number
-): Array<{ id: PageSectionId; top: number }> {
+): Array<{ id: PageSectionId; top: number; bottom: number; center: number }> {
   return pageSections
     .map((section) => {
       const element = document.getElementById(section.id);
@@ -175,12 +179,22 @@ function getOrderedSectionAnchors(
         return null;
       }
       const top = element.getBoundingClientRect().top + scrollY;
+      const height = element.offsetHeight;
       return {
         id: section.id,
         top,
+        bottom: top + height,
+        center: top + height / 2,
       };
     })
-    .filter((item): item is { id: PageSectionId; top: number } => item !== null)
+    .filter(
+      (item): item is {
+        id: PageSectionId;
+        top: number;
+        bottom: number;
+        center: number;
+      } => item !== null
+    )
     .sort((a, b) => a.top - b.top);
 }
 
@@ -709,8 +723,6 @@ const planGroups = [
   },
 ];
 
-const topNavSections = pageSections.filter((section) => section.topNav);
-
 const initialFeatureStoryProgress = Object.fromEntries(
   featureStories.map((story) => [story.id, 0])
 ) as Record<(typeof featureStories)[number]['id'], number>;
@@ -853,6 +865,14 @@ function App() {
   const isQortalEnvironment = accessContext.mode !== 'internet';
   const hasAffiliateCode = Boolean(affiliateCode);
   const isLiteSpaceMode = isCompactMobile || prefersReducedMotion;
+  const topNavSections = useMemo(() => {
+    const allowedIds = isCompactMobile
+      ? mobileTopNavSectionIds
+      : desktopTopNavSectionIds;
+    return pageSections.filter(
+      (section) => section.topNav && allowedIds.has(section.id)
+    );
+  }, [isCompactMobile]);
   const activeShowcaseSlide =
     interfaceShowcaseSlides.find(
       (slide) => slide.id === activeShowcaseSlideId
@@ -925,15 +945,19 @@ function App() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.2, rootMargin: '0px 0px -10% 0px' }
+      {
+        threshold: isCompactMobile ? 0.06 : 0.16,
+        rootMargin: isCompactMobile ? '0px 0px 14% 0px' : '0px 0px -8% 0px',
+      }
     );
 
     items.forEach((item) => observer.observe(item));
     return () => observer.disconnect();
-  }, []);
+  }, [isCompactMobile]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -972,15 +996,24 @@ function App() {
 
       const orderedAnchors = getOrderedSectionAnchors(nextY);
       let nextActive: string = orderedAnchors[0]?.id ?? pageSections[0].id;
-      const activationLine =
-        nextY + getTopbarOffset() + window.innerHeight * 0.24;
 
-      for (const anchor of orderedAnchors) {
-        if (activationLine >= anchor.top) {
-          nextActive = anchor.id;
-          continue;
-        }
-        break;
+      const activationLine =
+        nextY +
+        getTopbarOffset() +
+        (isCompactMobile ? window.innerHeight * 0.2 : window.innerHeight * 0.26);
+
+      const containingAnchor = orderedAnchors.find(
+        (anchor) => activationLine >= anchor.top && activationLine <= anchor.bottom
+      );
+
+      if (containingAnchor) {
+        nextActive = containingAnchor.id;
+      } else if (orderedAnchors.length) {
+        nextActive = orderedAnchors.reduce((closest, anchor) => {
+          const anchorDistance = Math.abs(anchor.center - activationLine);
+          const closestDistance = Math.abs(closest.center - activationLine);
+          return anchorDistance < closestDistance ? anchor : closest;
+        }).id;
       }
 
       if (
@@ -1217,47 +1250,37 @@ function App() {
                     onClick={() => scrollToId(section.id)}
                     size="small"
                   >
-                    {isCondensedNav ? section.shortLabel : section.label}
+                    {isCompactMobile
+                      ? section.label
+                      : isCondensedNav
+                        ? section.shortLabel
+                        : section.label}
                   </Button>
                 ))}
               </Stack>
-              {!isCompactMobile ? (
-                <Button
-                  component={Link}
-                  to="/affiliate-program"
-                  size="small"
-                  className="sc-nav-link"
-                >
-                  {isCondensedNav ? 'Aff' : 'Affiliates'}
-                </Button>
-              ) : null}
-              {!isCompactMobile ? (
-                <Button
-                  component={Link}
-                  to="/self-hosting"
-                  size="small"
-                  className="sc-nav-link"
-                >
-                  {isCondensedNav ? 'Self' : 'Self-Hosting'}
-                </Button>
-              ) : null}
-              {isCompactMobile ? (
-                <Button
-                  component={Link}
-                  to="/affiliate-program"
-                  size="small"
-                  className="sc-nav-link"
-                >
-                  Aff
-                </Button>
-              ) : null}
+              <Button
+                component={Link}
+                to="/affiliate-program"
+                size="small"
+                className="sc-nav-link"
+              >
+                {isCompactMobile ? 'Affiliates' : isCondensedNav ? 'Aff' : 'Affiliates'}
+              </Button>
+              <Button
+                component={Link}
+                to="/self-hosting"
+                size="small"
+                className="sc-nav-link"
+              >
+                {isCompactMobile ? 'NQSH' : isCondensedNav ? 'Self' : 'Self-Hosting'}
+              </Button>
               <Button
                 className="sc-btn-primary sc-nav-cta"
                 size="small"
                 onClick={() => scrollToId('plans')}
               >
                 {isCompactMobile
-                  ? 'Buy'
+                  ? 'View Plans'
                   : isCondensedNav
                     ? 'Plans'
                     : 'View Plans'}

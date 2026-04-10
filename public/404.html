@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NuQloud</title>
+  </head>
+  <body>
+    <script>
+      (function () {
+        var storageKey = 'nuqloud.spa.redirect';
+        var knownRouteRoots = [
+          '/affiliate-program',
+          '/self-hosting',
+          '/feature-details',
+          '/terms',
+        ];
+        var currentPath =
+          window.location.pathname +
+          window.location.search +
+          window.location.hash;
+        var pathname = window.location.pathname;
+        var basePath = '';
+
+        for (var i = 0; i < knownRouteRoots.length; i += 1) {
+          var routeRoot = knownRouteRoots[i];
+          var routeIndex = pathname.indexOf(routeRoot);
+          if (routeIndex > -1) {
+            basePath = pathname.slice(0, routeIndex) || '/';
+            break;
+          }
+        }
+
+        if (!basePath) {
+          basePath = pathname.endsWith('/')
+            ? pathname
+            : pathname.replace(/\/[^/]*$/, '/');
+        }
+
+        if (!basePath) {
+          basePath = '/';
+        }
+
+        try {
+          window.sessionStorage.setItem(storageKey, currentPath);
+        } catch (_error) {
+          /* no-op */
+        }
+
+        window.location.replace(window.location.origin + basePath);
+      })();
+    </script>
+  </body>
+</html>

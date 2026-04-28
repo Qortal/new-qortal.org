@@ -105,11 +105,20 @@ const QORTAL_QMAIL_CONTACT_URL = 'qortal://APP/Q-Mail/to/crowetic';
 const QORTAL_CHDC_URL = 'qortal://CHDC';
 const AFFILIATE_CODE_STORAGE_KEY = 'nuqloud-affiliate-code';
 const AFFILIATE_CODE_MAX_LENGTH = 64;
+const BOOT_SCREEN_LINES: Array<{ text: string; tone?: 'dim' | 'green' }> = [
+  { text: '// NUQLOUD SYSTEMS v7.0.0 - INIT SEQUENCE', tone: 'dim' },
+  { text: 'ESTABLISHING ENCRYPTED CHANNEL ...' },
+  { text: 'NEXTCLOUD LAYER ............. ONLINE', tone: 'dim' },
+  { text: 'QDN MESH .................... ONLINE', tone: 'dim' },
+  { text: 'E2E ENCRYPTION .............. ACTIVE', tone: 'dim' },
+  { text: 'YOUR PRIVATE CLOUD .......... READY', tone: 'green' },
+] as const;
 
 const pageSections = [
   { id: 'overview', label: 'Home', shortLabel: 'Hm', topNav: true },
   { id: 'about', label: 'About', shortLabel: 'Abt', topNav: true },
   { id: 'features', label: 'Features', shortLabel: 'Feat', topNav: true },
+  { id: 'architecture', label: 'Layers', shortLabel: 'Lay', topNav: true },
   { id: 'foundation', label: 'Screenshots', shortLabel: 'Shots', topNav: true },
   { id: 'plans', label: 'Plans', shortLabel: 'Plan', topNav: false },
   { id: 'contact', label: 'Contact', shortLabel: 'Info', topNav: true },
@@ -121,11 +130,12 @@ const desktopTopNavSectionIds = new Set<PageSectionId>([
   'overview',
   'about',
   'features',
+  'architecture',
   'foundation',
   'contact',
 ]);
 
-const mobileTopNavSectionIds = new Set<PageSectionId>(['overview', 'contact']);
+const mobileTopNavSectionIds = new Set<PageSectionId>(['features']);
 
 const heroHighlights = [
   'Private cloud',
@@ -188,7 +198,9 @@ function getOrderedSectionAnchors(
       };
     })
     .filter(
-      (item): item is {
+      (
+        item
+      ): item is {
         id: PageSectionId;
         top: number;
         bottom: number;
@@ -215,6 +227,66 @@ const heroQuickWins = [
     Icon: ShieldRoundedIcon,
   },
 ];
+
+const whatHighlights = [
+  {
+    title: 'Private file sync and storage',
+    body: 'Across multiple devices, including mobile, desktop, and browser access.',
+    Icon: DescriptionRoundedIcon,
+  },
+  {
+    title: 'Private collaboration',
+    body: 'For teams, communities, organizations, families, and external clients.',
+    Icon: GroupsRoundedIcon,
+  },
+  {
+    title: 'Encrypted voice, video, and meetings',
+    body: 'With private conversations, screensharing, scheduling, and notifications.',
+    Icon: CallRoundedIcon,
+  },
+  {
+    title: 'Optional decentralized publishing',
+    body: 'Publish selected files to QDN for access beyond normal server-dependent links.',
+    Icon: ShieldRoundedIcon,
+  },
+] as const;
+
+const architectureLayers = [
+  {
+    eyebrow: 'Devices',
+    title: 'Mobile, Desktop, Web',
+    detail: 'Access your private cloud from the tools people already use.',
+    tone: 'blue',
+  },
+  {
+    eyebrow: 'NuQloud',
+    title: 'Nextcloud Foundation + NuQloud Plugin',
+    detail:
+      'A familiar open-source cloud base, adapted with NuQloud integration and service controls.',
+    tone: 'cyan',
+  },
+  {
+    eyebrow: 'Powered by Qortal',
+    title: 'Identity, Auth, Publishing',
+    detail:
+      'NuQloud connects selected workflows to identity and publishing services.',
+    tone: 'green',
+  },
+  {
+    eyebrow: 'QDN',
+    title: 'Decentralized Data Layer',
+    detail:
+      'Optional publishing moves selected data beyond normal server-dependent links.',
+    tone: 'violet',
+  },
+] as const;
+
+const architectureCapabilities = [
+  'Files: storage and sync',
+  'Talk: meetings and chat',
+  'Publish: QDN and off-net access',
+  'Identity: Powered by Qortal keys',
+] as const;
 
 type ProviderLogo = {
   name: string;
@@ -813,11 +885,43 @@ function renderFeatureScene(
   );
 }
 
+function BootScreen({ reducedMotion }: { reducedMotion: boolean }) {
+  return (
+    <Box
+      className={`sc-boot-screen ${reducedMotion ? 'is-reduced-motion' : ''}`}
+      aria-label="NuQloud initializing"
+      role="status"
+    >
+      <Box className="sc-boot-lines">
+        {BOOT_SCREEN_LINES.map((line, index) => (
+          <Typography
+            className={`sc-boot-line ${line.tone ? `is-${line.tone}` : ''}`}
+            key={line.text}
+            style={{ ['--sc-boot-index' as string]: index } as CSSProperties}
+          >
+            {line.text}
+          </Typography>
+        ))}
+      </Box>
+      <Box className="sc-boot-progress-wrap" aria-hidden>
+        <Typography className="sc-boot-progress-label">INITIALIZING</Typography>
+        <Box className="sc-boot-progress-bar">
+          <Box className="sc-boot-progress-fill" />
+        </Box>
+      </Box>
+      <Typography className="sc-boot-logo">
+        Nu<span>Qloud</span>
+      </Typography>
+    </Box>
+  );
+}
+
 function App() {
   const [theme, setTheme] = useAtom(themeAtom);
   const [scrollY, setScrollY] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const prefersReducedMotion = useReducedMotion() ?? false;
+  const [isBooting, setIsBooting] = useState(true);
   const [activeSection, setActiveSection] = useState<string>(
     pageSections[0].id
   );
@@ -960,6 +1064,20 @@ function App() {
   }, [isCompactMobile]);
 
   useEffect(() => {
+    const bootTimer = window.setTimeout(
+      () => setIsBooting(false),
+      prefersReducedMotion ? 700 : 4100
+    );
+
+    return () => window.clearTimeout(bootTimer);
+  }, [prefersReducedMotion]);
+
+  useEffect(() => {
+    document.body.classList.toggle('sc-is-booting', isBooting);
+    return () => document.body.classList.remove('sc-is-booting');
+  }, [isBooting]);
+
+  useEffect(() => {
     const handleResize = () => {
       setIsCondensedNav(window.innerWidth <= NAV_COMPACT_BREAKPOINT);
       setIsCompactMobile(window.innerWidth <= MOBILE_COMPACT_BREAKPOINT);
@@ -1000,10 +1118,13 @@ function App() {
       const activationLine =
         nextY +
         getTopbarOffset() +
-        (isCompactMobile ? window.innerHeight * 0.2 : window.innerHeight * 0.26);
+        (isCompactMobile
+          ? window.innerHeight * 0.2
+          : window.innerHeight * 0.26);
 
       const containingAnchor = orderedAnchors.find(
-        (anchor) => activationLine >= anchor.top && activationLine <= anchor.bottom
+        (anchor) =>
+          activationLine >= anchor.top && activationLine <= anchor.bottom
       );
 
       if (containingAnchor) {
@@ -1032,7 +1153,6 @@ function App() {
         window.innerWidth,
         window.innerHeight
       );
-      const completionTravelFactor = isMobileViewport ? 0.96 : 0.9;
       const progressLead = isMobileViewport
         ? window.innerHeight * 0.02
         : window.innerHeight * -0.12;
@@ -1053,11 +1173,7 @@ function App() {
               (window.innerHeight * 0.72 - rect.top + progressLead) /
                 Math.max(rect.height + window.innerHeight * 0.18, 1)
             )
-          : clampProgress(
-              (window.innerHeight + progressLead - rect.top) /
-                (window.innerHeight -
-                  (stickyTop - pinnedTravel * completionTravelFactor))
-            );
+          : clampProgress((stickyTop - rect.top) / pinnedTravel);
         nextFeatureProgress[story.id] = progress;
       }
       setFeatureStoryProgress(nextFeatureProgress);
@@ -1156,6 +1272,19 @@ function App() {
     void openOrCopyInternetLink(CONTACT_TICKET_URL);
   }, [openOrCopyInternetLink]);
 
+  const handleAiSupportAction = useCallback(
+    (event?: { preventDefault: () => void }) => {
+      event?.preventDefault();
+      if (isQortalEnvironment) {
+        setQortalPurchasePlanName('AI-powered support');
+        return;
+      }
+
+      window.location.href = AI_SUPPORT_EMAIL_URL;
+    },
+    [isQortalEnvironment]
+  );
+
   const openShowcaseLightbox = useCallback(() => {
     setIsShowcaseLightboxOpen(true);
   }, []);
@@ -1199,6 +1328,7 @@ function App() {
         liteMode={isLiteSpaceMode}
         reducedMotion={prefersReducedMotion}
       />
+      {isBooting ? <BootScreen reducedMotion={prefersReducedMotion} /> : null}
       <Box
         className="sc-scroll-progress"
         aria-hidden
@@ -1225,7 +1355,16 @@ function App() {
           <Box
             className={`sc-topbar sc-reveal ${isCondensedNav ? 'is-condensed' : ''} ${isCompactMobile ? 'is-mobile-compact' : ''}`}
           >
-            <Stack direction="row" spacing={1.2} alignItems="center">
+            <Stack
+              component="button"
+              type="button"
+              direction="row"
+              spacing={1.2}
+              alignItems="center"
+              className="sc-brand-home"
+              onClick={() => scrollToId('overview')}
+              aria-label="Go to NuQloud home"
+            >
               <img
                 src={BRAND_HEADER_LOGO}
                 alt="NuQloud"
@@ -1264,7 +1403,11 @@ function App() {
                 size="small"
                 className="sc-nav-link"
               >
-                {isCompactMobile ? 'Affiliates' : isCondensedNav ? 'Aff' : 'Affiliates'}
+                {isCompactMobile
+                  ? 'Aff'
+                  : isCondensedNav
+                    ? 'Aff'
+                    : 'Affiliates'}
               </Button>
               <Button
                 component={Link}
@@ -1272,7 +1415,11 @@ function App() {
                 size="small"
                 className="sc-nav-link"
               >
-                {isCompactMobile ? 'NQSH' : isCondensedNav ? 'Self' : 'Self-Hosting'}
+                {isCompactMobile
+                  ? 'NQSH'
+                  : isCondensedNav
+                    ? 'Self'
+                    : 'Self-Hosting'}
               </Button>
               <Button
                 className="sc-btn-primary sc-nav-cta"
@@ -1280,7 +1427,7 @@ function App() {
                 onClick={() => scrollToId('plans')}
               >
                 {isCompactMobile
-                  ? 'View Plans'
+                  ? 'Plans'
                   : isCondensedNav
                     ? 'Plans'
                     : 'View Plans'}
@@ -1313,7 +1460,7 @@ function App() {
                 Your Private Cloud, Without Big Tech.
               </Typography>
               <Typography variant="body1" className="sc-subline">
-                Secure, private options to run your digital world
+                Secure, private options to run your digital life
               </Typography>
               <Stack
                 direction={{ xs: 'column', sm: 'row' }}
@@ -1330,9 +1477,9 @@ function App() {
               <Typography className="sc-home-support-copy">
                 From ENCRYPTED voice/video calls, meetings, and real-time
                 collaboration, to DECENTRALIZED DATA and apps, NuQloud is your
-                PRIVATE digital world. The features you need today (without
-                harvesting your data), and a gateway to a post-quantum
-                decentralized tomorrow.
+                PRIVATE digital workspace. The features you need today (without
+                harvesting your data), and a stepping stone to a decentralized
+                tomorrow.
               </Typography>
               <Stack
                 direction="row"
@@ -1400,12 +1547,18 @@ function App() {
           </motion.section>
 
           <motion.section
-            className="sc-section sc-section--cinematic"
+            className="sc-section sc-section--cinematic sc-what-section"
             id="about"
             {...getRevealMotion(0.02, 64)}
           >
-            <Typography variant="h2" className="sc-section-title sc-reveal">
+            <Typography className="sc-card-label sc-reveal">
               What Is NuQloud
+            </Typography>
+            <Typography
+              variant="h2"
+              className="sc-section-title sc-what-title sc-reveal"
+            >
+              Future-Proof Private Cloud Upgrade
             </Typography>
             <Typography
               variant="body1"
@@ -1416,56 +1569,41 @@ function App() {
               re-thought for user privacy, and easy access to a next-generation
               decentralized data network
             </Typography>
-            <Box className="sc-two-col sc-home-intro-grid">
-              <Card className="sc-card sc-reveal">
-                <CardContent>
-                  <Typography className="sc-card-label">
-                    More on NuQloud
-                  </Typography>
-                  <Typography className="sc-feature-copy">
-                    For most users NuQloud will be a private cloud service that
-                    doesn't harvest your metadata to use against you. A unified
-                    platform that replaces a huge number of services with a
-                    single platform. But NuQloud offers much more than that, it
-                    is simultaneously a gateway to the future of content
-                    distribution that does not suffer from the same security
-                    issues of the internet. NuQloud helps you transition to a
-                    decentralized future, while ensuring you keep the
-                    functionality you need today.
-                  </Typography>
-                </CardContent>
-              </Card>
-              <Card className="sc-card sc-reveal">
-                <CardContent>
-                  <Typography className="sc-card-label">
-                    Included in Every NuQloud
-                  </Typography>
-                  <Box
-                    component="ul"
-                    className="sc-detail-list sc-home-checklist"
-                  >
-                    <Box component="li" className="sc-detail-item">
-                      Private file sync/storage across multiple devices (mobile
-                      and desktop)
+            <Box className="sc-what-grid sc-reveal">
+              <Box className="sc-what-copy-panel">
+                <Typography className="sc-feature-copy">
+                  NuQloud brings the everyday cloud tools people expect into a
+                  private managed environment, then adds optional QDN publishing
+                  for stronger ownership and resilience.
+                </Typography>
+                <Button
+                  className="sc-btn-ghost sc-what-cta"
+                  onClick={() => scrollToId('plans')}
+                >
+                  View Plans
+                  <ChevronRightRoundedIcon fontSize="small" />
+                </Button>
+              </Box>
+              <Box className="sc-what-feature-list">
+                {whatHighlights.map((item) => {
+                  const Icon = item.Icon;
+                  return (
+                    <Box className="sc-what-feature" key={item.title}>
+                      <Box className="sc-what-feature-icon">
+                        <Icon fontSize="small" />
+                      </Box>
+                      <Box>
+                        <Typography className="sc-what-feature-title">
+                          {item.title}
+                        </Typography>
+                        <Typography className="sc-what-feature-body">
+                          {item.body}
+                        </Typography>
+                      </Box>
                     </Box>
-                    <Box component="li" className="sc-detail-item">
-                      Private collaboration for teams, communities,
-                      organizations and families
-                    </Box>
-                    <Box component="li" className="sc-detail-item">
-                      Encrypted and private voice, video, screensharing and
-                      meetings with easy scheduling and E-Mail notifications.
-                    </Box>
-                    <Box component="li" className="sc-detail-item">
-                      Off-internet decentralized data backups and decentralized
-                      applications access.
-                    </Box>
-                    <Box component="li" className="sc-detail-item">
-                      A feature set no other cloud can provide.
-                    </Box>
-                  </Box>
-                </CardContent>
-              </Card>
+                  );
+                })}
+              </Box>
             </Box>
           </motion.section>
 
@@ -1487,7 +1625,7 @@ function App() {
               {featureStories.map((story, index) => {
                 const Icon = story.Icon;
                 const progress = featureStoryProgress[story.id] ?? 0;
-                const sceneProgress = rangeProgress(progress, 0.01, 0.88);
+                const sceneProgress = rangeProgress(progress, 0.03, 0.78);
                 const replacementExpanded = progress > 0.015;
                 const bulletSpan =
                   story.steps.length > 1 ? 0.58 / (story.steps.length - 1) : 0;
@@ -1667,6 +1805,59 @@ function App() {
                   </Box>
                 );
               })}
+            </Box>
+          </motion.section>
+
+          <motion.section
+            className="sc-section sc-section--cinematic sc-architecture-section"
+            id="architecture"
+            {...getRevealMotion(0.05, 68)}
+          >
+            <Typography className="sc-card-label sc-reveal">
+              Platform Architecture
+            </Typography>
+            <Typography variant="h2" className="sc-section-title sc-reveal">
+              Built on proven layers. Extended for private ownership.
+            </Typography>
+            <Typography
+              variant="body1"
+              className="sc-section-subtitle sc-reveal"
+            >
+              NuQloud uses Nextcloud foundation for familiar private cloud
+              workflows, then adds NuQloud-controlled integrations for services,
+              publishing, and QDN access powered by Qortal. Nextcloud Nextcloud
+              is the upstream open-source base, not a NuQloud sponsor or
+              endorsement.
+            </Typography>
+            <Box className="sc-architecture-map sc-reveal">
+              {architectureLayers.map((layer, index) => (
+                <Box
+                  className={`sc-architecture-layer sc-architecture-layer--${layer.tone}`}
+                  key={layer.eyebrow}
+                >
+                  <Typography className="sc-architecture-eyebrow">
+                    {layer.eyebrow}
+                  </Typography>
+                  <Typography className="sc-architecture-title">
+                    {layer.title}
+                  </Typography>
+                  <Typography className="sc-architecture-detail">
+                    {layer.detail}
+                  </Typography>
+                  {index < architectureLayers.length - 1 ? (
+                    <Box className="sc-architecture-arrow" aria-hidden>
+                      -&gt;
+                    </Box>
+                  ) : null}
+                </Box>
+              ))}
+            </Box>
+            <Box className="sc-architecture-capabilities sc-reveal">
+              {architectureCapabilities.map((item) => (
+                <Box className="sc-architecture-capability" key={item}>
+                  {item}
+                </Box>
+              ))}
             </Box>
           </motion.section>
 
@@ -2159,6 +2350,7 @@ function App() {
                 component="a"
                 className="sc-footer-support-link"
                 href={AI_SUPPORT_EMAIL_URL}
+                onClick={handleAiSupportAction}
               >
                 AI-powered Support
               </Box>

@@ -2,21 +2,21 @@ import { createTheme } from '@mui/material/styles';
 
 const commonThemeOptions = {
   typography: {
-    fontFamily: ['Oxygen', 'sans-serif'].join(','),
+    fontFamily: ['Space Grotesk', 'Oxygen', 'sans-serif'].join(','),
     h1: {
-      fontFamily: ['Orbitron', 'Oxygen', 'sans-serif'].join(','),
+      fontFamily: ['Space Grotesk', 'Oxygen', 'sans-serif'].join(','),
       fontSize: '2rem',
-      fontWeight: 700,
+      fontWeight: 600,
     },
     h2: {
-      fontFamily: ['Orbitron', 'Oxygen', 'sans-serif'].join(','),
+      fontFamily: ['Space Grotesk', 'Oxygen', 'sans-serif'].join(','),
       fontSize: '1.75rem',
-      fontWeight: 700,
+      fontWeight: 600,
     },
     h3: {
-      fontFamily: ['Orbitron', 'Oxygen', 'sans-serif'].join(','),
+      fontFamily: ['Space Grotesk', 'Oxygen', 'sans-serif'].join(','),
       fontSize: '1.5rem',
-      fontWeight: 700,
+      fontWeight: 600,
     },
     h4: {
       fontSize: '1.25rem',
@@ -78,12 +78,12 @@ const lightTheme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: 'rgb(31, 111, 255)',
-      dark: 'rgb(14, 73, 170)',
-      light: 'rgb(97, 165, 255)',
+      main: 'rgb(33, 81, 245)',
+      dark: 'rgb(15, 46, 170)',
+      light: 'rgb(0, 212, 255)',
     },
     secondary: {
-      main: 'rgba(98, 165, 255, 1)',
+      main: 'rgb(0, 212, 255)',
     },
     background: {
       default: 'rgb(245, 248, 252)',
@@ -101,12 +101,12 @@ const darkTheme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: 'rgb(79, 163, 255)',
-      dark: 'rgb(31, 111, 255)',
-      light: 'rgb(130, 199, 255)',
+      main: 'rgb(0, 212, 255)',
+      dark: 'rgb(33, 81, 245)',
+      light: 'rgb(238, 238, 240)',
     },
     secondary: {
-      main: 'rgb(89, 184, 255)',
+      main: 'rgb(0, 255, 136)',
     },
     background: {
       default: 'rgb(3, 9, 19)',

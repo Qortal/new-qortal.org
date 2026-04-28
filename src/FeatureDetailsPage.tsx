@@ -1,6 +1,6 @@
-import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
-import DarkModeRoundedIcon from "@mui/icons-material/DarkModeRounded";
-import LightModeRoundedIcon from "@mui/icons-material/LightModeRounded";
+import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
+import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
+import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
 import {
   Box,
   Button,
@@ -8,26 +8,43 @@ import {
   CardContent,
   Chip,
   Container,
+  Dialog,
+  DialogContent,
   IconButton,
   Stack,
   Typography,
-} from "@mui/material";
-import { useAtom } from "jotai";
-import { CSSProperties, useEffect, useMemo, useState } from "react";
-import { Link, Navigate, useParams } from "react-router-dom";
-import { BRAND_HEADER_LOGO } from "./brandAssets";
+} from '@mui/material';
+import { useAtom } from 'jotai';
+import {
+  CSSProperties,
+  MouseEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
+import { Link, Navigate, useParams } from 'react-router-dom';
+import { BRAND_HEADER_LOGO } from './brandAssets';
 import {
   FeatureStoryId,
   featureStoryDetails,
-} from "./content/featureStoryDetails";
-import { EnumTheme, themeAtom } from "./state/global/system";
-import "./App.css";
+} from './content/featureStoryDetails';
+import { useAccessContext } from './hooks/useAccessContext';
+import { EnumTheme, themeAtom } from './state/global/system';
+import './App.css';
+
+const AI_SUPPORT_EMAIL_URL = 'mailto:info@nuqloud.com';
+const QORTAL_QMAIL_CONTACT_URL = 'qortal://APP/Q-Mail/to/crowetic';
+const QORTAL_CHDC_URL = 'qortal://CHDC';
 
 function FeatureDetailsPage() {
   const [theme, setTheme] = useAtom(themeAtom);
   const [scrollY, setScrollY] = useState(0);
+  const [qortalPurchasePlanName, setQortalPurchasePlanName] = useState('');
   const { storyId } = useParams<{ storyId: FeatureStoryId }>();
+  const { accessContext, openQortalLink } = useAccessContext();
   const isDark = theme === EnumTheme.DARK;
+  const isQortalEnvironment = accessContext.mode !== 'internet';
 
   const story = storyId ? featureStoryDetails[storyId] : undefined;
 
@@ -38,12 +55,12 @@ function FeatureDetailsPage() {
     };
 
     handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
     };
   }, []);
 
@@ -54,15 +71,32 @@ function FeatureDetailsPage() {
   const pageMotionStyles = useMemo(
     () =>
       ({
-        ["--sc-parallax-y" as string]: `${Math.round(scrollY * 0.08)}px`,
-        ["--sc-parallax-soft" as string]: `${Math.round(scrollY * 0.04)}px`,
-        ["--sc-spin-a" as string]: `${Math.round((scrollY * 0.05) % 360)}deg`,
-        ["--sc-spin-b" as string]: `${Math.round((scrollY * -0.03) % 360)}deg`,
-        ["--sc-spin-c" as string]: `${Math.round((scrollY * 0.07) % 360)}deg`,
-        ["--sc-depth" as string]: `${(1 + Math.sin(scrollY / 260) * 0.04).toFixed(3)}`,
+        ['--sc-parallax-y' as string]: `${Math.round(scrollY * 0.08)}px`,
+        ['--sc-parallax-soft' as string]: `${Math.round(scrollY * 0.04)}px`,
+        ['--sc-spin-a' as string]: `${Math.round((scrollY * 0.05) % 360)}deg`,
+        ['--sc-spin-b' as string]: `${Math.round((scrollY * -0.03) % 360)}deg`,
+        ['--sc-spin-c' as string]: `${Math.round((scrollY * 0.07) % 360)}deg`,
+        ['--sc-depth' as string]: `${(1 + Math.sin(scrollY / 260) * 0.04).toFixed(3)}`,
       }) as CSSProperties,
-    [scrollY],
+    [scrollY]
   );
+
+  const handleAiSupportAction = useCallback(
+    (event: MouseEvent<HTMLAnchorElement>) => {
+      event.preventDefault();
+      if (isQortalEnvironment) {
+        setQortalPurchasePlanName('AI-powered support');
+        return;
+      }
+
+      window.location.href = AI_SUPPORT_EMAIL_URL;
+    },
+    [isQortalEnvironment]
+  );
+
+  const closeQortalPurchaseModal = useCallback(() => {
+    setQortalPurchasePlanName('');
+  }, []);
 
   if (!story) {
     return <Navigate to="/" replace />;
@@ -70,7 +104,7 @@ function FeatureDetailsPage() {
 
   return (
     <Box
-      className={`sc-page sc-page--msp ${isDark ? "sc-theme-dark" : "sc-theme-light"}`}
+      className={`sc-page sc-page--msp ${isDark ? 'sc-theme-dark' : 'sc-theme-light'}`}
       style={pageMotionStyles}
     >
       <Box className="sc-bg-orb sc-bg-orb-a" />
@@ -147,7 +181,7 @@ function FeatureDetailsPage() {
                 {story.supportCopy}
               </Typography>
               <Stack
-                direction={{ xs: "column", sm: "row" }}
+                direction={{ xs: 'column', sm: 'row' }}
                 spacing={1.2}
                 className="sc-hero-actions"
               >
@@ -290,7 +324,7 @@ function FeatureDetailsPage() {
                   <CardContent>
                     <Typography className="sc-card-label">Deep Dive</Typography>
                     <Typography className="sc-home-card-title">
-                      {section.title.replace("Deep Dive: ", "")}
+                      {section.title.replace('Deep Dive: ', '')}
                     </Typography>
                     <Box component="ul" className="sc-detail-list">
                       {section.points.map((item) => (
@@ -314,20 +348,83 @@ function FeatureDetailsPage() {
               Need this explained in the context of your workflow?
             </Typography>
             <Stack
-              direction={{ xs: "column", sm: "row" }}
+              direction={{ xs: 'column', sm: 'row' }}
               spacing={1.2}
               justifyContent="center"
             >
-              <Button className="sc-btn-primary" component={Link} to="/">
-                Back To Homepage
+              <Button
+                className="sc-btn-primary"
+                component="a"
+                href={AI_SUPPORT_EMAIL_URL}
+                onClick={handleAiSupportAction}
+              >
+                Private AI Support
               </Button>
-              <Button className="sc-btn-ghost" component={Link} to="/self-hosting">
-                Self-Hosting Path
+              <Button className="sc-btn-ghost" component={Link} to="/">
+                Back Home
               </Button>
             </Stack>
           </section>
         </Box>
       </Container>
+      <Dialog
+        open={Boolean(qortalPurchasePlanName)}
+        onClose={closeQortalPurchaseModal}
+        className="sc-qortal-purchase-dialog"
+      >
+        <DialogContent className="sc-qortal-purchase-dialog-content">
+          <Typography className="sc-showcase-lightbox-title">
+            Qortal-native purchasing options coming soon
+          </Typography>
+          <Typography className="sc-qortal-purchase-dialog-copy">
+            Direct Qortal-native purchasing for{' '}
+            <strong>{qortalPurchasePlanName || 'this plan'}</strong> is coming
+            soon. For now, contact crowetic in Q-Mail for more information, or
+            follow CHDC on QDN for updates.
+          </Typography>
+          <Box className="sc-qortal-purchase-dialog-links">
+            <Button
+              className="sc-btn-primary"
+              onClick={() => void openQortalLink(QORTAL_QMAIL_CONTACT_URL)}
+            >
+              Contact via Q-Mail
+            </Button>
+            <Button
+              className="sc-btn-link"
+              onClick={() => void openQortalLink(QORTAL_CHDC_URL)}
+            >
+              Open CHDC
+            </Button>
+          </Box>
+          <Box className="sc-qortal-purchase-dialog-meta">
+            <Typography className="sc-qortal-purchase-dialog-hint">
+              Q-Mail:{' '}
+              <Box
+                component="a"
+                className="sc-qortal-purchase-dialog-anchor"
+                href={QORTAL_QMAIL_CONTACT_URL}
+              >
+                {QORTAL_QMAIL_CONTACT_URL}
+              </Box>
+            </Typography>
+            <Typography className="sc-qortal-purchase-dialog-hint">
+              Updates:{' '}
+              <Box
+                component="a"
+                className="sc-qortal-purchase-dialog-anchor"
+                href={QORTAL_CHDC_URL}
+              >
+                {QORTAL_CHDC_URL}
+              </Box>
+            </Typography>
+          </Box>
+          <Box className="sc-qortal-purchase-dialog-actions">
+            <Button className="sc-btn-link" onClick={closeQortalPurchaseModal}>
+              Close
+            </Button>
+          </Box>
+        </DialogContent>
+      </Dialog>
     </Box>
   );
 }

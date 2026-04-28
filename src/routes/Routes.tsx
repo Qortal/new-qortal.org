@@ -1,22 +1,23 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import App from "../App";
-import AffiliateProgramPage from "../AffiliateProgramPage";
-import { AppWrapper } from "../AppWrapper";
-import FeatureDetailsPage from "../FeatureDetailsPage";
-import SelfHostingPage from "../SelfHostingPage";
-import TermsPage from "../TermsPage";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import App from '../App';
+import AffiliateProgramPage from '../AffiliateProgramPage';
+import { AppWrapper } from '../AppWrapper';
+import FeatureDetailsPage from '../FeatureDetailsPage';
+import SelfHostingPage from '../SelfHostingPage';
+import StoragePage from '../StoragePage';
+import TermsPage from '../TermsPage';
 
 interface CustomWindow extends Window {
   _qdnBase: string;
 }
 const customWindow = window as unknown as CustomWindow;
-const baseUrl = customWindow?._qdnBase || "";
+const baseUrl = customWindow?._qdnBase || '';
 
 export function Routes() {
   const router = createBrowserRouter(
     [
       {
-        path: "/",
+        path: '/',
         element: <AppWrapper />,
         children: [
           {
@@ -24,19 +25,23 @@ export function Routes() {
             element: <App />,
           },
           {
-            path: "self-hosting",
+            path: 'self-hosting',
             element: <SelfHostingPage />,
           },
           {
-            path: "affiliate-program",
+            path: 'affiliate-program',
             element: <AffiliateProgramPage />,
           },
           {
-            path: "feature-details/:storyId",
+            path: 'feature-details/:storyId',
             element: <FeatureDetailsPage />,
           },
           {
-            path: "terms",
+            path: 'storage',
+            element: <StoragePage />,
+          },
+          {
+            path: 'terms',
             element: <TermsPage />,
           },
         ],
@@ -44,7 +49,7 @@ export function Routes() {
     ],
     {
       basename: baseUrl,
-    },
+    }
   );
 
   return <RouterProvider router={router} />;

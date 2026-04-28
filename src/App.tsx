@@ -2078,6 +2078,115 @@ function App() {
 
           <motion.section
             className="sc-section sc-section--cinematic"
+            id="storage"
+            {...getRevealMotion(0.08, 74, 0, 0.01)}
+          >
+            <Typography className="sc-card-label sc-reveal">
+              Storage & Pricing
+            </Typography>
+            <Typography variant="h2" className="sc-section-title sc-reveal">
+              NuQloud Storage Model
+            </Typography>
+            <Typography
+              variant="body1"
+              className="sc-section-subtitle sc-reveal"
+            >
+              NuQloud separates traditional cloud storage from decentralized QDN
+              preservation. Every plan includes private cloud storage for your
+              files, plus guaranteed decentralized storage for published QDN
+              data. Additional storage can be added separately depending on what
+              you actually need.
+            </Typography>
+            <Box
+              sx={{
+                display: 'grid',
+                gridTemplateColumns: { xs: '1fr', md: '1fr 1fr 1fr' },
+                gap: 3,
+                mt: 3,
+              }}
+              className="sc-reveal"
+            >
+              <Card className="sc-card">
+                <CardContent>
+                  <Typography
+                    variant="h5"
+                    className="sc-detail-title"
+                    gutterBottom
+                  >
+                    Cloud Storage
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    className="sc-detail-item"
+                    paragraph
+                  >
+                    Private server-side storage for files, sync, sharing, and
+                    collaboration.
+                  </Typography>
+                  <Typography
+                    variant="h6"
+                    sx={{ fontWeight: 700, my: 2, color: 'primary.main' }}
+                  >
+                    $0.20 / GB / month
+                  </Typography>
+                </CardContent>
+              </Card>
+              <Card className="sc-card">
+                <CardContent>
+                  <Typography
+                    variant="h5"
+                    className="sc-detail-title"
+                    gutterBottom
+                  >
+                    Guaranteed QDN Storage
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    className="sc-detail-item"
+                    paragraph
+                  >
+                    NuQloud actively preserves your published QDN data.
+                  </Typography>
+                  <Typography
+                    variant="h6"
+                    sx={{ fontWeight: 700, my: 2, color: 'primary.main' }}
+                  >
+                    $0.35 / GB / month based on actual usage
+                  </Typography>
+                </CardContent>
+              </Card>
+              <Card className="sc-card">
+                <CardContent>
+                  <Typography
+                    variant="h5"
+                    className="sc-detail-title"
+                    gutterBottom
+                  >
+                    Redundancy Options
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    className="sc-detail-item"
+                    paragraph
+                  >
+                    Choose how many NuQloud nodes preserve your QDN data.
+                  </Typography>
+                  <Button
+                    component={Link}
+                    to="/storage"
+                    variant="outlined"
+                    size="small"
+                    sx={{ mt: 'auto' }}
+                  >
+                    Learn About Storage Options
+                  </Button>
+                </CardContent>
+              </Card>
+            </Box>
+          </motion.section>
+
+          <motion.section
+            className="sc-section sc-section--cinematic"
             id="plans"
             {...getRevealMotion(0.08, 74, 0, 0.01)}
           >

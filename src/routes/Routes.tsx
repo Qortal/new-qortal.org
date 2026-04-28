@@ -44,6 +44,10 @@ export function Routes() {
             path: 'terms',
             element: <TermsPage />,
           },
+          {
+            path: '*',
+            element: <App />,
+          },
         ],
       },
     ],

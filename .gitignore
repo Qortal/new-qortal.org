@@ -3,3 +3,4 @@ AGENTS.md
 dist
 node_modules
 *.zip
+node_modules/*

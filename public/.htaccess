@@ -1,6 +1,18 @@
 RewriteEngine On
 RewriteBase /
 
+# Established qortal.org routes with current destinations
+Redirect 301 /downloads/ /get-started
+Redirect 301 /get-involved/ /community
+Redirect 301 /what-is-the-qortal-blockchain-project/ /explore
+Redirect 301 /what-does-qortal-have-now/ /ecosystem
+Redirect 301 /trade-portal/ /technology#trade
+Redirect 302 /minting-leveling/ /community
+Redirect 301 /tutorials/ https://qortal.dev/onboarding
+Redirect 301 /faq/ https://qortal.dev/faq
+Redirect 301 /video/ https://www.youtube.com/channel/UC2dm2DxTM6JRdtmxP4RABBQ/
+Redirect 301 /donate/ https://qortal.dev/donate
+
 # If the requested file is a real file or directory, serve it
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d

@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Authentication Identity">
-  <rect width="64" height="64" rx="12" fill="#4a1028"/>
-  <circle cx="32" cy="24" r="10" fill="#ffd3df"/>
-  <rect x="18" y="36" width="28" height="16" rx="8" fill="#ffd3df"/>
-  <rect x="38" y="34" width="14" height="18" rx="3" fill="#f7f9ff"/>
-  <path d="M45 42a3 3 0 1 0-4 0v4h4v-4z" fill="#4a1028"/>
-</svg>

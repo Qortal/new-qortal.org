@@ -1,106 +1,69 @@
-# NuQloud Website
+# Qortal.org
 
-Landing site for NuQloud, built as a Qortal-publishable React app (via `create-qortal-app`) and designed to work cleanly in both:
+The modern public home for Qortal: community-owned digital infrastructure for decentralized applications, publishing, communication, identity, transactions, and local-first participation.
 
-- Qortal native context
-- Gateway-accessed context (for example `nuqloud.com`)
+This repository began from the engineering foundation of a NuQloud website, but the resulting product, content architecture, and visual system are purpose-built for Qortal.
 
-## What This Build Includes
+## Routes
 
-- Two distinct scroller routes:
-  - `/` MSP-primary service page (managed provider focus)
-  - `/self-hosting` plugin/self-hosting page
-  - `/feature-details/:storyId` preserved in-depth feature pages sourced from the archived MSP content model
-- Root landing page now uses a private-cloud-first marketing structure:
-  - direct hero messaging for normal buyers
-  - updated hero/about positioning around NuQloud as a private digital world and gateway to decentralized data/apps
-  - plain-language explanation of what NuQloud is
-  - a scroll-driven feature-story section with animated workflows, larger bundled color replacement-provider logos, and `Read More` links into preserved detail pages
-  - a curated real screenshot gallery for the NuQloud dashboard, network identity/publishing flow, decentralized apps, files, conversations, and collaborative editing, with mobile-friendly bottom tabs below the active screenshot and arrow-based navigation in the enlarged lightbox view
-  - managed account plan cards now surface the team variant as a smaller outlined `team - up to 5 users` button so the alternate package path is easier to notice
-  - communications replacement logos now avoid duplicate entries and include additional real bundled service marks for messaging apps like Telegram and WhatsApp
-  - plans now render as two coordinated lanes, with the `NuQloud Accounts` and `Dedicated Branded NuQloud Instances` summary cards centered above their matching plan groups and accent styling carried through to the plan cards and buy buttons
-  - differentiation, service-model split, stack summary, and plan preview sections
-- Self-hosting route remains available for the plugin-first audience with separate messaging and navigation, and now clearly notes that the plugin package is being finalized for near-term release.
-- The self-hosting/plugin route now mirrors the main page structure more closely:
-  - hero + launch-status banner
-  - about/data snapshot
-  - core functionality section
-  - explicit add-on catalog (`qortal_files_bridge`, `qortal_talk_bridge`, `custom_pwa`)
-  - architecture/flow section
-  - implemented screenshot gallery
-  - launch-prep CTA section
-- Plugin-page copy now uses product-aware naming:
-  - `NuQloud for Nextcloud` for the plugin package
-  - Qortal nomenclature for decentralized functions and app surfaces
-- Shared layout/CSS now clamps horizontal overflow more aggressively to prevent the sideways mobile scroll issue.
-- Previous dense MSP homepage content is preserved in:
-  - `src/content/mspLegacyArchive.ts`
-- Branding refresh:
-  - MSP route: `NuQloud`
-  - Plugin route: `NuQloud for Nextcloud - powered by Qortal`
-- MSP page keeps right-side animated geometry and square-grid atmosphere.
-- Self-hosting page uses left-side animated geometry with circular-grid black-background styling.
-- Dual-theme design (dark + light blue systems).
-- Access-context detection uses:
-  - authenticated QDN detection via `GET_USER_ACCOUNT` (takes priority)
-  - trusted gateway host detection only for `*.crowetic.com`
-  - internet fallback context
-- On-page theme toggle plus iframe theme compatibility.
-- Percent-based content width (intentionally narrower than full viewport to expose animated side objects).
-- Active-section navigation (sticky top nav + side progress rail on wide viewports).
-- The sticky header navigation now includes a direct `Screenshots` jump link for the interface gallery section.
-- Scroll choreography includes side-slide reveal cards for deeper replacement details.
-- Responsive layout for desktop/tablet/mobile.
-- Reveal-on-scroll section animation with staggered choreography, parallax background response, and scroll-reactive geometric objects.
-- Cross-functional internet-link actions:
-  - Authenticated QDN context copies internet-only links to clipboard.
-  - Trusted gateway/internet contexts open links in a new tab.
+- `/` — Qortal overview and primary entry points
+- `/explore` — why Qortal takes a different architectural approach
+- `/technology` — Core, Hub, QDN, names, Q-Apps, communication, wallets, trade, and groups
+- `/ecosystem` — curated current interfaces, Q-Apps, and tools
+- `/get-started` — hosted access, local Core + Hub, Android, and browser extension paths
+- `/build` — developer entry point
+- `/community` — participation and verified community links
+- `/about` — philosophy, community ownership, history, and direction
 
-## Content Sources
+## Dual deployment model
 
-Primary product messaging is derived from:
+The application supports both ordinary web hosting and direct Qortal/QDN rendering:
 
-- `DOCS/Initial-Concept-Overview.md`
-- `DOCS/Initial-Platform-Packages.md`
+- React Router uses `window._qdnBase` as its basename when Qortal supplies it.
+- Runtime detection distinguishes ordinary internet, recognized Qortal gateway, and authenticated QDN contexts.
+- The current access context is visible in the header and footer.
+- Internet destinations open normally on web/gateway copies and are copied for external use in authenticated QDN context.
+- Qortal-native URIs use the Qortal interface bridge when available.
+- Public access probes only the global Qortal bridge and does not force authentication.
 
-Legacy MSP homepage content from the earlier detailed landing build is preserved for reuse in:
+## Content and configuration
 
-- `src/content/mspLegacyArchive.ts`
+- External URLs: `src/config/siteLinks.ts`
+- Curated ecosystem data: `src/data/ecosystem.ts`
+- Full repository metadata cache: `src/data/qortal-repositories.json`
+- Source updater: `scripts/update-qortal-sources.mjs`
+- Content provenance: [CONTENT_SOURCES.md](CONTENT_SOURCES.md)
+- Route migration: [REDIRECTS.md](REDIRECTS.md)
+- Information architecture: [SITE_ARCHITECTURE.md](SITE_ARCHITECTURE.md)
+- Implementation decisions and TODOs: [REBUILD_NOTES.md](REBUILD_NOTES.md)
 
-## Assets
-
-Logo/hero graphics are loaded from:
-
-- `public/NuQloud-Nucleus-logoOnly-favicon-512x512.png`
-- `public/NuQloud-Nucleus-logo-noBG-1024x1024.png`
-- `public/NuQloud-Block-logoOnly-512x512.png`
-- `public/NuQloud-Block-logo-noBG-1024x1024.png`
-
-Replacement-provider icons and the `Powered by Qortal` badge are bundled locally in `src/assets/` so they continue to work in QDN-hosted builds without remote asset dependencies.
-
-The website and Nextcloud integration now both use the smaller bundled `Powered by Qortal` logo variants where that badge is shown, reducing the visual footprint while keeping theme-specific light/dark assets.
-
-The interface gallery screenshots are also bundled locally under `src/assets/interface-gallery/` with stable renamed filenames so the gallery works the same in both standard hosting and QDN-published deployments.
+The new Docusaurus documentation URL was not present during the rebuild. `siteLinks.docs` is the only value that needs changing when that URL is available.
 
 ## Development
 
 ```bash
+npm ci
 npm run dev
 ```
 
-## Build
+Refresh the maintainers' GitHub organization snapshot without adding a runtime dependency:
 
 ```bash
+npm run update:sources
+```
+
+## Validation
+
+```bash
+npm run format:check
+npm run lint
 npm run build
 ```
 
-## Notes
+There is no separate automated test script. The production build runs the TypeScript project build before Vite bundling.
 
-- Router basename remains `_qdnBase` aware for QDN compatibility.
-- GlobalProvider auth auto-login is disabled for public landing-page access.
-- `index.html` metadata/title now emphasizes the private-cloud offer instead of the previous abstract tagline.
-- Public-facing metadata now includes canonical URL, robots directives, expanded Open Graph/Twitter card fields, absolute social-preview image URLs, and JSON-LD structured data for stronger SEO and link-preview behavior on internet-hosted deployments.
-- A routed Terms page is available at `/terms`, and a global footer now shows `© 2026 CHD` plus a Terms link.
-- The Terms page now explicitly distinguishes on-instance data from QDN-published data, including CHD’s lack of access/control over private QDN-published data and the limits of CHD redundancy guarantees once an account is no longer in good standing.
-- The Terms page also now clarifies present hardware-policy scope, nominative/comparative use of third-party logos and service marks, and that `NuQloud for Nextcloud` is a Qortal-powered plugin layer extending the separate Nextcloud platform.
+## Deployment
+
+`public/.htaccess` supports SPA routing and selected legacy qortal.org redirects on Apache-compatible hosts. `public/404.html` restores deep links on static hosts. `public/sitemap.xml`, `public/robots.txt`, per-route metadata, canonical links, OpenGraph/Twitter metadata, and JSON-LD cover public SEO behavior.
+
+The site has no runtime dependency on GitHub, external fonts, or remote visual assets.

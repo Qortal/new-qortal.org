@@ -1,9 +1,37 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import './site/site.css';
 
 @font-face {
   font-family: 'Orbitron';
   src: url('./styles/fonts/Orbitron-VariableFont_wght.ttf') format('truetype');
   font-weight: 400 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('./styles/fonts/Inter-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('./styles/fonts/Inter-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('./styles/fonts/Inter-SemiBold.ttf') format('truetype');
+  font-weight: 600 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('./styles/fonts/Inter-ExtraBold.ttf') format('truetype');
+  font-weight: 800 900;
   font-display: swap;
 }
 
@@ -19,7 +47,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: 'Space Grotesk', 'Oxygen', sans-serif;
+  font-family: 'Inter', 'Oxygen', sans-serif;
 }
 
 *,
@@ -40,32 +68,12 @@ body,
 }
 
 body {
-  background: #05060a;
-  color: #eeeef0;
+  background: #040913;
+  color: #f3f8fc;
   overflow-x: clip;
 }
 
-body.sc-is-booting {
-  overflow: hidden;
-}
-
-.sc-site-footer {
-  width: 100%;
-  padding: 0.9rem 1rem 1.4rem;
-  display: flex;
-  justify-content: center;
-  gap: 0.9rem;
-  align-items: center;
-  font-size: 0.88rem;
-  color: #a8c4e6;
-  background: linear-gradient(180deg, rgba(3, 8, 17, 0), rgba(3, 8, 17, 0.82));
-}
-
-.sc-site-footer-link {
-  color: #7db8ff;
-  text-decoration: none;
-}
-
-.sc-site-footer-link:hover {
-  text-decoration: underline;
+html[data-theme='light'] body {
+  background: #edf5fb;
+  color: #071725;
 }

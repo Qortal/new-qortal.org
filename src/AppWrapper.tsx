@@ -1,23 +1,10 @@
-import { GlobalProvider } from 'qapp-core';
 import Layout from './styles/Layout';
-import { publicSalt } from './qapp-config';
+import { AccessContextProvider } from './hooks/useAccessContext';
 
 export const AppWrapper = () => {
   return (
-    <GlobalProvider
-      config={{
-        appName: 'NuQloud',
-        auth: {
-          balanceSetting: {
-            interval: 180000,
-            onlyOnMount: false,
-          },
-          authenticateOnMount: false,
-        },
-        publicSalt: publicSalt,
-      }}
-    >
+    <AccessContextProvider>
       <Layout />
-    </GlobalProvider>
+    </AccessContextProvider>
   );
 };

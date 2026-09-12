@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Slack Teams Zoom">
-  <rect width="64" height="64" rx="12" fill="#1a1f2b"/>
-  <path d="M18 26a8 8 0 1 1 8-8v8h-8z" fill="#36C5F0"/>
-  <path d="M26 46a8 8 0 1 1-8-8h8v8z" fill="#2EB67D"/>
-  <path d="M38 18a8 8 0 1 1 8 8h-8v-8z" fill="#E01E5A"/>
-  <path d="M46 38a8 8 0 1 1-8 8v-8h8z" fill="#ECB22E"/>
-  <rect x="26" y="14" width="12" height="36" rx="6" fill="#ffffff" fill-opacity="0.85"/>
-  <rect x="14" y="26" width="36" height="12" rx="6" fill="#ffffff" fill-opacity="0.85"/>
-</svg>

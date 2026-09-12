@@ -5,14 +5,37 @@ export enum EnumTheme {
   DARK = 2,
 }
 
-const themeStateAtom = atom<EnumTheme>(EnumTheme.DARK);
+const THEME_STORAGE_KEY = 'qortal-org.theme';
 
-// Keep the website in dark mode for now, even if older UI paths or embeds
-// attempt to flip the theme back to light.
+function getInitialTheme(): EnumTheme {
+  if (typeof window === 'undefined') {
+    return EnumTheme.DARK;
+  }
+
+  const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+  if (storedTheme === 'light') {
+    return EnumTheme.LIGHT;
+  }
+  if (storedTheme === 'dark') {
+    return EnumTheme.DARK;
+  }
+
+  return window.matchMedia?.('(prefers-color-scheme: light)').matches
+    ? EnumTheme.LIGHT
+    : EnumTheme.DARK;
+}
+
+const themeStateAtom = atom<EnumTheme>(getInitialTheme());
+
 export const themeAtom = atom(
   (get) => get(themeStateAtom),
   (_get, set, nextTheme: EnumTheme) => {
-    void nextTheme;
-    set(themeStateAtom, EnumTheme.DARK);
+    set(themeStateAtom, nextTheme);
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem(
+        THEME_STORAGE_KEY,
+        nextTheme === EnumTheme.LIGHT ? 'light' : 'dark'
+      );
+    }
   }
 );

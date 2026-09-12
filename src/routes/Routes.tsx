@@ -1,11 +1,30 @@
+import { lazy, Suspense } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import App from '../App';
-import AffiliateProgramPage from '../AffiliateProgramPage';
 import { AppWrapper } from '../AppWrapper';
-import FeatureDetailsPage from '../FeatureDetailsPage';
-import SelfHostingPage from '../SelfHostingPage';
-import StoragePage from '../StoragePage';
-import TermsPage from '../TermsPage';
+import HomePage from '../site/pages/HomePage';
+
+const ExplorePage = lazy(() => import('../site/pages/ExplorePage'));
+const TechnologyPage = lazy(() => import('../site/pages/TechnologyPage'));
+const EcosystemPage = lazy(() => import('../site/pages/EcosystemPage'));
+const GetStartedPage = lazy(() => import('../site/pages/GetStartedPage'));
+const BuildPage = lazy(() => import('../site/pages/BuildPage'));
+const CommunityPage = lazy(() => import('../site/pages/CommunityPage'));
+const AboutPage = lazy(() => import('../site/pages/AboutPage'));
+const NotFoundPage = lazy(() => import('../site/pages/NotFoundPage'));
+
+function RouteLoader({ children }: { children: React.ReactNode }) {
+  return (
+    <Suspense
+      fallback={
+        <div className="route-loader" role="status">
+          Loading Qortal…
+        </div>
+      }
+    >
+      {children}
+    </Suspense>
+  );
+}
 
 interface CustomWindow extends Window {
   _qdnBase: string;
@@ -22,31 +41,71 @@ export function Routes() {
         children: [
           {
             index: true,
-            element: <App />,
+            element: <HomePage />,
           },
           {
-            path: 'self-hosting',
-            element: <SelfHostingPage />,
+            path: 'explore',
+            element: (
+              <RouteLoader>
+                <ExplorePage />
+              </RouteLoader>
+            ),
           },
           {
-            path: 'affiliate-program',
-            element: <AffiliateProgramPage />,
+            path: 'technology',
+            element: (
+              <RouteLoader>
+                <TechnologyPage />
+              </RouteLoader>
+            ),
           },
           {
-            path: 'feature-details/:storyId',
-            element: <FeatureDetailsPage />,
+            path: 'ecosystem',
+            element: (
+              <RouteLoader>
+                <EcosystemPage />
+              </RouteLoader>
+            ),
           },
           {
-            path: 'storage',
-            element: <StoragePage />,
+            path: 'get-started',
+            element: (
+              <RouteLoader>
+                <GetStartedPage />
+              </RouteLoader>
+            ),
           },
           {
-            path: 'terms',
-            element: <TermsPage />,
+            path: 'build',
+            element: (
+              <RouteLoader>
+                <BuildPage />
+              </RouteLoader>
+            ),
+          },
+          {
+            path: 'community',
+            element: (
+              <RouteLoader>
+                <CommunityPage />
+              </RouteLoader>
+            ),
+          },
+          {
+            path: 'about',
+            element: (
+              <RouteLoader>
+                <AboutPage />
+              </RouteLoader>
+            ),
           },
           {
             path: '*',
-            element: <App />,
+            element: (
+              <RouteLoader>
+                <NotFoundPage />
+              </RouteLoader>
+            ),
           },
         ],
       },

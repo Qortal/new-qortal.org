@@ -3,50 +3,39 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NuQloud</title>
+    <meta name="robots" content="noindex" />
+    <title>Redirecting | Qortal</title>
   </head>
   <body>
     <script>
       (function () {
-        var storageKey = 'nuqloud.spa.redirect';
-        var knownRouteRoots = [
-          '/affiliate-program',
-          '/self-hosting',
-          '/feature-details',
-          '/terms',
-        ];
+        var storageKey = 'qortal-org.spa.redirect';
         var currentPath =
           window.location.pathname +
           window.location.search +
           window.location.hash;
-        var pathname = window.location.pathname;
-        var basePath = '';
-
-        for (var i = 0; i < knownRouteRoots.length; i += 1) {
-          var routeRoot = knownRouteRoots[i];
-          var routeIndex = pathname.indexOf(routeRoot);
-          if (routeIndex > -1) {
-            basePath = pathname.slice(0, routeIndex) || '/';
+        var routeRoots = [
+          '/explore',
+          '/technology',
+          '/ecosystem',
+          '/get-started',
+          '/build',
+          '/community',
+          '/about',
+        ];
+        var basePath = '/';
+        for (var i = 0; i < routeRoots.length; i += 1) {
+          var index = window.location.pathname.indexOf(routeRoots[i]);
+          if (index > -1) {
+            basePath = window.location.pathname.slice(0, index) || '/';
             break;
           }
         }
-
-        if (!basePath) {
-          basePath = pathname.endsWith('/')
-            ? pathname
-            : pathname.replace(/\/[^/]*$/, '/');
-        }
-
-        if (!basePath) {
-          basePath = '/';
-        }
-
         try {
           window.sessionStorage.setItem(storageKey, currentPath);
         } catch (_error) {
-          /* no-op */
+          /* storage unavailable */
         }
-
         window.location.replace(window.location.origin + basePath);
       })();
     </script>

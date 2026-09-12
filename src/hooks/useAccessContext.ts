@@ -1,4 +1,12 @@
-import { useCallback, useEffect, useState } from 'react';
+import {
+  createContext,
+  createElement,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from 'react';
 
 export type AccessMode = 'gateway' | 'qdn' | 'internet';
 
@@ -17,16 +25,16 @@ type QortalRequestLike = (payload: {
   qortalLink?: string;
 }) => Promise<unknown>;
 
-const TRUSTED_GATEWAY_HOST_SUFFIXES = ['crowetic.com'];
+const TRUSTED_GATEWAY_HOST_SUFFIXES = ['qortal.link', 'qortal.name'];
 
 const DEFAULT_INTERNET_CONTEXT: AccessContext = {
   mode: 'internet',
   isGateway: false,
   isQdn: false,
-  label: 'Internet Context',
-  detail: 'Detected standard browser context outside trusted gateway hosts.',
-  primaryAction: 'Choose Deployment Path',
-  primaryTarget: 'paths',
+  label: 'Open Web Context',
+  detail: 'This copy is being viewed through the ordinary internet.',
+  primaryAction: 'Choose a Starting Point',
+  primaryTarget: 'get-started',
 };
 
 function isTrustedGatewayHost(hostname: string): boolean {
@@ -34,6 +42,17 @@ function isTrustedGatewayHost(hostname: string): boolean {
   return TRUSTED_GATEWAY_HOST_SUFFIXES.some(
     (domain) => normalized === domain || normalized.endsWith(`.${domain}`)
   );
+}
+
+function hasQortalGatewayMarker(): boolean {
+  if (typeof window === 'undefined') {
+    return false;
+  }
+
+  const runtimeBase = String(window._qdnBase || '').trim();
+  const path = String(window.location.pathname || '');
+
+  return Boolean(runtimeBase) || /\/render\/(?:APP|WEBSITE)\//i.test(path);
 }
 
 function hasAuthenticatedAccount(response: unknown): boolean {
@@ -86,7 +105,7 @@ function resolveQortalRequest(): QortalRequestLike | null {
   return null;
 }
 
-export function useAccessContext() {
+function useAccessContextState() {
   const [accessContext, setAccessContext] = useState<AccessContext>(
     DEFAULT_INTERNET_CONTEXT
   );
@@ -108,15 +127,20 @@ export function useAccessContext() {
       }
 
       const hostname = String(window.location.hostname || '').toLowerCase();
-      if (hostname && isTrustedGatewayHost(hostname)) {
+      if (
+        (hostname && isTrustedGatewayHost(hostname)) ||
+        hasQortalGatewayMarker()
+      ) {
         setSafeContext({
           mode: 'gateway',
           isGateway: true,
           isQdn: false,
-          label: 'Trusted Gateway Context',
-          detail: `Gateway host detected: ${hostname}`,
-          primaryAction: 'Choose Deployment Path',
-          primaryTarget: 'paths',
+          label: 'Qortal Gateway Context',
+          detail: hostname
+            ? `Gateway-hosted Q-App detected at ${hostname}. Internet checkout and contact links remain available.`
+            : 'Gateway-hosted Q-App detected. Internet checkout and contact links remain available.',
+          primaryAction: 'Choose a Starting Point',
+          primaryTarget: 'get-started',
         });
       } else {
         setSafeContext(DEFAULT_INTERNET_CONTEXT);
@@ -141,8 +165,8 @@ export function useAccessContext() {
               label: 'Authenticated QDN Context',
               detail:
                 'Authenticated Qortal account detected via GET_USER_ACCOUNT.',
-              primaryAction: 'See Decentralized Roadmap',
-              primaryTarget: 'evolution',
+              primaryAction: 'Explore the Ecosystem',
+              primaryTarget: 'ecosystem',
             });
             return;
           }
@@ -189,8 +213,16 @@ export function useAccessContext() {
         return;
       }
 
-      window.open(url, '_blank', 'noopener,noreferrer');
-      setContextActionFeedback('Opened link in a new browser tab.');
+      const opened = window.open(url, '_blank', 'noopener,noreferrer');
+      if (opened) {
+        setContextActionFeedback(
+          accessContext.mode === 'gateway'
+            ? 'Opened internet link from the Qortal gateway in a new tab.'
+            : 'Opened link in a new browser tab.'
+        );
+      } else {
+        window.location.assign(url);
+      }
     },
     [accessContext.mode]
   );
@@ -228,4 +260,25 @@ export function useAccessContext() {
     openQortalLink,
     openOrCopyInternetLink,
   };
+}
+
+type AccessContextValue = ReturnType<typeof useAccessContextState>;
+
+const AccessContextReactContext = createContext<AccessContextValue | null>(
+  null
+);
+
+export function AccessContextProvider({ children }: { children: ReactNode }) {
+  const value = useAccessContextState();
+  return createElement(AccessContextReactContext.Provider, { value }, children);
+}
+
+export function useAccessContext() {
+  const value = useContext(AccessContextReactContext);
+  if (!value) {
+    throw new Error(
+      'useAccessContext must be used within AccessContextProvider'
+    );
+  }
+  return value;
 }

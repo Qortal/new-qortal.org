@@ -65,11 +65,7 @@ export function SiteShell() {
               title={accessContext.detail}
             >
               <i />
-              {accessContext.mode === 'qdn'
-                ? 'Inside Qortal'
-                : accessContext.mode === 'gateway'
-                  ? 'Qortal gateway'
-                  : 'Open web'}
+              Connection: {accessContext.mode === 'qdn' ? 'Qortal' : 'Internet'}
             </span>
             <button
               className="icon-button"
@@ -121,6 +117,9 @@ export function SiteShell() {
           <div>
             <strong>Participate</strong>
             <Link to="/get-started">Get started</Link>
+            <ExternalLink href={siteLinks.onboarding} className="footer-link">
+              Account onboarding
+            </ExternalLink>
             <Link to="/build">Build a Q-App</Link>
             <Link to="/community">Community</Link>
             <ExternalLink href={siteLinks.docs} className="footer-link">

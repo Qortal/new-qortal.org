@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { siteLinks } from '../../config/siteLinks';
 import { Icon } from '../Icons';
 import { ExternalLink, PageHero, SectionIntro } from '../Shared';
@@ -19,12 +20,20 @@ export default function GetStartedPage() {
           </>
         }
         actions={
-          <ExternalLink
-            href={siteLinks.downloads}
-            className="button button--primary"
-          >
-            Open download guide
-          </ExternalLink>
+          <>
+            <Link
+              className="button button--secondary"
+              to="/get-started#onboarding"
+            >
+              Account onboarding <Icon name="arrow" />
+            </Link>
+            <ExternalLink
+              href={siteLinks.downloads}
+              className="button button--primary"
+            >
+              Open download guide
+            </ExternalLink>
+          </>
         }
         visual={
           <div className="start-compass">
@@ -63,6 +72,12 @@ export default function GetStartedPage() {
                 A public-node-backed Hub lets you explore without installing
                 Core. It is the shortest path in, but you depend on the hosted
                 operator’s node and availability.
+              </p>
+              <p className="hosted-warning">
+                <strong>Version notice:</strong> Rapid development of the
+                rebuilt Hub and Q-Chat over Reticulum has moved ahead of the
+                hosted service. This access point is on an older version until a
+                new hosted build can be delivered.
               </p>
               <ul>
                 <li>No Core installation to begin</li>
@@ -107,6 +122,62 @@ export default function GetStartedPage() {
               </div>
             </article>
           </div>
+        </div>
+      </section>
+      <section className="section" id="onboarding">
+        <div className="shell onboarding-panel">
+          <div className="onboarding-panel__intro">
+            <span className="eyebrow">Guided onboarding</span>
+            <h2>Establish your place on the network.</h2>
+            <p>
+              Qortal onboarding helps a new participant move from having no
+              account to having an established Qortal identity. The guided
+              process helps you create an account, supplies the initial QORT
+              needed to register a name, and walks you through completing your
+              network setup.
+            </p>
+            <ExternalLink
+              href={siteLinks.onboarding}
+              className="button button--primary"
+            >
+              Start guided onboarding
+            </ExternalLink>
+          </div>
+          <ol className="onboarding-steps" aria-label="Qortal onboarding steps">
+            <li>
+              <span>01</span>
+              <Icon name="identity" />
+              <div>
+                <strong>Create your account</strong>
+                <p>
+                  Generate your Qortal account and learn how to protect the
+                  backup and recovery information that controls it.
+                </p>
+              </div>
+            </li>
+            <li>
+              <span>02</span>
+              <Icon name="wallet" />
+              <div>
+                <strong>Receive starter QORT</strong>
+                <p>
+                  The onboarding process funds the new account with the initial
+                  QORT required for name registration.
+                </p>
+              </div>
+            </li>
+            <li>
+              <span>03</span>
+              <Icon name="network" />
+              <div>
+                <strong>Register and get established</strong>
+                <p>
+                  Register your Qortal name and finish setting up an identity
+                  ready to participate across the network.
+                </p>
+              </div>
+            </li>
+          </ol>
         </div>
       </section>
       <section className="section section--ink">

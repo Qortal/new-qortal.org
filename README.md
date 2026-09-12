@@ -22,7 +22,7 @@ The application supports both ordinary web hosting and direct Qortal/QDN renderi
 - React Router uses `window._qdnBase` as its basename when Qortal supplies it.
 - Runtime detection distinguishes ordinary internet, recognized Qortal gateway, and authenticated QDN contexts.
 - The current access context is visible in the header and footer.
-- Internet destinations open normally on web/gateway copies and are copied for external use in authenticated QDN context.
+- Every external internet destination opens in a new browser tab or window across web, gateway, and authenticated QDN contexts.
 - Qortal-native URIs use the Qortal interface bridge when available.
 - Public access probes only the global Qortal bridge and does not force authentication.
 
@@ -38,6 +38,10 @@ The application supports both ordinary web hosting and direct Qortal/QDN renderi
 - Implementation decisions and TODOs: [REBUILD_NOTES.md](REBUILD_NOTES.md)
 
 The new Docusaurus documentation URL was not present during the rebuild. `siteLinks.docs` is the only value that needs changing when that URL is available.
+
+The Get Started hero links directly to its guided onboarding section, which points participants to `https://qortal.dev/onboarding` for account creation, starter QORT for name registration, and the steps needed to establish a new Qortal identity.
+
+Hosted Hub links carry a visible version notice: rapid work on the rebuilt Hub and Q-Chat over Reticulum has moved ahead of the current hosted deployment, which remains available on an older version until a replacement hosted build is ready.
 
 ## Development
 

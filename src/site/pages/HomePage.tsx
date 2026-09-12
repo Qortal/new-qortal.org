@@ -272,6 +272,11 @@ export default function HomePage() {
                 software. Useful for discovery; dependent on infrastructure
                 operated by someone else.
               </p>
+              <p className="hosted-warning">
+                <strong>Older hosted version:</strong> Hub and Q-Chat are being
+                rebuilt rapidly around Reticulum. Hosted access remains on an
+                earlier version until a new hosted build is ready.
+              </p>
               <ExternalLink
                 href={siteLinks.hostedHub}
                 className="button button--secondary"

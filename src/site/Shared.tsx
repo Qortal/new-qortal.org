@@ -102,17 +102,12 @@ export function ExternalLink({
   children: ReactNode;
   className?: string;
 }) {
-  const { openOrCopyInternetLink } = useAccessContext();
   return (
     <a
       className={className}
       href={href}
       target="_blank"
-      rel="noreferrer"
-      onClick={(event) => {
-        event.preventDefault();
-        void openOrCopyInternetLink(href);
-      }}
+      rel="noopener noreferrer"
     >
       {children}
       <Icon name="external" />

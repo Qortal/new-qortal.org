@@ -16,7 +16,7 @@ export default function CommunityPage() {
       <Seo
         title="Community"
         path="/community"
-        description="Find verified Qortal-native support, community discussion, development repositories, and concrete ways to participate in the Qortal network."
+        description="Find community-run support, Qortal-native applications, external discussion spaces, development repositories, and concrete ways to participate in the Qortal network."
       />
       <PageHero
         eyebrow="Community"
@@ -100,11 +100,12 @@ export default function CommunityPage() {
         <div className="shell">
           <SectionIntro
             eyebrow="Verified community links"
-            title="Begin with Qortal-native spaces."
+            title="Meet the community where it gathers."
           >
             <p>
-              External services are useful meeting points, but they are not the
-              network itself.
+              Community-run external services and Qortal-native applications
+              serve different purposes. Each link below identifies which kind of
+              space you are opening.
             </p>
           </SectionIntro>
           <div className="channel-grid">
@@ -112,18 +113,18 @@ export default function CommunityPage() {
               <span className="icon-tile">
                 <Icon name="chat" />
               </span>
-              <span className="card-tag">Qortal-native</span>
-              <h3>Community support chat</h3>
+              <span className="card-tag">External · Community-run</span>
+              <h3>Qortal Cloud community server</h3>
               <p>
-                Join the currently linked Qortal Cloud chat for support and
-                conversation without treating an external social network as the
-                source of truth.
+                Qortal Cloud is an external community cloud server operated by
+                CHD for Qortal community members. Use its hosted chat and
+                collaboration services for support and conversation.
               </p>
               <ExternalLink
                 href={siteLinks.support}
                 className="button button--secondary"
               >
-                Open support chat
+                Open Qortal Cloud
               </ExternalLink>
             </article>
             <article>

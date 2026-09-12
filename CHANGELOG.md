@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- **Added:** Added a guided onboarding section explaining account creation, starter QORT for name registration, and establishing a new network identity, with a direct jump link in the Get Started hero (how to use: open `/get-started`, choose “Account onboarding,” then choose “Start guided onboarding”).
+- **Changed:** All external internet links now open in a new browser tab or window, including when the site is viewed through authenticated QDN (migration/notes: Qortal-native links continue to use the Qortal interface bridge when available).
+- **Added:** Added a visible warning that hosted Hub is currently behind the rapidly rebuilt Hub and Q-Chat over Reticulum while a replacement hosted build is prepared (how to use: review the notice beside each hosted-access action).
+- **Changed:** The Ecosystem Hub action now opens `qortal.dev`, every source-code card uses the label “View source,” and the header monitor reads “Connection: Internet” or “Connection: Qortal” (migration/notes: gateway access is categorized as an internet connection).
+- **Fixed:** Corrected the Community page’s Qortal Cloud description to identify it as an external community cloud server operated by CHD for Qortal community members, rather than a Qortal-native service (impact: visitors now see the service boundary and operator accurately).
 - **Changed:** Rebuilt the former NuQloud website into the official Qortal.org public experience, with a Qortal-specific information architecture, visual system, content, and navigation focused on community-owned digital infrastructure (migration/notes: former product, pricing, affiliate, storage, and enterprise routes are removed).
 - **Added:** Added Why Qortal, Technology, Ecosystem, Get Started, Build, Community, and About routes with responsive layouts and current-source-backed copy (how to use: begin at `/` or navigate directly from the shared header).
 - **Added:** Added centralized official links, a complete cached Qortal GitHub organization inventory, and a maintainer update script that does not create a production runtime dependency on GitHub (how to use: run `npm run update:sources`).

@@ -193,40 +193,6 @@ function useAccessContextState() {
     return () => window.clearTimeout(timer);
   }, [contextActionFeedback]);
 
-  const openOrCopyInternetLink = useCallback(
-    async (url: string) => {
-      if (typeof window === 'undefined') {
-        return;
-      }
-
-      if (accessContext.mode === 'qdn') {
-        try {
-          await navigator.clipboard.writeText(url);
-          setContextActionFeedback(
-            'Copied internet-only link to clipboard for external browser use.'
-          );
-        } catch {
-          setContextActionFeedback(
-            `Copy failed. Use this link manually: ${url}`
-          );
-        }
-        return;
-      }
-
-      const opened = window.open(url, '_blank', 'noopener,noreferrer');
-      if (opened) {
-        setContextActionFeedback(
-          accessContext.mode === 'gateway'
-            ? 'Opened internet link from the Qortal gateway in a new tab.'
-            : 'Opened link in a new browser tab.'
-        );
-      } else {
-        window.location.assign(url);
-      }
-    },
-    [accessContext.mode]
-  );
-
   const openQortalLink = useCallback(
     async (qortalLink: string) => {
       if (typeof window === 'undefined' || !qortalLink) {
@@ -258,7 +224,6 @@ function useAccessContextState() {
     accessContext,
     contextActionFeedback,
     openQortalLink,
-    openOrCopyInternetLink,
   };
 }
 

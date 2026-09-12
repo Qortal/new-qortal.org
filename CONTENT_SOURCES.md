@@ -28,6 +28,7 @@ Production pages do not query GitHub at runtime.
 
 ## Claims deliberately bounded
 
+- Qortal Cloud is identified as an external community cloud server operated by CHD for Qortal community members. It is not presented as a Qortal-native service.
 - QDN is described as distributed data with on-chain transaction/hash references. The site does not call it unhackable, impossible to remove, or infinitely scalable.
 - Qortal is described as locally operable and participant-run. The site does not guarantee universal uptime or immunity from software, device, network, or user risk.
 - Q-Chat is current. Reticulum direct/group voice and file transfer are described as current Hub work; group calling is labeled beta.
@@ -39,5 +40,5 @@ Production pages do not query GitHub at runtime.
 
 - The new Docusaurus documentation staging URL was not present in this repository or its environment. `src/config/siteLinks.ts` therefore keeps the verified current wiki landing page in `siteLinks.docs` as a temporary single-point value. Replace it when the production documentation URL is supplied.
 - `Q-Manager` is active but had no useful README in the researched branch. Its public description is intentionally general.
-- Hosted `go.qortal.link` currently resolves to the hosted Hub endpoint. The site links mobile users to official Android releases and does not promise a distinct mobile-hosted experience.
+- Hosted `go.qortal.link` currently resolves to the hosted Hub endpoint. The interface is explicitly labeled as an older version while rapid development continues on the rebuilt Hub and Q-Chat over Reticulum, pending a replacement hosted build. The site links mobile users to official Android releases and does not promise a distinct mobile-hosted experience.
 - No Telegram link was promoted because a current authoritative link was not found in the researched sources.

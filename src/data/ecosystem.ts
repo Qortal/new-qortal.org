@@ -17,7 +17,7 @@ export const ecosystemProjects: EcosystemProject[] = [
     status: 'Available',
     description:
       'The modern desktop interface for accounts, Q-Chat, wallets, Q-Apps, publishing, and newer communication features.',
-    href: siteLinks.hubRepository,
+    href: siteLinks.qortalDev,
     action: 'View Hub',
   },
   {
@@ -27,7 +27,7 @@ export const ecosystemProjects: EcosystemProject[] = [
     description:
       'The Android interface for accessing Qortal from a mobile device, maintained in the official qortal-mobile repository.',
     href: siteLinks.mobileRepository,
-    action: 'View mobile project',
+    action: 'View source',
   },
   {
     name: 'Qortal Extension',
@@ -36,7 +36,7 @@ export const ecosystemProjects: EcosystemProject[] = [
     description:
       'A Chromium extension for authenticated Qortal access and interaction with Q-Apps through gateway nodes.',
     href: siteLinks.extensionRepository,
-    action: 'View extension',
+    action: 'View source',
   },
   {
     name: 'Q-Tube',
@@ -45,7 +45,7 @@ export const ecosystemProjects: EcosystemProject[] = [
     description:
       'A Q-App for discovering, publishing, listening to, and downloading video on Qortal.',
     href: 'https://github.com/Qortal/q-tube',
-    action: 'View repository',
+    action: 'View source',
     qortalUri: 'qortal://APP/Q-Tube',
   },
   {
@@ -55,7 +55,7 @@ export const ecosystemProjects: EcosystemProject[] = [
     description:
       'Decentralized articles, episodes, audio and video, author profiles, and private subscriber content.',
     href: 'https://github.com/Qortal/Subwire',
-    action: 'View repository',
+    action: 'View source',
   },
   {
     name: 'Q-Wallets',
@@ -64,7 +64,7 @@ export const ecosystemProjects: EcosystemProject[] = [
     description:
       'A Q-App interface for QORT and supported cross-chain wallets, balances, transfers, and address books.',
     href: 'https://github.com/Qortal/Q-Wallets',
-    action: 'View repository',
+    action: 'View source',
     qortalUri: 'qortal://APP/Q-Wallets',
   },
   {
@@ -74,7 +74,7 @@ export const ecosystemProjects: EcosystemProject[] = [
     description:
       'A current TypeScript project for Qortal management workflows and network-aware administration.',
     href: 'https://github.com/Qortal/Q-Manager',
-    action: 'View repository',
+    action: 'View source',
   },
   {
     name: 'Q-Mintership',
@@ -83,7 +83,7 @@ export const ecosystemProjects: EcosystemProject[] = [
     description:
       'Community boards and group-approval workflows used for current minter onboarding and coordination.',
     href: 'https://github.com/Qortal/Q-Mintership-Alpha',
-    action: 'View repository',
+    action: 'View source',
     qortalUri: 'qortal://APP/Q-Mintership',
   },
   {
@@ -93,7 +93,7 @@ export const ecosystemProjects: EcosystemProject[] = [
     description:
       'Reusable authentication, QDN data, resource-list, and utility building blocks for Q-App developers.',
     href: siteLinks.qappCore,
-    action: 'View library',
+    action: 'View source',
   },
 ];
 

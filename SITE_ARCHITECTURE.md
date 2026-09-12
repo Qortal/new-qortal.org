@@ -8,7 +8,7 @@
 - `/ecosystem` — curated current interfaces, Q-Apps, and developer tools.
 - `/get-started` — hosted evaluation versus local Core + Hub, with desktop/mobile/browser paths.
 - `/build` — developer overview and links into Q-App, QDN, API, qapp-core, and source documentation.
-- `/community` — participation paths and verified Qortal-native/external community locations.
+- `/community` — participation paths with explicit distinctions between Qortal-native applications and external community-run locations such as Qortal Cloud.
 - `/about` — philosophy, ownership model, history, and current direction.
 
 ## Intended user journeys
